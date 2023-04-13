@@ -6,22 +6,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_marginBottom="@dimen/chapter_card_bottom_margin"
+        android:orientation="vertical"
+        >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tvSubjectName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:text="타이틀"
-                android:textColor="@color/white"
-                android:textSize="18sp" />
+                android:text="Title"
+                android:textAppearance="?attr/textAppearanceHeadline5"
+                android:textStyle="bold"
+                android:textColor="?attr/colorOnPrimary"
+              />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvChapters"
@@ -29,7 +31,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="1"
+                app:spanCount="@integer/span"
                 tools:listitem="@layout/list_item_home_series" />
 
         </LinearLayout>

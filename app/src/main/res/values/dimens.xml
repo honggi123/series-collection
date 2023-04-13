@@ -1,2 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+
+    <!-- Per Material Design specs: -->
+    <!-- https://material.io/design/components/buttons-floating-action-button.html#specs -->
+    <dimen name="margin_normal">16dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin_extra_small">4dp</dimen>
+
+    <dimen name="card_side_margin">4dp</dimen>
+    <dimen name="card_bottom_margin">4dp</dimen>
+    <dimen name="card_elevation">2dp</dimen>
+
+    <dimen name="toolbar_elevation">1dp</dimen>
+
+    <dimen name="home_side_margin">12dp</dimen>
+
+    <dimen name="chapter_card_bottom_margin">14dp</dimen>
+
+    <dimen name="home_header_margin">72dp</dimen>
+
+</resources>

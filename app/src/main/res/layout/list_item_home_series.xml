@@ -6,10 +6,11 @@
     <androidx.cardview.widget.CardView
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:layout_marginBottom="5dp"
+        android:layout_marginEnd="@dimen/card_side_margin"
+        android:layout_marginBottom="@dimen/card_bottom_margin"
         android:clipChildren="true"
-        app:cardElevation="1dp"
+        app:cardElevation="@dimen/card_elevation"
+        app:cardBackgroundColor="@android:color/transparent"
         app:cardPreventCornerOverlap="false">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,6 +33,7 @@
                 android:textAppearance="?attr/textAppearanceListItem"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
+                android:textColor="?attr/colorOnPrimary"
                 app:layout_constraintTop_toBottomOf="@id/series_item_thumbnail"
                 tools:text="Series 1" />
 
@@ -39,9 +41,10 @@
                 android:id="@+id/series_item_channel_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?attr/textAppearanceListItem"
+                android:textColor="?attr/colorSecondary"
+                android:textAppearance="?attr/textAppearanceSubtitle2"
                 app:layout_constraintTop_toBottomOf="@+id/series_item_title"
-                tools:text="channel" />
+                tools:text="channel_name1" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

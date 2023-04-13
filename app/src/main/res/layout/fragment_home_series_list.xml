@@ -12,10 +12,9 @@
             android:id="@+id/rvChapters"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="12dp"
-            android:paddingStart="12dp"
-            android:paddingTop="72dp"
-            android:paddingEnd="12dp"
+            android:paddingStart="@dimen/home_side_margin"
+            android:paddingTop="@dimen/home_header_margin"
+            android:paddingEnd="@dimen/home_side_margin"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/list_item_chapter" />
 
@@ -42,7 +41,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:background="@android:color/transparent"
-                    app:contentInsetStartWithNavigation="0dp"
                     app:layout_collapseMode="pin"
                     app:titleTextColor="?attr/colorOnSurface" />
 
@@ -50,14 +48,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:gravity="center_vertical"
-                    android:paddingLeft="12dp"
+                    android:paddingLeft="@dimen/home_side_margin"
                     android:text="@string/app_name"
-                    android:textAppearance="?attr/textAppearanceHeadline5" />
+                    android:textStyle="bold"
+                    android:textColor="?attr/colorOnPrimary"
+                    android:textAppearance="?attr/textAppearanceHeadline4" />
+
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 
 </layout>
