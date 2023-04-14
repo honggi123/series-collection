@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
 
     <!-- To see how these attributes are used, please visit https://material.io/develop/android/theming/color/ -->
-    <style name="Base.Theme.SeriesCollector" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Base.Theme.SeriesCollector" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/black</item>
         <item name="colorSecondary">@color/sc_gray200</item>
         <item name="android:colorBackground">@color/black</item>
@@ -12,4 +12,8 @@
 
     <style name="Theme.SeriesCollector.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar"/>
 
+    <style name="Theme.SeriesCollector.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 </resources>
