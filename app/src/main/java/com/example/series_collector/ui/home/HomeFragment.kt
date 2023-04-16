@@ -1,4 +1,4 @@
-package com.example.series_collector
+package com.example.series_collector.ui.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
