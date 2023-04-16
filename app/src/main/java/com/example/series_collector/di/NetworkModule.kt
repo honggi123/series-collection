@@ -4,6 +4,9 @@ import android.content.Context
 import androidx.room.Room
 import com.example.series_collector.data.room.AppDatabase
 import com.example.series_collector.data.room.SeriesDao
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -13,16 +16,12 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-class DataBaseModule {
+class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideAppDataBase(@ApplicationContext context: Context): AppDatabase {
-        return AppDatabase.getInstance(context)
+    fun provideFireStoreService(@ApplicationContext context: Context): FirebaseFirestore {
+        return Firebase.firestore
     }
 
-    @Provides
-    fun provideSeriesDao(appDatabase: AppDatabase): SeriesDao {
-        return appDatabase.SeriesDao()
-    }
 }
