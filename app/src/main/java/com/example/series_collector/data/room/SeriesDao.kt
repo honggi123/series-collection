@@ -8,5 +8,5 @@ import com.example.series_collector.data.Series
 @Dao
 interface SeriesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAllSeries(series: List<Series>)
+    fun insertAllSeries(series: List<Series?>)
 }

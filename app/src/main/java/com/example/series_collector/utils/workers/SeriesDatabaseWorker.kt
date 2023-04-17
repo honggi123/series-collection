@@ -7,6 +7,7 @@ import androidx.work.WorkerParameters
 import com.example.series_collector.data.Series
 import com.example.series_collector.data.room.SeriesDao
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.toObject
 import kotlinx.coroutines.Dispatchers
@@ -21,6 +22,7 @@ class SeriesDatabaseWorker @Inject constructor(
 ) : CoroutineWorker(context, workerParams) {
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         networkService.collection("Series")
+            .orderBy("updatedAt", Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { result ->
                 seriesDao.insertAllSeries(getResponseList(result))
@@ -34,10 +36,10 @@ class SeriesDatabaseWorker @Inject constructor(
         Result.success()
     }
 
-    private fun getResponseList(result: QuerySnapshot): MutableList<Series> {
-        return result.map {
+    private fun getResponseList(result: QuerySnapshot): List<Series?> {
+        return result.documents.map {
             it.toObject(Series::class.java)
-        }.toMutableList()
+        }.toList()
     }
 
     companion object {
