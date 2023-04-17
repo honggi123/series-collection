@@ -2,6 +2,8 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'dagger.hilt.android.plugin'
+
 android {
     compileSdk rootProject.compileSdkVersion
     dataBinding {
@@ -15,6 +17,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
     }
 
     buildTypes {
@@ -42,7 +45,7 @@ dependencies {
     implementation "androidx.work:work-runtime-ktx:$rootProject.workVersion"
     implementation "androidx.core:core-ktx:$rootProject.ktxVersion"
     implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
-    implementation "com.google.android.material:material$rootProject.materialVersion"
+    implementation "com.google.android.material:material:$rootProject.materialVersion"
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
     implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navigationVersion"
     implementation "androidx.navigation:navigation-ui-ktx:$rootProject.navigationVersion"

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -12,6 +13,7 @@ import com.example.series_collector.data.Series
 import com.example.series_collector.utils.workers.SeriesDatabaseWorker
 
 @Database(entities = [Series::class], version = 1, exportSchema = false)
+@TypeConverters(Converter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun SeriesDao(): SeriesDao
 

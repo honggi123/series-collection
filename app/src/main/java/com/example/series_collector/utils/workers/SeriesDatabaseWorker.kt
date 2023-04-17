@@ -22,7 +22,6 @@ class SeriesDatabaseWorker @Inject constructor(
 ) : CoroutineWorker(context, workerParams) {
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
         networkService.collection("Series")
-            .orderBy("updatedAt", Query.Direction.DESCENDING)
             .get()
             .addOnSuccessListener { result ->
                 seriesDao.insertAllSeries(getResponseList(result))
