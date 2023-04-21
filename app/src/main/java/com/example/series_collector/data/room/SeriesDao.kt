@@ -13,8 +13,8 @@ interface SeriesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllSeries(series: List<Series?>)
 
-    @Query("SELECT * FROM Series ORDER BY last_update_date DESC LIMIT 1")
-    suspend fun getLastUpdatedSeries(): Series?
+    @Query("SELECT last_update_date FROM Series ORDER BY last_update_date DESC LIMIT 1")
+    suspend fun getLastUpdateDate(): Calendar
 
     @Query("SELECT (SELECT COUNT(*) FROM Series) == 0")
     suspend fun isEmpty(): Boolean

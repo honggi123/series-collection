@@ -6,13 +6,8 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.example.series_collector.data.Series
 import com.example.series_collector.data.room.AppDatabase
-import com.example.series_collector.data.room.SeriesDao
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
 import kotlinx.coroutines.*
 
 class SeriesInitWorker(
@@ -26,7 +21,6 @@ class SeriesInitWorker(
                 .get()
                 .addOnSuccessListener { result ->
                     val list = result.toObjects(Series::class.java)
-                    Log.d("list",list.size.toString())
                     val database= AppDatabase.getInstance(applicationContext)
 
                     CoroutineScope(Dispatchers.IO).launch{
@@ -46,8 +40,6 @@ class SeriesInitWorker(
 
         Result.success()
     }
-
-
 
 
     companion object {

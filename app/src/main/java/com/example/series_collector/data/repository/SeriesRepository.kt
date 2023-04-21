@@ -15,13 +15,15 @@ class SeriesRepository @Inject constructor(
 
     suspend fun isEmpty() = seriesDao.isEmpty()
 
-    fun getUpdatedSeries(lastUpdate: Calendar?) = networkDataSource.getUpdatedSeries(lastUpdate)
+    suspend fun getUpdatedSeries(lastUpdate: Calendar) = withContext(Dispatchers.IO) {
+        networkDataSource.getUpdatedSeries(lastUpdate)
+    }
 
     suspend fun insertAllSeries(list: List<Series?>) = withContext(Dispatchers.IO) {
         seriesDao.insertAllSeries(list)
     }
 
-    suspend fun getLastUpdatedSeries() = withContext(Dispatchers.IO) {
-        seriesDao.getLastUpdatedSeries() }
+    suspend fun getLastUpdateDate() = withContext(Dispatchers.IO) {
+        seriesDao.getLastUpdateDate() }
 
 }

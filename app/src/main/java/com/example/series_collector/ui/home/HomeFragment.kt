@@ -1,7 +1,6 @@
 package com.example.series_collector.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,13 +32,14 @@ class HomeFragment() : Fragment() {
 
 
     private fun workInfosObserver(): Observer<List<WorkInfo>> {
-        binding.isLoading = false
         return Observer { listOfWorkInfo ->
             if (!listOfWorkInfo.isNullOrEmpty()) {
-                val workInfo = listOfWorkInfo[0]
-                if (!workInfo.state.isFinished) {
-                    binding.isLoading = true
+
+                if (listOfWorkInfo[0].state.isFinished) {
+                    binding.isLoading = false
                     return@Observer
+                }else{
+                    binding.isLoading = true
                 }
             }
         }
