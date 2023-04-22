@@ -10,6 +10,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
+import com.example.series_collector.data.Category
 import com.example.series_collector.data.Series
 import com.example.series_collector.utils.workers.SeriesInitWorker
 

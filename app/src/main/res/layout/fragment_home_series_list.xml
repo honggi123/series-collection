@@ -24,7 +24,7 @@
             android:progressDrawable="@drawable/circular_progress_bar"></ProgressBar>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvChapters"
+            android:id="@+id/rvCategorys"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/home_side_margin"
