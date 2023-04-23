@@ -1,6 +1,7 @@
 package com.example.series_collector.ui.adapters
 
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import com.example.series_collector.databinding.ListItemHomeSeriesBinding
 class SeriesAdapter : ListAdapter<Series, RecyclerView.ViewHolder>(SeriesDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+      Log.e("onCreateViewHolder","OncreateViewHolder")
         return SeriesViewHolder(
             ListItemHomeSeriesBinding.inflate(
                 LayoutInflater.from(parent.context),
