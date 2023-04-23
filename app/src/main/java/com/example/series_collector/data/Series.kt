@@ -22,7 +22,9 @@ data class Series(
     @ColumnInfo(name = "have_count")
     val have_count: Int = 0,
     @ColumnInfo(name = "genre")
-    val genre: Int = 0
+    val genre: Int = 0,
+    @ColumnInfo(name = "thumbnail")
+    var thumbnail: String = ""
 ){
     @ColumnInfo(name = "last_update_date")
     var lastUpdateDate: Calendar = Calendar.getInstance()

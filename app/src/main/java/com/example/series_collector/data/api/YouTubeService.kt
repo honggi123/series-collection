@@ -11,7 +11,7 @@ import retrofit2.http.Query
 
 interface YouTubeService {
 
-    @GET("youtube/v3/playlistItems")
+    @GET("playlistItems")
     suspend fun getYoutubePlayListItems(
         @Query("key") apiKey: String = BuildConfig.GOOGLE_API_KEY,
         @Query("part") part: String = "id, snippet",

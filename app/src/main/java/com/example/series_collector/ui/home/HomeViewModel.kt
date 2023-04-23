@@ -42,8 +42,8 @@ class HomeViewModel @Inject constructor(
                 }
 
                 val list: MutableList<Category> = getCategorys()
-                list.map {
-                    it.seriesList = this.getCategoryList(it.categoryId)
+                list.map { series ->
+                    series.seriesList = getCategoryList(series.categoryId)
                 }
 
                 _SeriesContents.value = list

@@ -14,6 +14,9 @@ interface SeriesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllSeries(series: List<Series?>)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertSeries(series: Series)
+
     @Query("SELECT last_update_date FROM Series ORDER BY last_update_date DESC LIMIT 1")
     suspend fun getLastUpdateDate(): Calendar
 
