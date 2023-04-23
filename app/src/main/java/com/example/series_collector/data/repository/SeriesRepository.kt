@@ -33,13 +33,13 @@ class SeriesRepository @Inject constructor(
                 seriesDao.getRecentSeries()
             }
             CATEGORY_POPULAR -> {
-                seriesDao.getRecentSeries()
+                seriesDao.getPopularSeries()
             }
             CATEGORY_FICTION -> {
-                seriesDao.getRecentSeries()
+                seriesDao.getFictionSeries()
             }
             CATEGORY_TRAVEL -> {
-                seriesDao.getRecentSeries()
+                seriesDao.getTravelSeries()
             }
             else -> {
                 seriesDao.getRecentSeries()

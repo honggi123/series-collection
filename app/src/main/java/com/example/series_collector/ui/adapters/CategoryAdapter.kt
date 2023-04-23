@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.series_collector.data.Category
-import com.example.series_collector.databinding.ListItemChapterBinding
+import com.example.series_collector.databinding.ListItemCategoryBinding
 import com.example.series_collector.utils.CATEGORY_FICTION
 import com.example.series_collector.utils.CATEGORY_TRAVEL
 
@@ -21,7 +21,7 @@ class CategoryAdapter : ListAdapter<Category, RecyclerView.ViewHolder>(CategoryD
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         context = parent.context
         return CategoryViewHolder(
-            ListItemChapterBinding.inflate(
+            ListItemCategoryBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -35,7 +35,7 @@ class CategoryAdapter : ListAdapter<Category, RecyclerView.ViewHolder>(CategoryD
     }
 
     class CategoryViewHolder(
-        private val binding: ListItemChapterBinding,
+        private val binding: ListItemCategoryBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: Category, context: Context) {
             binding.apply {

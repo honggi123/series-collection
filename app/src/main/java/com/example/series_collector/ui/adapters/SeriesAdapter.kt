@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.series_collector.data.Category
 import com.example.series_collector.data.Series
-import com.example.series_collector.databinding.ListItemChapterBinding
 import com.example.series_collector.databinding.ListItemHomeSeriesBinding
 
 

@@ -23,12 +23,12 @@ interface SeriesDao {
     @Query("SELECT * FROM Series ORDER BY last_update_date DESC LIMIT 8")
     suspend fun getRecentSeries(): List<Series>
 
-    @Query("SELECT * FROM Series ORDER BY last_update_date DESC LIMIT 8")
+    @Query("SELECT * FROM Series ORDER BY have_count DESC LIMIT 8")
     suspend fun getPopularSeries(): List<Series>
 
     @Query("SELECT * FROM Series WHERE genre == 1 LIMIT 16")
     suspend fun getFictionSeries(): List<Series>
 
-    @Query("SELECT * FROM Series  WHERE genre == 1 LIMIT 16")
+    @Query("SELECT * FROM Series  WHERE genre == 2 LIMIT 16")
     suspend fun getTravelSeries(): List<Series>
 }
