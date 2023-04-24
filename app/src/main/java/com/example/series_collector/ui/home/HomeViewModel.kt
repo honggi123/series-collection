@@ -6,6 +6,7 @@ import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.example.series_collector.data.Category
 import com.example.series_collector.data.Series
+import com.example.series_collector.data.repository.CategoryRepository
 import com.example.series_collector.data.repository.SeriesRepository
 import com.example.series_collector.utils.CATEGORY_FICTION
 import com.example.series_collector.utils.CATEGORY_POPULAR
@@ -15,13 +16,17 @@ import com.example.series_collector.utils.workers.SeriesInitWorker.Companion.WOR
 import com.example.series_collector.utils.workers.Workers
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val seriesRepository: SeriesRepository,
+    private val categoryRepository: CategoryRepository,
     private val workers: Workers,
     @ApplicationContext appContext: Context
 ) : ViewModel() {
@@ -29,8 +34,8 @@ class HomeViewModel @Inject constructor(
     val outputInitWorkInfos: LiveData<List<WorkInfo>> = WorkManager.getInstance(appContext)
         .getWorkInfosByTagLiveData(WORK_TAG)
 
-    private val _SeriesContents = MutableLiveData<List<Category>>()
-    val SeriesContents: LiveData<List<Category>> = _SeriesContents
+    private val _seriesContents = MutableLiveData<List<Category>>()
+    val seriesContents: LiveData<List<Category>> = _seriesContents
 
     init {
         viewModelScope.launch {
@@ -41,15 +46,28 @@ class HomeViewModel @Inject constructor(
                     insertUpdatedSeries()
                 }
 
-                val list: MutableList<Category> = getCategorys()
-                list.map { series ->
-                    series.seriesList = getCategoryList(series.categoryId)
-                }
+                val list: MutableList<Category> = categoryRepository.getCategorys()
 
-                _SeriesContents.value = list
+                list.map { category ->
+                    category.seriesList = getCategoryList(category.categoryId)
+                }
+                _seriesContents.value = list
             }
         }
     }
+
+    private suspend fun getCategoryList(categoryId: Int): List<Series> =
+        withContext(Dispatchers.IO) {
+            categoryRepository.getCategoryList(categoryId)
+                .map { series ->
+                    series.apply {
+                        if (thumbnail.isNullOrEmpty()) {
+                            thumbnail = seriesRepository.getThumbnailImage(series.SeriesId)
+                            seriesRepository.insertSeries(series)
+                        }
+                    }
+                }
+        }
 
 
     private fun insertUpdatedSeries() {

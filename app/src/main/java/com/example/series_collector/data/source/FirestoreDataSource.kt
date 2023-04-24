@@ -11,9 +11,7 @@ import retrofit2.Response
 import java.util.*
 import javax.inject.Inject
 
-class NetworkDataSource @Inject constructor(
-    private val youTubeService: YouTubeService
-) {
+class FirestoreDataSource @Inject constructor() {
     suspend fun getUpdatedSeries(lastUpdate: Calendar): List<Series> {
         return lastUpdate.let {
             Firebase.firestore.collection("Series")
@@ -27,9 +25,5 @@ class NetworkDataSource @Inject constructor(
         .get()
         .await().toObjects(Category::class.java)
 
-    suspend fun getThumbNailImage(playListId: String): String =
-        youTubeService.run {
-            getYoutubePlayListItems(id = playListId, maxResults = 1)
-                .items.get(0).snippet.thumbnails.default.url
-        }
+
 }

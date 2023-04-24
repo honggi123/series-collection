@@ -39,7 +39,6 @@ class HomeFragment() : Fragment() {
     private fun workInfosObserver(): Observer<List<WorkInfo>> {
         return Observer { listOfWorkInfo ->
             if (!listOfWorkInfo.isNullOrEmpty()) {
-
                 if (listOfWorkInfo[0].state.isFinished) {
                     binding.isLoading = false
                     return@Observer
@@ -51,7 +50,7 @@ class HomeFragment() : Fragment() {
     }
 
     private fun subscribeUi(adapter: CategoryAdapter) {
-        viewModel.SeriesContents.observe(viewLifecycleOwner) { contents ->
+        viewModel.seriesContents.observe(viewLifecycleOwner) { contents ->
             adapter.submitList(contents)
         }
     }

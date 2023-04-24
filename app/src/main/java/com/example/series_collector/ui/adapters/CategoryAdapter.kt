@@ -36,6 +36,10 @@ class CategoryAdapter : ListAdapter<Category, RecyclerView.ViewHolder>(CategoryD
         private val binding: ListItemCategoryBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
+        init {
+
+        }
+
         fun bind(item: Category, context: Context, sharedPool: RecyclerView.RecycledViewPool) {
             binding.apply {
                 category = item
