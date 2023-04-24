@@ -13,9 +13,8 @@ import com.example.series_collector.utils.CATEGORY_TRAVEL
 
 class CategoryAdapter : ListAdapter<Category, RecyclerView.ViewHolder>(CategoryDiffCallback()) {
 
-    lateinit private var context: Context
     private val viewPool: RecyclerView.RecycledViewPool = RecyclerView.RecycledViewPool()
-
+    private lateinit var context: Context
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         context = parent.context
         return CategoryViewHolder(
@@ -29,32 +28,31 @@ class CategoryAdapter : ListAdapter<Category, RecyclerView.ViewHolder>(CategoryD
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val category = getItem(position)
-        (holder as CategoryViewHolder).bind(item = category, context = context, sharedPool = viewPool)
+        (holder as CategoryViewHolder).bind(
+            item = category,
+            context = context,
+            sharedPool = viewPool
+        )
     }
 
     class CategoryViewHolder(
         private val binding: ListItemCategoryBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-
-        init {
-
-        }
+        private var snapHelper: SnapHelper = LinearSnapHelper()
+        private var adapter: SeriesAdapter = SeriesAdapter()
 
         fun bind(item: Category, context: Context, sharedPool: RecyclerView.RecycledViewPool) {
             binding.apply {
                 category = item
-
-                val adapter = SeriesAdapter()
-
-                (rvSeries.layoutManager as LinearLayoutManager).recycleChildrenOnDetach = true
-
-                rvSeries.adapter = adapter
                 if (category?.categoryId == CATEGORY_TRAVEL || category?.categoryId == CATEGORY_FICTION) {
                     rvSeries.layoutManager =
                         GridLayoutManager(context, 2, RecyclerView.HORIZONTAL, false)
                 }
-
+                (rvSeries.layoutManager as LinearLayoutManager).recycleChildrenOnDetach = true
+                rvSeries.adapter = adapter
                 rvSeries.setRecycledViewPool(sharedPool)
+
+                snapHelper.attachToRecyclerView(rvSeries)
 
                 adapter.submitList(item.seriesList)
 
