@@ -4,22 +4,25 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.firebase.firestore.DocumentId
-import java.util.Calendar
+import com.google.firebase.firestore.ServerTimestamp
+import java.util.*
 
 @Entity(tableName = "Series")
 data class Series(
     @PrimaryKey
     @DocumentId
     @ColumnInfo(name = "id")
-    val SeriesId: String,
+    val seriesId: String = "",
     @ColumnInfo(name = "name")
-    val name: String,
+    val name: String = "",
     @ColumnInfo(name = "description")
-    val description: String,
+    val description: String = "",
+    @ColumnInfo(name = "channel")
+    val channel: String = "",
     @ColumnInfo(name = "have_count")
-    val have_count: Int,
+    val haveCount: Int = 0,
     @ColumnInfo(name = "genre")
-    val genre: Int,
+    val genre: Int = 0
 ){
     @ColumnInfo(name = "last_update_date")
     var lastUpdateDate: Calendar = Calendar.getInstance()
