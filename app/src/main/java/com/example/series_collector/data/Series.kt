@@ -20,7 +20,7 @@ data class Series(
     @ColumnInfo(name = "channel")
     val channel: String = "",
     @ColumnInfo(name = "have_count")
-    val have_count: Int = 0,
+    val haveCount: Int = 0,
     @ColumnInfo(name = "genre")
     val genre: Int = 0
 ){
