@@ -12,7 +12,7 @@ data class Series(
     @PrimaryKey
     @DocumentId
     @ColumnInfo(name = "id")
-    val SeriesId: String = "",
+    val seriesId: String = "",
     @ColumnInfo(name = "name")
     val name: String = "",
     @ColumnInfo(name = "description")
