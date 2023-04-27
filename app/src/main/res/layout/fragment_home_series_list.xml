@@ -5,8 +5,8 @@
 
     <data>
         <variable
-            name="isLoading"
-            type="boolean" />
+            name="viewModel"
+            type="com.example.series_collector.ui.home.HomeViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            app:isGone="@{!isLoading}"
+            app:isGone="@{!viewModel.isLoading}"
             android:progressDrawable="@drawable/circular_progress_bar"></ProgressBar>
 
         <androidx.recyclerview.widget.RecyclerView

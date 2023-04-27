@@ -17,6 +17,10 @@ class SeriesRepository @Inject constructor(
 
     suspend fun isEmpty() = seriesDao.isEmpty()
 
+    suspend fun getAllSeries() = withContext(Dispatchers.IO) {
+        firestoreDataSource.getAllSeries()
+    }
+
     suspend fun getUpdatedSeries(lastUpdate: Calendar) = withContext(Dispatchers.IO) {
         firestoreDataSource.getUpdatedSeries(lastUpdate)
     }
