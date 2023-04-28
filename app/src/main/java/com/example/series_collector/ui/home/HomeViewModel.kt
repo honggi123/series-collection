@@ -20,6 +20,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
@@ -36,7 +37,6 @@ class HomeViewModel @Inject constructor(
     private val workers: Workers,
     @ApplicationContext private val appContext: Context
 ) : ViewModel() {
-
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -56,8 +56,8 @@ class HomeViewModel @Inject constructor(
                 }
             }.also {
                 WorkManager.getInstance(appContext)
-                    .getWorkInfoByIdLiveData(it).asFlow().collect { workInfo2 ->
-                        if (workInfo2.state.isFinished) {
+                    .getWorkInfoByIdLiveData(it).asFlow().collect { workInfo ->
+                        if (workInfo.state.isFinished) {
                             refreshCategorys()
                             _isLoading.value = false
                         }
@@ -72,26 +72,28 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun refreshCategorys() {
-        val list: MutableList<Category> = categoryRepository.getCategorys()
+        val categorys: MutableList<Category> = categoryRepository.getCategorys()
 
-        list.map { category ->
+        categorys.map { category ->
             category.seriesList = getCategoryList(category.categoryId)
         }
-        _seriesContents.value = list
+        _seriesContents.value = categorys
     }
 
     private suspend fun getCategoryList(categoryId: Int): List<Series> =
-        withContext(Dispatchers.IO) {
-            categoryRepository.getCategoryList(categoryId)
-                .map { series ->
-                    series.apply {
-                        if (thumbnail.isNullOrEmpty()) {
-                            thumbnail = seriesRepository.getThumbnailImage(series.seriesId)
-                            seriesRepository.insertSeries(series)
-                        }
+        categoryRepository.getCategoryList(categoryId)
+            .map { series ->
+                series.apply {
+                    if (thumbnail.isNullOrEmpty()) {
+                        thumbnail = getThumbnailImage(seriesId)
+                        seriesRepository.insertSeries(series)
                     }
                 }
-        }
+            }
+
+
+    private suspend fun getThumbnailImage(seriesId: String) =
+        seriesRepository.getThumbnailImage(seriesId)
 
 
 }

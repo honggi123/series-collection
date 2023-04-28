@@ -34,17 +34,6 @@ class HomeFragment() : Fragment() {
             subscribeUi(adapter)
         }
 
-//        viewModel.isLoading.observe(viewLifecycleOwner) { status ->
-//            if (status){
-//                Log.e("loading","true")
-//                binding.progressCircular.visibility = View.VISIBLE
-//            }else{
-//                binding.progressCircular.visibility = View.GONE
-//
-//            }
-//
-//        }
-
         return binding.root
     }
 
