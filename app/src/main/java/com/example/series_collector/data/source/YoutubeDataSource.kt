@@ -3,7 +3,7 @@ package com.example.series_collector.data.source
 import com.example.series_collector.data.api.YouTubeService
 import javax.inject.Inject
 
-class YoutubeDataSource  @Inject constructor(
+class YouTubeDataSource  @Inject constructor(
     private val youTubeService: YouTubeService
 ) {
     suspend fun getThumbNailImage(playListId: String): String =
