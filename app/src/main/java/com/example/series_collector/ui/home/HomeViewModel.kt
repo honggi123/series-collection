@@ -56,7 +56,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getCategoryList(categoryId: Int): List<Series> =
+    private suspend fun getSeriesList(categoryId: Int): List<Series> =
         withContext(Dispatchers.IO) {
             categoryRepository.getCategoryList(categoryId)
                 .map { series ->
