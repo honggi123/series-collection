@@ -49,7 +49,7 @@ class HomeViewModel @Inject constructor(
                 val list: MutableList<Category> = categoryRepository.getCategorys()
 
                 list.map { category ->
-                    category.seriesList = getCategoryList(category.categoryId)
+                    category.seriesList = getSeriesList(category.categoryId)
                 }
                 _seriesContents.value = list
             }
@@ -62,7 +62,7 @@ class HomeViewModel @Inject constructor(
                 .map { series ->
                     series.apply {
                         if (thumbnail.isNullOrEmpty()) {
-                            thumbnail = seriesRepository.getThumbnailImage(series.SeriesId)
+                            thumbnail = seriesRepository.getThumbnailImage(series.seriesId)
                             seriesRepository.insertSeries(series)
                         }
                     }

@@ -1,6 +1,6 @@
 package com.example.series_collector.di
 
-import com.example.series_collector.data.api.YouTubeService
+import com.example.series_collector.data.api.YoutubeService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,8 +14,8 @@ class NetWorkModule {
 
     @Singleton
     @Provides
-    fun provideUnsplashService(): YouTubeService {
-        return YouTubeService.create()
+    fun provideUnsplashService(): YoutubeService {
+        return YoutubeService.create()
     }
 
 }

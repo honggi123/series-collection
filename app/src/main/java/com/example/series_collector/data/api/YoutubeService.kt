@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface YouTubeService {
+interface YoutubeService {
 
     @GET("playlistItems")
     suspend fun getYoutubePlayListItems(
@@ -22,7 +22,7 @@ interface YouTubeService {
     companion object {
         private const val BASE_URL = "https://www.googleapis.com/youtube/v3/"
 
-        fun create(): YouTubeService {
+        fun create(): YoutubeService {
             val logger =
                 HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BASIC }
 
@@ -35,7 +35,7 @@ interface YouTubeService {
                 .client(client)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-                .create(YouTubeService::class.java)
+                .create(YoutubeService::class.java)
         }
     }
 }

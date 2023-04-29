@@ -17,7 +17,7 @@ import com.example.series_collector.utils.workers.SeriesInitWorker
 @Database(entities = [Series::class], version = 3, exportSchema = false)
 @TypeConverters(Converter::class)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun SeriesDao(): SeriesDao
+    abstract fun seriesDao(): SeriesDao
 
     companion object {
         // For Singleton instantiation

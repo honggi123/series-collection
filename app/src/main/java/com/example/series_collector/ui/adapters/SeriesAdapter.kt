@@ -42,7 +42,7 @@ class SeriesAdapter : ListAdapter<Series, RecyclerView.ViewHolder>(SeriesDiffCal
 private class SeriesDiffCallback : DiffUtil.ItemCallback<Series>() {
 
     override fun areItemsTheSame(oldItem: Series, newItem: Series): Boolean {
-        return oldItem.SeriesId == newItem.SeriesId
+        return oldItem.seriesId == newItem.seriesId
     }
 
     override fun areContentsTheSame(oldItem: Series, newItem: Series): Boolean {

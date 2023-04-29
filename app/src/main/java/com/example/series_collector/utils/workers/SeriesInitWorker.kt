@@ -24,7 +24,7 @@ class SeriesInitWorker(
                     val database= AppDatabase.getInstance(applicationContext)
 
                     CoroutineScope(Dispatchers.IO).launch{
-                        database.SeriesDao().insertAllSeries(list)
+                        database.seriesDao().insertAllSeries(list)
                     }
 
                     Result.success()

@@ -2,12 +2,9 @@ package com.example.series_collector.data.source
 
 import com.example.series_collector.data.Category
 import com.example.series_collector.data.Series
-import com.example.series_collector.data.api.PlayListThumbnailRespons
-import com.example.series_collector.data.api.YouTubeService
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
-import retrofit2.Response
 import java.util.*
 import javax.inject.Inject
 
