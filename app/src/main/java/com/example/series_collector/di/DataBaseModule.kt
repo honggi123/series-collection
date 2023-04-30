@@ -3,6 +3,7 @@ package com.example.series_collector.di
 import android.content.Context
 import com.example.series_collector.data.room.AppDatabase
 import com.example.series_collector.data.room.SeriesDao
+
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,7 +13,7 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-class DataBaseModule {
+class DataModule {
 
     @Singleton
     @Provides
@@ -25,4 +26,6 @@ class DataBaseModule {
         return appDatabase.seriesDao()
     }
 
+
 }
+
