@@ -25,13 +25,13 @@ class SeriesRepository @Inject constructor(
         firestoreDataSource.getUpdatedSeries(lastUpdate)
     }
 
-    suspend fun insertSeries(series: Series) = withContext(Dispatchers.IO) {
+    suspend fun insertSeries(series: Series) =
         seriesDao.insertSeries(series)
-    }
 
-    suspend fun insertAllSeries(list: List<Series?>) = withContext(Dispatchers.IO) {
+
+    suspend fun insertAllSeries(list: List<Series?>) =
         seriesDao.insertAllSeries(list)
-    }
+
 
     suspend fun getLastUpdateDate() = withContext(Dispatchers.IO) {
         seriesDao.getLastUpdateDate()

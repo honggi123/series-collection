@@ -18,14 +18,11 @@ import com.example.series_collector.utils.workers.Workers
 import com.example.series_collector.utils.workers.Workers.Companion.SYNC_WORK_TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
 import java.util.*
 import javax.inject.Inject
 
@@ -71,29 +68,37 @@ class HomeViewModel @Inject constructor(
         WorkManager.getInstance(appContext).cancelAllWorkByTag(SYNC_WORK_TAG)
     }
 
-    private suspend fun refreshCategorys() {
-        val categorys: MutableList<Category> = categoryRepository.getCategorys()
+    private fun refreshCategorys() {
+        viewModelScope.launch {
+            val categorys: MutableList<Category> = categoryRepository.getCategorys()
 
-        categorys.map { category ->
-            category.seriesList = getCategoryList(category.categoryId)
+            categorys.map { category ->
+                category.seriesList = getCategoryList(category.categoryId)
+            }
+            _seriesContents.value = categorys
         }
-        _seriesContents.value = categorys
     }
 
     private suspend fun getCategoryList(categoryId: Int): List<Series> =
-        categoryRepository.getCategoryList(categoryId)
-            .map { series ->
-                series.apply {
-                    if (thumbnail.isNullOrEmpty()) {
-                        thumbnail = getThumbnailImage(seriesId)
-                        seriesRepository.insertSeries(series)
+        withContext(Dispatchers.IO) {
+            categoryRepository.getCategoryList(categoryId)
+                .map { series ->
+                    async {
+                        series.apply {
+                            if (thumbnail.isNullOrEmpty()) {
+                                thumbnail = seriesRepository.getThumbnailImage(series.seriesId)
+                                insertSeries(series)
+                            }
+                        }
                     }
-                }
-            }
+                }.awaitAll()
+        }
 
-
-    private suspend fun getThumbnailImage(seriesId: String) =
-        seriesRepository.getThumbnailImage(seriesId)
+    private fun insertSeries(series: Series) {
+        viewModelScope.launch {
+            seriesRepository.insertSeries(series)
+        }
+    }
 
 
 }
