@@ -2,9 +2,11 @@ package com.example.series_collector.ui.adapters
 
 import android.view.View
 import android.widget.ImageView
+import androidx.appcompat.widget.AppCompatButton
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.example.series_collector.R
 
 @BindingAdapter("isGone")
 fun bindIsGone(view: View, isGone: Boolean) {
@@ -12,6 +14,18 @@ fun bindIsGone(view: View, isGone: Boolean) {
         View.GONE
     } else {
         View.VISIBLE
+    }
+}
+
+
+@BindingAdapter("isMySeries")
+fun bindIsMySeries(button: AppCompatButton, isMySeries: Boolean) {
+    if (isMySeries) {
+        button.isSelected = false
+        button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_check_24,0,0,0)
+    } else {
+        button.isSelected = true
+        button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_add_24,0,0,0)
     }
 }
 

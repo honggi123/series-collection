@@ -1,0 +1,167 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="callback"
+            type="com.example.series_collector.ui.detail.DetailFragment.Callback" />
+        <variable
+            name="viewModel"
+            type="com.example.series_collector.ui.detail.DetailViewModel" />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:ignore="MergeRootFrame">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            android:theme="@style/Theme.SeriesCollector.AppBarOverlay">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:navigationIcon="@drawable/ic_baseline_arrow_back_24">
+
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="right"
+                    android:padding="10dp">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="14sp"
+                        android:paddingStart="14dp"
+                        android:paddingEnd="14dp"
+                        android:onClick="@{() -> callback.toggle(viewModel.isMySeries)}"
+                        android:drawableStart="@drawable/ic_baseline_add_24"
+                        android:background="@drawable/btn_selector"
+                        android:text="보고싶어요"
+                        app:isMySeries="@{viewModel.isMySeries}"
+                        />
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
+            </com.google.android.material.appbar.MaterialToolbar>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/series_detail_scrollview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/detail_header_margin"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/card_side_margin"
+                android:paddingEnd="@dimen/card_side_margin">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/series_detail_thumbnail"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/detail_thumbnail_image_height"
+                        android:scaleType="centerCrop"
+                        app:imageFromUrl="@{viewModel.series.thumbnail}"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/series_detail_play_btn"
+                        android:layout_width="@dimen/detail_series_play_btn_size"
+                        android:layout_height="@dimen/detail_series_play_btn_size"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/series_detail_thumbnail"
+                        app:layout_constraintStart_toStartOf="@+id/series_detail_thumbnail"
+                        app:layout_constraintTop_toTopOf="@+id/series_detail_thumbnail"
+                        app:srcCompat="@drawable/ic_baseline_play_arrow_24" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/series_detail_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_small"
+                    android:gravity="center"
+                    android:text="@{viewModel.series.name}"
+                    android:textAppearance="?attr/textAppearanceHeadline5"
+                    android:textColor="?attr/colorOnPrimary"
+                    tools:text="시리즈 이름" />
+
+                <TextView
+                    android:id="@+id/series_sub_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_small"
+                    android:gravity="center"
+                    android:text="@{viewModel.subDescription}"
+                    android:textAppearance="?attr/textAppearanceSubtitle1"
+                    android:textColor="?attr/colorSecondary"
+                    tools:text="#장르 #채널명 #회차개수" />
+
+                <TextView
+                    android:id="@+id/series_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_small"
+                    android:maxLines="5"
+                    android:text="@{viewModel.series.description}"
+                    android:textAppearance="?attr/textAppearanceSubtitle1"
+                    android:textColor="?attr/colorSecondary" />
+
+                <TextView
+                    android:id="@+id/series_description_more"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="더보기"
+                    android:textAppearance="?attr/textAppearanceSubtitle1"
+                    android:textColor="?attr/colorSecondary"
+                    android:visibility="gone" />
+
+
+                <TextView
+                    android:id="@+id/tvSeriesVideolists"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_small"
+                    android:gravity="center"
+                    android:text="회차정보"
+                    android:textAppearance="?attr/textAppearanceHeadline5"
+                    android:textColor="?attr/colorOnPrimary" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvSeriesVideos"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/list_item_series_video" />
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</layout>
+
+

@@ -4,6 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
+
         <variable
             name="series"
             type="com.example.series_collector.data.Series" />
@@ -15,8 +20,9 @@
         android:layout_marginEnd="@dimen/card_side_margin"
         android:layout_marginBottom="@dimen/card_bottom_margin"
         android:clipChildren="true"
-        app:cardElevation="@dimen/card_elevation"
+        android:onClick="@{clickListener}"
         app:cardBackgroundColor="@android:color/transparent"
+        app:cardElevation="@dimen/card_elevation"
         app:cardPreventCornerOverlap="false">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,10 +32,10 @@
             <ImageView
                 android:id="@+id/series_item_thumbnail"
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
+                android:layout_height="100dp"
+                android:background="?attr/colorOnPrimary"
                 android:scaleType="centerCrop"
                 app:imageFromUrl="@{series.thumbnail}"
-                android:background="?attr/colorOnPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -38,11 +44,11 @@
                 android:id="@+id/series_item_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="@{series.name}"
                 android:textAppearance="?attr/textAppearanceListItem"
+                android:textColor="?attr/colorOnPrimary"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                android:text="@{series.name}"
-                android:textColor="?attr/colorOnPrimary"
                 app:layout_constraintTop_toBottomOf="@id/series_item_thumbnail"
                 tools:text="Series 1" />
 
@@ -50,9 +56,9 @@
                 android:id="@+id/series_item_channel_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="?attr/colorSecondary"
                 android:text="@{series.channel}"
                 android:textAppearance="?attr/textAppearanceSubtitle2"
+                android:textColor="?attr/colorSecondary"
                 app:layout_constraintTop_toBottomOf="@+id/series_item_title"
                 tools:text="channel_name1" />
 

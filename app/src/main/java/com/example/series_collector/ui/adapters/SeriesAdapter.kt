@@ -2,12 +2,15 @@ package com.example.series_collector.ui.adapters
 
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.series_collector.data.Series
 import com.example.series_collector.databinding.ListItemHomeSeriesBinding
+import com.example.series_collector.ui.home.HomeFragmentDirections
 
 
 class SeriesAdapter : ListAdapter<Series, RecyclerView.ViewHolder>(SeriesDiffCallback()) {
@@ -30,6 +33,25 @@ class SeriesAdapter : ListAdapter<Series, RecyclerView.ViewHolder>(SeriesDiffCal
     class SeriesViewHolder(
         private val binding: ListItemHomeSeriesBinding
     ) : RecyclerView.ViewHolder(binding.root) {
+
+        init {
+            binding.setClickListener {
+                binding.series?.let { series ->
+                    navigateToDetail(series, it)
+                }
+            }
+        }
+
+        private fun navigateToDetail(
+            series: Series,
+            view: View
+        ) {
+            val direction =
+                HomeFragmentDirections.actionHomeFragmentToDetailFragment(series.seriesId)
+            view.findNavController().navigate(direction)
+        }
+
+
         fun bind(item: Series) {
             binding.apply {
                 binding.series = item

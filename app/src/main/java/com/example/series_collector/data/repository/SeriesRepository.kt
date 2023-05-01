@@ -21,6 +21,16 @@ class SeriesRepository @Inject constructor(
         firestoreDataSource.getAllSeries()
     }
 
+    fun getSeriesStream(seriesId: String) =
+        seriesDao.flowSeries(seriesId)
+
+    fun getPlaylistResultStream(seriesId: String) =
+        youtubeDataSource.getSearchResultStream(seriesId)
+
+    suspend fun getPageInfo(seriesId: String) = withContext(Dispatchers.IO) {
+        youtubeDataSource.getPageInfo(seriesId)
+    }
+
     suspend fun getUpdatedSeries(lastUpdate: Calendar) = withContext(Dispatchers.IO) {
         firestoreDataSource.getUpdatedSeries(lastUpdate)
     }
@@ -39,4 +49,3 @@ class SeriesRepository @Inject constructor(
         youtubeDataSource.getThumbnailImageUrl(playListId = seriesId)
     }
 }
-

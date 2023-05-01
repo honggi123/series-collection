@@ -1,14 +1,15 @@
 package com.example.series_collector.data.api
 
-data class PlayListThumbnailRespons(
+data class PlayListsResponse(
     val etag: String,
-    val items: List<Item>,
+    val items: List<SeriesVideo>,
     val kind: String,
+    val prevPageToken: String,
     val nextPageToken: String,
     val pageInfo: PageInfo
 )
 
-data class Item(
+data class SeriesVideo(
     val etag: String,
     val id: String,
     val kind: String,
