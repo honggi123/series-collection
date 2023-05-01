@@ -19,7 +19,8 @@ class SeriesWorkImpl @Inject constructor(
 
     override fun updateSeries(): UUID = buildUpdateWorker(appContext)
 
-    fun buildInitWorker(context: Context): UUID {
+
+    private fun buildInitWorker(context: Context): UUID {
         val request = OneTimeWorkRequestBuilder<SeriesInitWorker>()
             .addTag(SYNC_WORK_TAG)
             .build()
@@ -27,7 +28,7 @@ class SeriesWorkImpl @Inject constructor(
         return request.id
     }
 
-    fun buildUpdateWorker(context: Context): UUID {
+    private fun buildUpdateWorker(context: Context): UUID {
         val request = OneTimeWorkRequestBuilder<SeriesUpdateWorker>()
             .addTag(SYNC_WORK_TAG)
             .build()

@@ -23,15 +23,28 @@ class SeriesInitWorker @AssistedInject constructor(
     override suspend fun doWork(): Result = coroutineScope{
         try {
             val list = seriesRepository.getAllSeries()
-            seriesRepository.insertAllSeries(list)
+            seriesRepository.insertAllSeries(fetchSeriesThumbnail(list))
         } catch (ex: Exception) {
-            Log.e(TAG, "Error database", ex)
+            Log.e(TAG, "Error worker", ex)
         }
         Result.success()
     }
 
-
+    private suspend fun fetchSeriesThumbnail(list: List<Series>): List<Series> {
+        val tempList = mutableListOf<Series>()
+        withContext(Dispatchers.IO) {
+            list.mapIndexed { index, series ->
+                async {
+                    series.apply {
+                        val thumbnailUrl = seriesRepository.getThumbnailImageUrl(series.seriesId)
+                        tempList.add(copy(thumbnail = thumbnailUrl))
+                    }
+                }
+            }.awaitAll()
+        }
+        return tempList
+    }
     companion object {
-        private const val TAG = "SeriesDatabaseWorker"
+        private const val TAG = "SeriesInitWorker"
     }
 }

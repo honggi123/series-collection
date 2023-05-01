@@ -28,17 +28,15 @@ class SeriesRepository @Inject constructor(
     suspend fun insertSeries(series: Series) =
         seriesDao.insertSeries(series)
 
-
     suspend fun insertAllSeries(list: List<Series?>) =
         seriesDao.insertAllSeries(list)
-
 
     suspend fun getLastUpdateDate() = withContext(Dispatchers.IO) {
         seriesDao.getLastUpdateDate()
     }
 
-    suspend fun getThumbnailImage(seriesId: String) = withContext(Dispatchers.IO) {
-        youtubeDataSource.getThumbNailImage(playListId = seriesId)
+    suspend fun getThumbnailImageUrl(seriesId: String) = withContext(Dispatchers.IO) {
+        youtubeDataSource.getThumbnailImageUrl(playListId = seriesId)
     }
 }
 

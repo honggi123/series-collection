@@ -23,19 +23,40 @@ class SeriesUpdateWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParams: WorkerParameters,
     private val seriesRepository: SeriesRepository
-    ) : CoroutineWorker(context, workerParams) {
+) : CoroutineWorker(context, workerParams) {
     override suspend fun doWork(): Result = coroutineScope {
-        val lastDate = seriesRepository.getLastUpdateDate()
-        val list = seriesRepository.getUpdatedSeries(lastDate)
-        insertSeries(list)
+        try {
+            val lastDate = seriesRepository.getLastUpdateDate()
+            val list = seriesRepository.getUpdatedSeries(lastDate)
+            insertSeries(fetchSeriesThumbnail(list))
+        } catch (ex: Exception) {
+            Log.e(TAG, "Error worker", ex)
+        }
+
         Result.success()
     }
+
+    private suspend fun fetchSeriesThumbnail(list: List<Series>): List<Series> {
+        val tempList = mutableListOf<Series>()
+        withContext(Dispatchers.IO) {
+            list.mapIndexed { index, series ->
+                async {
+                    series.apply {
+                        val thumbnailUrl = seriesRepository.getThumbnailImageUrl(series.seriesId)
+                        tempList.add(copy(thumbnail = thumbnailUrl))
+                    }
+                }
+            }.awaitAll()
+        }
+        return tempList
+    }
+
 
     private suspend fun insertSeries(taskAsync: List<Series>) =
         seriesRepository.insertAllSeries(taskAsync)
 
 
     companion object {
-        private const val TAG = "SeriesDatabaseWorker"
+        private const val TAG = "SeriesUpdateWorker"
     }
 }

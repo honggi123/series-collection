@@ -3,6 +3,7 @@ package com.example.series_collector.ui.home
 import android.content.Context
 import androidx.lifecycle.*
 import androidx.work.WorkManager
+import androidx.work.await
 import com.example.series_collector.data.Category
 import com.example.series_collector.data.Series
 import com.example.series_collector.data.repository.CategoryRepository
@@ -32,9 +33,9 @@ class HomeViewModel @Inject constructor(
     val seriesContents: LiveData<List<Category>> = _seriesContents
 
     init {
-        cancelAllWork()
+        _isLoading.value = true
         viewModelScope.launch {
-            _isLoading.value = true
+            cancelAllWork()
             seriesWork.run {
                 if (seriesRepository.isEmpty()) {
                     initSeries()
@@ -46,7 +47,7 @@ class HomeViewModel @Inject constructor(
                     .getWorkInfoByIdLiveData(it).asFlow().collect { workInfo ->
                         if (workInfo.state.isFinished) {
                             refreshCategorys()
-                            _isLoading.value = false
+                            _isLoading.postValue(false)
                         }
                     }
             }
@@ -54,41 +55,23 @@ class HomeViewModel @Inject constructor(
     }
 
 
-    private fun cancelAllWork() {
-        workManager.cancelAllWorkByTag(SYNC_WORK_TAG)
+    private suspend fun cancelAllWork() {
+        workManager.cancelAllWorkByTag(SYNC_WORK_TAG).await()
     }
 
-    private fun refreshCategorys() {
-        viewModelScope.launch {
+    private suspend fun refreshCategorys() {
+        withContext(Dispatchers.IO) {
             val categorys: MutableList<Category> = categoryRepository.getCategorys()
 
             categorys.map { category ->
-                category.seriesList = getCategoryList(category.categoryId)
+                category.seriesList = getSeriesList(category.categoryId)
             }
-            _seriesContents.value = categorys
+            _seriesContents.postValue(categorys)
         }
     }
 
-    private suspend fun getCategoryList(categoryId: Int): List<Series> =
-        withContext(Dispatchers.IO) {
-            categoryRepository.getCategoryList(categoryId)
-                .map { series ->
-                    async {
-                        series.apply {
-                            if (thumbnail.isNullOrEmpty()) {
-                                thumbnail = seriesRepository.getThumbnailImage(series.seriesId)
-                                insertSeries(series)
-                            }
-                        }
-                    }
-                }.awaitAll()
-        }
-
-    private fun insertSeries(series: Series) {
-        viewModelScope.launch {
-            seriesRepository.insertSeries(series)
-        }
-    }
+    private suspend fun getSeriesList(categoryId: Int): List<Series> =
+        categoryRepository.getCategoryList(categoryId)
 
 
 }
