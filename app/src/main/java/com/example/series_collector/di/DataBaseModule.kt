@@ -22,7 +22,7 @@ class DataBaseModule {
 
     @Provides
     fun provideSeriesDao(appDatabase: AppDatabase): SeriesDao {
-        return appDatabase.SeriesDao()
+        return appDatabase.seriesDao()
     }
 
 }

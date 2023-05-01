@@ -10,10 +10,11 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
+import com.example.series_collector.data.Category
 import com.example.series_collector.data.Series
 import com.example.series_collector.utils.workers.SeriesInitWorker
 
-@Database(entities = [Series::class], version = 2, exportSchema = false)
+@Database(entities = [Series::class], version = 3, exportSchema = false)
 @TypeConverters(Converter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun seriesDao(): SeriesDao

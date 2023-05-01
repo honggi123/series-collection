@@ -18,6 +18,8 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
+        buildConfigField("String", "GOOGLE_API_KEY", "\"" + getGoogleAccess() + "\"")
+
     }
 
     buildTypes {
@@ -38,6 +40,7 @@ android {
 dependencies {
     kapt "androidx.room:room-compiler:$rootProject.roomVersion"
     kapt "com.google.dagger:hilt-android-compiler:$rootProject.hiltVersion"
+    kapt "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
 
     implementation platform("com.google.firebase:firebase-bom:$fireBaseVersion")
     implementation 'com.google.firebase:firebase-firestore-ktx'
@@ -53,8 +56,16 @@ dependencies {
     implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$rootProject.lifecycleVersion"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycleVersion"
+    implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpLoggingVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
     //test
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+}
+
+def getGoogleAccess() {
+    return project.findProperty("GOOGLE_API_KEY")
 }

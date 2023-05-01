@@ -24,14 +24,14 @@
             android:progressDrawable="@drawable/circular_progress_bar"></ProgressBar>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvChapters"
+            android:id="@+id/rvCategorys"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingStart="@dimen/home_side_margin"
             android:paddingTop="@dimen/home_header_margin"
             android:paddingEnd="@dimen/home_side_margin"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/list_item_chapter" />
+            tools:listitem="@layout/list_item_category" />
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"

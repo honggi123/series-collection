@@ -24,6 +24,9 @@ buildscript {
         fireBaseVersion = '31.5.0'
         workVersion = '2.7.1'
         lifecycleVersion = '2.4.1'
+        glideVersion = '4.13.1'
+        retrofitVersion = '2.9.0'
+        okhttpLoggingVersion = '4.9.3'
 
     }
 
@@ -49,3 +52,5 @@ plugins {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+
