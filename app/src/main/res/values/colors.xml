@@ -8,4 +8,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="sc_gray">#adb5bd</color>
+    <color name="sc_pink">#F91968</color>
 </resources>

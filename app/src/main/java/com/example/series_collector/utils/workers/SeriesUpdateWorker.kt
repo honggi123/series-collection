@@ -8,15 +8,9 @@ import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.example.series_collector.data.Series
 import com.example.series_collector.data.repository.SeriesRepository
-import com.example.series_collector.data.room.AppDatabase
-import com.example.series_collector.data.room.SeriesDao
-import com.example.series_collector.data.source.FirestoreDataSource
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.*
-import javax.inject.Inject
 
 @HiltWorker
 class SeriesUpdateWorker @AssistedInject constructor(
@@ -26,34 +20,18 @@ class SeriesUpdateWorker @AssistedInject constructor(
 ) : CoroutineWorker(context, workerParams) {
     override suspend fun doWork(): Result = coroutineScope {
         try {
-            val lastDate = seriesRepository.getLastUpdateDate()
-            val list = seriesRepository.getUpdatedSeries(lastDate)
-            insertSeries(fetchSeriesThumbnail(list))
+            seriesRepository.run {
+                val lastDate = getLastUpdateDate()
+                val list = getUpdatedSeries(lastDate)
+                insertAllSeries(list)
+            }
+
         } catch (ex: Exception) {
             Log.e(TAG, "Error worker", ex)
         }
 
         Result.success()
     }
-
-    private suspend fun fetchSeriesThumbnail(list: List<Series>): List<Series> {
-        val tempList = mutableListOf<Series>()
-        withContext(Dispatchers.IO) {
-            list.mapIndexed { index, series ->
-                async {
-                    series.apply {
-                        val thumbnailUrl = seriesRepository.getThumbnailImageUrl(series.seriesId)
-                        tempList.add(copy(thumbnail = thumbnailUrl))
-                    }
-                }
-            }.awaitAll()
-        }
-        return tempList
-    }
-
-
-    private suspend fun insertSeries(taskAsync: List<Series>) =
-        seriesRepository.insertAllSeries(taskAsync)
 
 
     companion object {
