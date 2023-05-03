@@ -45,20 +45,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="right"
-                    android:padding="10dp">
+                    android:padding="@dimen/toolbar_padding">
 
                     <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/title"
+                        android:id="@+id/btn_add"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/btn_selector"
-                        android:drawableStart="@drawable/ic_baseline_add_24"
-                        android:onClick="@{() -> callback.toggle(viewModel.isFollowed)}"
                         android:paddingStart="14dp"
                         android:paddingEnd="14dp"
-                        android:text="보고싶어요"
-                        android:textSize="14sp"
-                        app:isFollowed="@{viewModel.isFollowed}" />
+                        android:onClick="@{() -> callback.toggle(viewModel.isFollowed)}"
+                        android:drawableStart="@drawable/ic_baseline_add_24"
+                        android:background="@drawable/btn_selector"
+                        app:isFollowed="@{viewModel.isFollowed}"
+                        android:text="@string/add_series"
+                        />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -95,7 +95,9 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:tint="#80000000"
+                        android:tintMode="src_atop"/>
 
                     <ImageView
                         android:id="@+id/series_detail_play_btn"
@@ -118,7 +120,7 @@
                     android:text="@{viewModel.series.name}"
                     android:textAppearance="?attr/textAppearanceHeadline5"
                     android:textColor="?attr/colorOnPrimary"
-                    tools:text="시리즈 이름" />
+                    tools:text="series title" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -162,7 +164,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin_small"
-                    android:maxLines="5"
+                    android:maxLines="@integer/detail_descpription_max_lines"
                     android:text="@{viewModel.series.description}"
                     android:textAppearance="?attr/textAppearanceSubtitle1"
                     android:textColor="?attr/colorSecondary"
@@ -173,18 +175,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="더보기"
-                    android:textAppearance="?attr/textAppearanceSubtitle1"
-                    android:textColor="?attr/colorSecondary"
-                    android:visibility="gone" />
-
+                    android:textAppearance="?attr/textAppearanceSubtitle1"></TextView>
 
                 <TextView
-                    android:id="@+id/tvSeriesVideolists"
+                    android:id="@+id/series_viedeo_info_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin_small"
                     android:gravity="center"
-                    android:text="회차정보"
+                    android:text="@string/series_videos_info_title"
                     android:textAppearance="?attr/textAppearanceHeadline5"
                     android:textColor="?attr/colorOnPrimary" />
 

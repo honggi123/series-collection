@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">시리즈 모아보기</string>
+
+    <string name="home_title">시리즈 모아보기</string>
+
+    <string name="inventory_title">보고싶은 시리즈</string>
+
+    <string name="add_series">보고싶어요</string>
+    <string name="series_videos_info_title">회차정보</string>
 </resources>

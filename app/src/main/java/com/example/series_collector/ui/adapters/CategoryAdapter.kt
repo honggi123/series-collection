@@ -51,9 +51,9 @@ class CategoryAdapter : ListAdapter<Category, RecyclerView.ViewHolder>(CategoryD
                 (rvSeries.layoutManager as LinearLayoutManager).recycleChildrenOnDetach = true
                 rvSeries.adapter = adapter
                 rvSeries.setRecycledViewPool(sharedPool)
+                rvSeries.setNestedScrollingEnabled(false)
 
                 snapHelper.attachToRecyclerView(rvSeries)
-
                 adapter.submitList(item.seriesList)
 
                 executePendingBindings()

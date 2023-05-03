@@ -15,7 +15,7 @@
     </data>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="270dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/card_side_margin"
         android:layout_marginBottom="@dimen/card_bottom_margin"
@@ -31,8 +31,8 @@
 
             <ImageView
                 android:id="@+id/series_item_thumbnail"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_width="@dimen/home_series_item_image_width"
+                android:layout_height="@dimen/home_series_item_image_height"
                 android:background="?attr/colorOnPrimary"
                 android:scaleType="centerCrop"
                 app:imageFromUrl="@{series.thumbnail}"
@@ -47,10 +47,9 @@
                 android:text="@{series.name}"
                 android:textAppearance="?attr/textAppearanceListItem"
                 android:textColor="?attr/colorOnPrimary"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/series_item_thumbnail"
-                tools:text="Series 1" />
+                tools:text="Series title" />
 
             <TextView
                 android:id="@+id/series_item_channel_name"
@@ -60,7 +59,7 @@
                 android:textAppearance="?attr/textAppearanceSubtitle2"
                 android:textColor="?attr/colorSecondary"
                 app:layout_constraintTop_toBottomOf="@+id/series_item_title"
-                tools:text="channel_name1" />
+                tools:text="channel name" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
