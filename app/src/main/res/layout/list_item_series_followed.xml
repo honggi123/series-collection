@@ -3,6 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener"/>
+        <variable
+            name="series"
+            type="com.example.series_collector.data.Series" />
+    </data>
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,6 +27,7 @@
                 android:id="@+id/mySeries_item_thumbnail"
                 android:layout_width="@dimen/series_item_image_width_normal"
                 android:layout_height="@dimen/series_item_image_height_normal"
+                app:imageFromUrl="@{series.thumbnail}"
                 android:background="?attr/colorSecondary"
                 android:scaleType="centerCrop" />
 
@@ -33,6 +43,7 @@
                     android:layout_height="wrap_content"
                     android:maxLines="@integer/inventory_descpription_max_lines"
                     android:paddingStart="@dimen/margin_extra_small"
+                    android:text="@{series.name}"
                     android:textAppearance="?attr/textAppearanceListItem"
                     android:textColor="?attr/colorOnPrimary"
                     tools:text="Series title" />
@@ -48,7 +59,7 @@
             </androidx.appcompat.widget.LinearLayoutCompat>
 
             <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/btn_remove"
+                android:id="@+id/btnDelete"
                 android:layout_width="@dimen/inventory_item_remove_btn_size"
                 android:layout_height="@dimen/inventory_item_remove_btn_size"
                 android:background="@drawable/ic_baseline_remove_circle_outline_24" />

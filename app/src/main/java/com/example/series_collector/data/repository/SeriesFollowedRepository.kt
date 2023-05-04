@@ -9,6 +9,8 @@ class SeriesFollowedRepository @Inject constructor(
 ) {
     fun isFollowed(seriesId: String) = seriesFollowedDao.isFollowed(seriesId)
 
+    fun getSeriesFollowedList() = seriesFollowedDao.getSeriesInSeriesFollowed()
+
     suspend fun followSeries(seriesId: String) {
         val seriesFollowed = SeriesFollowed(seriesId)
         seriesFollowedDao.insertSeriesFollowed(seriesFollowed)

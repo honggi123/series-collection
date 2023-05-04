@@ -3,14 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-            name="viewModel"
-            type="com.example.series_collector.ui.home.HomeViewModel" />
-    </data>
-
-
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -45,7 +37,7 @@
 
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvMySeries"
+            android:id="@+id/rvSeriesFollowed"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
@@ -53,7 +45,7 @@
             android:paddingEnd="@dimen/card_side_margin"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/list_item_my_series" />
+            tools:listitem="@layout/list_item_series_followed" />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 

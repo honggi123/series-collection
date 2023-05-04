@@ -3,6 +3,8 @@ package com.example.series_collector.data.room
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Transaction
+import com.example.series_collector.data.Series
 import com.example.series_collector.data.SeriesFollowed
 import kotlinx.coroutines.flow.Flow
 
@@ -11,6 +13,10 @@ interface SeriesFollowedDao {
 
     @Query("SELECT EXISTS(SELECT 1 FROM series_followed WHERE series_id = :seriesId LIMIT 1)")
     fun isFollowed(seriesId: String): Flow<Boolean>
+
+    @Transaction
+    @Query("SELECT * FROM series WHERE id IN (SELECT DISTINCT(series_id) FROM series_followed)")
+    fun getSeriesInSeriesFollowed(): Flow<List<Series>>
 
     @Insert
     suspend fun insertSeriesFollowed(seriesFollowed: SeriesFollowed)
