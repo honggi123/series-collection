@@ -6,7 +6,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.series_collector.data.Series
 import com.example.series_collector.data.api.SeriesVideo
-import com.example.series_collector.data.repository.MySeriesRepository
+import com.example.series_collector.data.repository.SeriesFollowedRepository
 import com.example.series_collector.data.repository.SeriesRepository
 import com.example.series_collector.utils.getGenreName
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,13 +21,13 @@ private const val SUB_DESCRIPTION_PREFIX = " # "
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val mySeriesRepository: MySeriesRepository,
+    private val seriesFollowedRepository: SeriesFollowedRepository,
     private val seriesRepository: SeriesRepository,
 ) : ViewModel() {
 
     val seriesId: String = savedStateHandle.get<String>(SERIES_ID_SAVED_STATE_KEY)!!
 
-    val isMySeries = mySeriesRepository.isMySeries(seriesId).asLiveData()
+    val isFollowed = seriesFollowedRepository.isFollowed(seriesId).asLiveData()
 
     private val _series = MutableLiveData<Series>()
     val series: LiveData<Series> = _series
@@ -50,12 +50,12 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    fun toggleMySeries(isMySeries: Boolean) {
+    fun toggleSeriesFollowed(isFollowed: Boolean) {
         viewModelScope.launch {
-            if(isMySeries){
-                mySeriesRepository.removeMySeries(seriesId)
-            }else{
-                mySeriesRepository.createMySeries(seriesId)
+            if (isFollowed) {
+                seriesFollowedRepository.followSeries(seriesId)
+            } else {
+                seriesFollowedRepository.unFollowSeries(seriesId)
             }
         }
     }

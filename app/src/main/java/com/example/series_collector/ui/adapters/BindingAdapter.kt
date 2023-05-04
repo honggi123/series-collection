@@ -18,9 +18,9 @@ fun bindIsGone(view: View, isGone: Boolean) {
 }
 
 
-@BindingAdapter("isMySeries")
-fun bindIsMySeries(button: AppCompatButton, isMySeries: Boolean) {
-    if (isMySeries) {
+@BindingAdapter("isFollowed")
+fun bindisFollowed(button: AppCompatButton, isFollowed: Boolean) {
+    if (isFollowed) {
         button.isSelected = false
         button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_check_24,0,0,0)
     } else {

@@ -43,11 +43,11 @@
                         android:textSize="14sp"
                         android:paddingStart="14dp"
                         android:paddingEnd="14dp"
-                        android:onClick="@{() -> callback.toggle(viewModel.isMySeries)}"
+                        android:onClick="@{() -> callback.toggle(viewModel.isFollowed)}"
                         android:drawableStart="@drawable/ic_baseline_add_24"
                         android:background="@drawable/btn_selector"
                         android:text="보고싶어요"
-                        app:isMySeries="@{viewModel.isMySeries}"
+                        app:isFollowed="@{viewModel.isFollowed}"
                         />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>

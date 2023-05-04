@@ -36,9 +36,9 @@ class DetailFragment : Fragment() {
             viewModel = detailViewModel
             lifecycleOwner = viewLifecycleOwner
 
-            callback = Callback { isMySeries ->
-                if (isMySeries != null) {
-                    detailViewModel.toggleMySeries(isMySeries)
+            callback = Callback { isFollowed ->
+                if (isFollowed != null) {
+                    detailViewModel.toggleSeriesFollowed(isFollowed)
                 }
             }
         }
@@ -63,7 +63,7 @@ class DetailFragment : Fragment() {
     }
 
     fun interface Callback {
-        fun toggle(isMySeries: Boolean?)
+        fun toggle(isFollowed: Boolean?)
     }
 
 

@@ -6,13 +6,13 @@ import java.util.*
 
 
 @Entity(
-    tableName = "my_series",
+    tableName = "series_followed",
     foreignKeys = [
         ForeignKey(entity = Series::class, parentColumns = ["id"], childColumns = ["series_id"])
     ],
     indices = [Index("series_id")]
 )
-data class MySeries(
+data class SeriesFollowed(
     @ColumnInfo(name = "series_id") val seriesId: String,
 
     @ColumnInfo(name = "put_date") val putDate: Calendar = Calendar.getInstance(),
@@ -20,5 +20,5 @@ data class MySeries(
     ) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
-    var mySeriesId: Long = 0
+    var seriesFollowedId: Long = 0
 }

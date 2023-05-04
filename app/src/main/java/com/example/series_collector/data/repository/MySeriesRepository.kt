@@ -1,19 +1,19 @@
 package com.example.series_collector.data.repository
 
-import com.example.series_collector.data.MySeries
-import com.example.series_collector.data.room.MySeriesDao
+import com.example.series_collector.data.SeriesFollowed
+import com.example.series_collector.data.room.SeriesFollowedDao
 import javax.inject.Inject
 
-class MySeriesRepository @Inject constructor(
-    private val mySeriesDao: MySeriesDao
+class SeriesFollowedRepository @Inject constructor(
+    private val seriesFollowedDao: SeriesFollowedDao
 ) {
-    fun isMySeries(seriesId: String) = mySeriesDao.isMySeries(seriesId)
+    fun isFollowed(seriesId: String) = seriesFollowedDao.isFollowed(seriesId)
 
-    suspend fun createMySeries(seriesId: String) {
-        val mySeries = MySeries(seriesId)
-        mySeriesDao.insertMySeries(mySeries)
+    suspend fun followSeries(seriesId: String) {
+        val seriesFollowed = SeriesFollowed(seriesId)
+        seriesFollowedDao.insertSeriesFollowed(seriesFollowed)
     }
 
-    suspend fun removeMySeries(seriesId: String) =
-        mySeriesDao.deleteMySeries(seriesId)
+    suspend fun unFollowSeries(seriesId: String) =
+        seriesFollowedDao.deleteSeriesFollowed(seriesId)
 }
