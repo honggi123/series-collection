@@ -46,7 +46,7 @@ class HomeViewModel @Inject constructor(
                 workManager
                     .getWorkInfoByIdLiveData(it).asFlow().collect { workInfo ->
                         if (workInfo.state.isFinished) {
-                            refreshCategorys()
+                            refreshSeriesContents()
                             _isLoading.postValue(false)
                         }
                     }
@@ -59,16 +59,18 @@ class HomeViewModel @Inject constructor(
         workManager.cancelAllWorkByTag(SYNC_WORK_TAG).await()
     }
 
-    private suspend fun refreshCategorys() {
+    private suspend fun refreshSeriesContents() {
         withContext(Dispatchers.IO) {
             val categorys: MutableList<Category> = categoryRepository.getCategorys()
 
-            categorys.map { category ->
-                category.seriesList = getSeriesList(category.categoryId)
-            }
-            _seriesContents.postValue(categorys)
+            val seriesContents = categorys.map { category ->
+                category.copy(seriesList = getSeriesList(category.categoryId))
+            }.toList()
+
+            _seriesContents.postValue(seriesContents)
         }
     }
+
 
     private suspend fun getSeriesList(categoryId: Int): List<Series> =
         categoryRepository.getCategoryList(categoryId)
