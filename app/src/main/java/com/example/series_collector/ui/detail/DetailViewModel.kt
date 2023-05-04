@@ -1,6 +1,7 @@
 package com.example.series_collector.ui.detail
 
 
+import android.util.Log
 import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -53,9 +54,9 @@ class DetailViewModel @Inject constructor(
     fun toggleSeriesFollowed(isFollowed: Boolean) {
         viewModelScope.launch {
             if (isFollowed) {
-                seriesFollowedRepository.followSeries(seriesId)
-            } else {
                 seriesFollowedRepository.unFollowSeries(seriesId)
+            } else {
+                seriesFollowedRepository.followSeries(seriesId)
             }
         }
     }
