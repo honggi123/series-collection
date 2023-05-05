@@ -1,7 +1,8 @@
 package com.example.series_collector.ui.detail
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,12 +11,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.series_collector.R
 import com.example.series_collector.databinding.FragmentDetailSeriesBinding
 import com.example.series_collector.ui.adapters.SeriesVideoAdapter
-import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 @AndroidEntryPoint
@@ -32,24 +30,29 @@ class DetailFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentDetailSeriesBinding.inflate(inflater, container, false)
+
         binding.apply {
             viewModel = detailViewModel
             lifecycleOwner = viewLifecycleOwner
+            rvSeriesVideos.adapter = adapter
 
             callback = Callback { isFollowed ->
                 if (isFollowed != null) {
                     detailViewModel.toggleSeriesFollowed(isFollowed)
                 }
             }
+
+            toolbar.setNavigationOnClickListener { view ->
+                view.findNavController().navigateUp()
+            }
+
+            seriesDetailPlayBtn.setOnClickListener {
+                createYoutubeIntent(args.seriesId)
+            }
+
         }
 
-
-        binding.rvSeriesVideos.adapter = adapter
         searchSeriesVideoList(args.seriesId)
-
-        binding.toolbar.setNavigationOnClickListener { view ->
-            view.findNavController().navigateUp()
-        }
 
         return binding.root
     }
@@ -61,6 +64,13 @@ class DetailFragment : Fragment() {
             }
         }
     }
+
+    private fun createYoutubeIntent(playListId: String) {
+        startActivity( Intent(Intent.ACTION_VIEW)
+            .setData(Uri.parse("https://www.youtube.com/watch?list=$playListId"))
+            .setPackage("com.google.android.youtube"));
+    }
+
 
     fun interface Callback {
         fun toggle(isFollowed: Boolean?)

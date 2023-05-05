@@ -2,11 +2,9 @@ package com.example.series_collector.ui.adapters
 
 import android.view.View
 import android.widget.ImageView
-import androidx.appcompat.widget.AppCompatButton
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.example.series_collector.R
 
 @BindingAdapter("isGone")
 fun bindIsGone(view: View, isGone: Boolean) {
@@ -18,16 +16,7 @@ fun bindIsGone(view: View, isGone: Boolean) {
 }
 
 
-@BindingAdapter("isFollowed")
-fun bindisFollowed(button: AppCompatButton, isFollowed: Boolean) {
-    if (isFollowed) {
-        button.isSelected = false
-        button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_check_24,0,0,0)
-    } else {
-        button.isSelected = true
-        button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_add_24,0,0,0)
-    }
-}
+
 
 @BindingAdapter("imageFromUrl")
 fun bindImageFromUrl(view: ImageView, imageUrl: String?) {

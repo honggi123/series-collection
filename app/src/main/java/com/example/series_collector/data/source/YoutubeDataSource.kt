@@ -9,7 +9,7 @@ import com.example.series_collector.data.api.SeriesVideo
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class YoutubeDataSource  @Inject constructor(
+class YoutubeDataSource @Inject constructor(
     private val youTubeService: YoutubeService
 ) {
     suspend fun getThumbnailImageUrl(playListId: String): String =
@@ -30,4 +30,6 @@ class YoutubeDataSource  @Inject constructor(
             getYoutubePlayListItems(id = playListId, maxResults = 1)
                 .pageInfo
         }
+
+
 }

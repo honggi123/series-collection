@@ -3,9 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="callback"
             type="com.example.series_collector.ui.detail.DetailFragment.Callback" />
+
         <variable
             name="viewModel"
             type="com.example.series_collector.ui.detail.DetailViewModel" />
@@ -16,6 +18,15 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         tools:ignore="MergeRootFrame">
+
+        <ProgressBar
+            android:id="@+id/progress_circular"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:progressDrawable="@drawable/circular_progress_bar"
+            app:isGone="@{!viewModel.isLoading}" />
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"
@@ -40,15 +51,14 @@
                         android:id="@+id/title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
+                        android:background="@drawable/btn_selector"
+                        android:drawableStart="@drawable/ic_baseline_add_24"
+                        android:onClick="@{() -> callback.toggle(viewModel.isFollowed)}"
                         android:paddingStart="14dp"
                         android:paddingEnd="14dp"
-                        android:onClick="@{() -> callback.toggle(viewModel.isFollowed)}"
-                        android:drawableStart="@drawable/ic_baseline_add_24"
-                        android:background="@drawable/btn_selector"
                         android:text="보고싶어요"
-                        app:isFollowed="@{viewModel.isFollowed}"
-                        />
+                        android:textSize="14sp"
+                        app:isFollowed="@{viewModel.isFollowed}" />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -61,7 +71,8 @@
             android:id="@+id/series_detail_scrollview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:fillViewport="true">
+            android:fillViewport="true"
+            app:isGone="@{viewModel.isLoading}">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -109,16 +120,42 @@
                     android:textColor="?attr/colorOnPrimary"
                     tools:text="시리즈 이름" />
 
-                <TextView
-                    android:id="@+id/series_sub_description"
+                <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_small"
-                    android:gravity="center"
-                    android:text="@{viewModel.subDescription}"
-                    android:textAppearance="?attr/textAppearanceSubtitle1"
-                    android:textColor="?attr/colorSecondary"
-                    tools:text="#장르 #채널명 #회차개수" />
+                    android:orientation="horizontal"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/series_genre_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:genreHashtag="@{viewModel.series.genre}"
+                        android:textAppearance="?attr/textAppearanceSubtitle1"
+                        android:textColor="?attr/colorSecondary"
+                        tools:text="#장르"/>
+
+                    <TextView
+                        android:id="@+id/series_channel_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_small"
+                        app:hashtag="@{viewModel.series.channel}"
+                        android:textAppearance="?attr/textAppearanceSubtitle1"
+                        android:textColor="?attr/colorSecondary"
+                        tools:text="#채널명"/>
+
+                    <TextView
+                        android:id="@+id/series_video_count_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_small"
+                        app:hashtagTotalPage="@{viewModel.seriesPageInfo.totalResults}"
+                        android:textAppearance="?attr/textAppearanceSubtitle1"
+                        android:textColor="?attr/colorSecondary"
+                        tools:text="#회차개수"/>
+
+                </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <TextView
                     android:id="@+id/series_description"
@@ -128,7 +165,8 @@
                     android:maxLines="5"
                     android:text="@{viewModel.series.description}"
                     android:textAppearance="?attr/textAppearanceSubtitle1"
-                    android:textColor="?attr/colorSecondary" />
+                    android:textColor="?attr/colorSecondary"
+                    tools:text="description about the series" />
 
                 <TextView
                     android:id="@+id/series_description_more"
