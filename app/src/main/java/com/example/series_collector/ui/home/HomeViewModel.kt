@@ -21,10 +21,7 @@ class HomeViewModel @Inject constructor(
     private val seriesRepository: SeriesRepository,
     private val categoryRepository: CategoryRepository,
     private val seriesWork: SeriesWork,
-    @ApplicationContext private val appContext: Context
 ) : ViewModel() {
-
-    private val workManager = WorkManager.getInstance(appContext)
 
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
@@ -35,28 +32,14 @@ class HomeViewModel @Inject constructor(
     init {
         _isLoading.value = true
         viewModelScope.launch {
-            cancelAllWork()
-            seriesWork.run {
-                if (seriesRepository.isEmpty()) {
-                    initSeries()
-                } else {
-                    updateSeries()
-                }
-            }.also {
-                workManager
-                    .getWorkInfoByIdLiveData(it).asFlow().collect { workInfo ->
-                        if (workInfo.state.isFinished) {
-                            refreshSeriesContents()
-                            _isLoading.postValue(false)
-                        }
+            seriesWork.updateSeriesStream()
+                .collect { workInfo ->
+                    if (workInfo.state.isFinished) {
+                        refreshSeriesContents()
+                        _isLoading.postValue(false)
                     }
-            }
+                }
         }
-    }
-
-
-    private suspend fun cancelAllWork() {
-        workManager.cancelAllWorkByTag(SYNC_WORK_TAG).await()
     }
 
     private suspend fun refreshSeriesContents() {

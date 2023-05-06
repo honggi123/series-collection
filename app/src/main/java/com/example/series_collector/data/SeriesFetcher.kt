@@ -11,17 +11,17 @@ class SeriesFetcher @Inject constructor(
     suspend fun fetchSeriesThumbnail(list: List<Series>): List<Series> =
         withContext(Dispatchers.IO) {
             list.map { series ->
-                supervisorScope {
-                    async {
-                        if (series.thumbnail.isBlank()) {
-                            val thumbnailUrl =
-                                youtubeDataSource.getThumbnailImageUrl(series.seriesId)
-                            series.copy(thumbnail = thumbnailUrl)
-                        } else series
-                    }
+                async {
+                    if (series.thumbnail.isBlank()) {
+                        val thumbnailUrl =
+                            youtubeDataSource.getThumbnailImageUrl(series.seriesId)
+                        series.copy(thumbnail = thumbnailUrl)
+                    } else series
                 }
             }.awaitAll()
         }
+
+
 
 
 }
