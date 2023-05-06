@@ -10,18 +10,24 @@ class SeriesFetcher @Inject constructor(
 
     suspend fun fetchSeriesThumbnail(list: List<Series>): List<Series> =
         withContext(Dispatchers.IO) {
-            list.map { series ->
-                async {
-                    if (series.thumbnail.isBlank()) {
-                        val thumbnailUrl =
-                            youtubeDataSource.getThumbnailImageUrl(series.seriesId)
-                        series.copy(thumbnail = thumbnailUrl)
-                    } else series
+            supervisorScope {
+                val deffered = list.map { series ->
+                    async {
+                        if (series.thumbnail.isBlank()) {
+                            val thumbnailUrl =
+                                youtubeDataSource.getThumbnailImageUrl(series.seriesId)
+                            series.copy(thumbnail = thumbnailUrl)
+                        } else series
+                    }
                 }
-            }.awaitAll()
+                try {
+                    deffered.awaitAll()
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                    list
+                }
+            }
         }
-
-
 
 
 }
