@@ -96,8 +96,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:tint="#80000000"
-                        android:tintMode="src_atop"/>
+                     />
 
                     <ImageView
                         android:id="@+id/series_detail_play_btn"
@@ -107,7 +106,7 @@
                         app:layout_constraintEnd_toEndOf="@+id/series_detail_thumbnail"
                         app:layout_constraintStart_toStartOf="@+id/series_detail_thumbnail"
                         app:layout_constraintTop_toTopOf="@+id/series_detail_thumbnail"
-                        app:srcCompat="@drawable/ic_baseline_play_arrow_24" />
+                        app:srcCompat="@drawable/ic_baseline_play_circle_24" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

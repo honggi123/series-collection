@@ -30,6 +30,7 @@
                 android:fitsSystemWindows="true"
                 app:contentScrim="?attr/colorPrimary"
                 app:expandedTitleMarginStart="12dp"
+                app:expandedTitleMarginBottom="16dp"
                 app:expandedTitleTextAppearance="@style/Toolbar.TitleText"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed"
                 app:toolbarId="@+id/toolbar">
@@ -43,6 +44,7 @@
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
+
 
         <ProgressBar
             android:id="@+id/progress_circular"
@@ -68,3 +70,4 @@
 
 
 </layout>
+
