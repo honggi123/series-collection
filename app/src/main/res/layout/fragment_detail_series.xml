@@ -84,7 +84,9 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_normal"
+                    >
 
                     <ImageView
                         android:id="@+id/series_detail_thumbnail"
@@ -119,6 +121,7 @@
                     android:text="@{viewModel.series.name}"
                     android:textAppearance="?attr/textAppearanceHeadline5"
                     android:textColor="?attr/colorOnPrimary"
+                    android:textStyle="bold"
                     tools:text="series title" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
@@ -157,30 +160,32 @@
                         tools:text="#회차개수"/>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
+=======
+                    android:layout_marginBottom="@dimen/margin_normal"
+                    android:gravity="center"
+                    android:text="@{viewModel.subDescription}"
+                    android:textAppearance="?attr/textAppearanceSubtitle1"
+                    android:textColor="?attr/colorSecondary"
+                    tools:text="#genre #channel #video count" />
+>>>>>>> b17afd2 (홈, 디테일 툴바 변경 및 시리즈 아이템 radius 적용)
 
                 <TextView
                     android:id="@+id/series_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_small"
+                    android:layout_marginBottom="@dimen/margin_normal"
                     android:maxLines="@integer/detail_descpription_max_lines"
                     android:text="@{viewModel.series.description}"
                     android:textAppearance="?attr/textAppearanceSubtitle1"
                     android:textColor="?attr/colorSecondary"
                     tools:text="description about the series" />
 
-                <TextView
-                    android:id="@+id/series_description_more"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="더보기"
-                    android:textAppearance="?attr/textAppearanceSubtitle1"></TextView>
 
                 <TextView
                     android:id="@+id/series_viedeo_info_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_small"
+                    android:layout_marginBottom="@dimen/margin_normal"
                     android:gravity="center"
                     android:text="@string/series_videos_info_title"
                     android:textAppearance="?attr/textAppearanceHeadline5"

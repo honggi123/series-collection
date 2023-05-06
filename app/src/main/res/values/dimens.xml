@@ -8,7 +8,7 @@
     <dimen name="margin_extra_small">4dp</dimen>
 
     <dimen name="card_side_margin">4dp</dimen>
-    <dimen name="card_bottom_margin">4dp</dimen>
+    <dimen name="card_bottom_margin">8dp</dimen>
     <dimen name="card_elevation">2dp</dimen>
 
     <dimen name="toolbar_elevation">1dp</dimen>
@@ -20,8 +20,8 @@
     <dimen name="home_side_margin">12dp</dimen>
     <dimen name="home_header_margin">72dp</dimen>
 
-    <dimen name="home_series_item_image_height">140dp</dimen>
-    <dimen name="home_series_item_image_width">260dp</dimen>
+    <dimen name="home_series_item_image_height">120dp</dimen>
+    <dimen name="home_series_item_image_width">220dp</dimen>
 
     <dimen name="category_card_bottom_margin">14dp</dimen>
 

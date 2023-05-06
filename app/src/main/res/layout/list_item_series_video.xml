@@ -25,7 +25,7 @@
                 android:id="@+id/video_item_thumbnail"
                 android:layout_width="@dimen/series_item_image_width_normal"
                 android:layout_height="@dimen/series_item_image_height_normal"
-                android:background="?attr/colorSecondary"
+                android:background="@drawable/round_radius_shape"
                 android:scaleType="centerCrop"
                 app:imageFromUrl="@{seriesVideo.snippet.thumbnails.standard.url}" />
 

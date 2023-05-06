@@ -35,9 +35,12 @@ class SeriesAdapter : ListAdapter<Series, RecyclerView.ViewHolder>(SeriesDiffCal
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.setClickListener {
-                binding.series?.let { series ->
-                    navigateToDetail(series, it)
+            binding.apply {
+                seriesItemThumbnail.clipToOutline = true
+                setClickListener {
+                    series?.let { series ->
+                        navigateToDetail(series, it)
+                    }
                 }
             }
         }
