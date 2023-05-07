@@ -3,10 +3,7 @@ package com.example.series_collector.utils.workers
 import android.content.Context
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.map
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.WorkInfo
-import androidx.work.WorkManager
-import androidx.work.await
+import androidx.work.*
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -26,20 +23,17 @@ class SeriesWorkImpl @Inject constructor(
 
     private val workManager = WorkManager.getInstance(appContext)
 
-    override fun updateSeriesStream(): Flow<WorkInfo> = requestUpdateWorker(appContext)
+    override fun updateSeriesStream(): Flow<WorkInfo> = requestUpdateWorker(workManager)
 
-    private fun requestUpdateWorker(context: Context): Flow<WorkInfo> {
-        cancelAllWork()
+    private fun requestUpdateWorker(workManager: WorkManager): Flow<WorkInfo> {
         val request = OneTimeWorkRequestBuilder<SeriesUpdateWorker>()
             .addTag(SYNC_WORK_TAG)
             .build()
-        WorkManager.getInstance(context).enqueue(request)
+        workManager.beginUniqueWork("update_work", ExistingWorkPolicy.REPLACE, request).enqueue()
+
         return workManager.getWorkInfoByIdLiveData(request.id).asFlow()
     }
 
-    private fun cancelAllWork() {
-        workManager.cancelAllWorkByTag(SYNC_WORK_TAG)
-    }
 
     companion object {
         const val SYNC_WORK_TAG = "SeriesSyncWorker"

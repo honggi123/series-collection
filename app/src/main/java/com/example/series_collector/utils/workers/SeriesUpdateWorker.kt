@@ -21,16 +21,15 @@ class SeriesUpdateWorker @AssistedInject constructor(
     @Assisted workerParams: WorkerParameters,
     private val seriesRepository: SeriesRepository
 ) : CoroutineWorker(context, workerParams) {
-    override suspend fun doWork(): Result = coroutineScope {
+    override suspend fun doWork(): Result = supervisorScope {
 
         seriesRepository.run {
-            val forceInit = if (seriesRepository.isEmpty()) true else false
+            val forceInit = if (isEmpty()) true else false
             updateSeries(forceInit)
         }
 
         Result.success()
     }
-
 
     companion object {
         private const val TAG = "SeriesUpdateWorker"

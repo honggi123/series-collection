@@ -1,6 +1,7 @@
 package com.example.series_collector.data.repository
 
 import com.example.series_collector.data.Series
+import com.example.series_collector.data.SeriesFetcher
 import com.example.series_collector.data.room.SeriesDao
 import com.example.series_collector.data.source.FirestoreDataSource
 import com.example.series_collector.utils.CATEGORY_FICTION
@@ -13,7 +14,8 @@ import javax.inject.Inject
 
 class CategoryRepository @Inject constructor(
     private val seriesDao: SeriesDao,
-    private val firestoreDataSource: FirestoreDataSource
+    private val firestoreDataSource: FirestoreDataSource,
+    private val seriesFetcher: SeriesFetcher
 ) {
 
     suspend fun getCategorys() = withContext(Dispatchers.IO) {
@@ -21,7 +23,7 @@ class CategoryRepository @Inject constructor(
     }
 
     suspend fun getCategoryList(categoryId: Int): List<Series> = withContext(Dispatchers.IO) {
-        when (categoryId) {
+        val series = when (categoryId) {
             CATEGORY_RECENT -> {
                 seriesDao.getRecentSeries()
             }
@@ -38,7 +40,12 @@ class CategoryRepository @Inject constructor(
                 seriesDao.getRecentSeries()
             }
         }
+
+        fetchSeriesThumbnail(series)
     }
+
+    private suspend fun fetchSeriesThumbnail(list: List<Series>): List<Series> =
+        seriesFetcher.fetchSeriesThumbnail(list)
 
 
 }
