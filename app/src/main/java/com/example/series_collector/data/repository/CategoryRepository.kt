@@ -22,7 +22,7 @@ class CategoryRepository @Inject constructor(
         firestoreDataSource.getCategorys()
     }
 
-    suspend fun getCategoryList(categoryId: Int): List<Series> = withContext(Dispatchers.IO) {
+    suspend fun getSeriesByCategory(categoryId: Int): List<Series> = withContext(Dispatchers.IO) {
         val series = when (categoryId) {
             CATEGORY_RECENT -> {
                 seriesDao.getRecentSeries()

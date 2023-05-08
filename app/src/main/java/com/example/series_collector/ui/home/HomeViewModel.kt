@@ -57,7 +57,7 @@ class HomeViewModel @Inject constructor(
             val categorys: MutableList<Category> = categoryRepository.getCategorys()
 
             val seriesContents = categorys.map { category ->
-                category.copy(seriesList = getSeriesList(category.categoryId))
+                category.copy(seriesList = getSeriesByCategory(category.categoryId))
             }.toList()
 
             _seriesContents.postValue(seriesContents)
@@ -65,8 +65,8 @@ class HomeViewModel @Inject constructor(
     }
 
 
-    private suspend fun getSeriesList(categoryId: Int): List<Series> =
-        categoryRepository.getCategoryList(categoryId)
+    private suspend fun getSeriesByCategory(categoryId: Int): List<Series> =
+        categoryRepository.getSeriesByCategory(categoryId)
 
 
 }
