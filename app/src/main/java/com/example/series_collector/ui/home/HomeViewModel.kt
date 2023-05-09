@@ -1,17 +1,13 @@
 package com.example.series_collector.ui.home
 
-import android.content.Context
 import androidx.lifecycle.*
-import androidx.work.WorkManager
-import androidx.work.await
+import androidx.work.WorkInfo
 import com.example.series_collector.data.Category
 import com.example.series_collector.data.Series
 import com.example.series_collector.data.repository.CategoryRepository
 import com.example.series_collector.data.repository.SeriesRepository
 import com.example.series_collector.utils.workers.SeriesWork
-import com.example.series_collector.utils.workers.SeriesWorkImpl.Companion.SYNC_WORK_TAG
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.*
 import javax.inject.Inject
 
@@ -44,9 +40,11 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch(updateExceptionHandler) {
             seriesWork.updateSeriesStream()
                 .collect { workInfo ->
-                    if (workInfo.state.isFinished) {
+                    if (workInfo.state == WorkInfo.State.SUCCEEDED
+                        || workInfo.state == WorkInfo.State.FAILED
+                    ) {
                         refreshSeriesContents()
-                        _isLoading.postValue(false)
+                        _isLoading.value = false
                     }
                 }
         }
