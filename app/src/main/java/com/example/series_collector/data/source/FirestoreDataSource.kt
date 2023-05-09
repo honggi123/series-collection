@@ -19,7 +19,7 @@ class FirestoreDataSource @Inject constructor() {
     suspend fun getUpdatedSeries(lastUpdate: Calendar): List<Series> {
         return lastUpdate.let {
             Firebase.firestore.collection("Series")
-                .whereGreaterThanOrEqualTo("updateAt", it.time)
+                .whereGreaterThanOrEqualTo("createdAt", it.time)
                 .get()
                 .await().toObjects(Series::class.java)
         }

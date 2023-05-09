@@ -5,18 +5,15 @@ import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.lifecycle.viewModelScope
 import androidx.work.CoroutineWorker
+import androidx.work.WorkManager
 import androidx.work.WorkerParameters
+import androidx.work.await
 import com.example.series_collector.data.Series
 import com.example.series_collector.data.repository.SeriesRepository
-import com.example.series_collector.data.room.AppDatabase
-import com.example.series_collector.data.room.SeriesDao
-import com.example.series_collector.data.source.FirestoreDataSource
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.*
-import javax.inject.Inject
 
 @HiltWorker
 class SeriesUpdateWorker @AssistedInject constructor(
@@ -24,37 +21,15 @@ class SeriesUpdateWorker @AssistedInject constructor(
     @Assisted workerParams: WorkerParameters,
     private val seriesRepository: SeriesRepository
 ) : CoroutineWorker(context, workerParams) {
-    override suspend fun doWork(): Result = coroutineScope {
-        try {
-            val lastDate = seriesRepository.getLastUpdateDate()
-            val list = seriesRepository.getUpdatedSeries(lastDate)
-            insertSeries(fetchSeriesThumbnail(list))
-        } catch (ex: Exception) {
-            Log.e(TAG, "Error worker", ex)
+    override suspend fun doWork(): Result = supervisorScope {
+
+        seriesRepository.run {
+            val forceInit = if (isEmpty()) true else false
+            updateSeries(forceInit)
         }
 
         Result.success()
     }
-
-    private suspend fun fetchSeriesThumbnail(list: List<Series>): List<Series> {
-        val tempList = mutableListOf<Series>()
-        withContext(Dispatchers.IO) {
-            list.mapIndexed { index, series ->
-                async {
-                    series.apply {
-                        val thumbnailUrl = seriesRepository.getThumbnailImageUrl(series.seriesId)
-                        tempList.add(copy(thumbnail = thumbnailUrl))
-                    }
-                }
-            }.awaitAll()
-        }
-        return tempList
-    }
-
-
-    private suspend fun insertSeries(taskAsync: List<Series>) =
-        seriesRepository.insertAllSeries(taskAsync)
-
 
     companion object {
         private const val TAG = "SeriesUpdateWorker"
