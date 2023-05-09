@@ -1,25 +1,14 @@
 package com.example.series_collector.ui.home
 
-import android.content.Context
 import androidx.lifecycle.*
 import androidx.work.WorkInfo
-import androidx.work.WorkManager
 import com.example.series_collector.data.Category
 import com.example.series_collector.data.Series
 import com.example.series_collector.data.repository.CategoryRepository
 import com.example.series_collector.data.repository.SeriesRepository
-import com.example.series_collector.utils.CATEGORY_FICTION
-import com.example.series_collector.utils.CATEGORY_POPULAR
-import com.example.series_collector.utils.CATEGORY_RECENT
-import com.example.series_collector.utils.CATEGORY_TRAVEL
-import com.example.series_collector.utils.workers.SeriesInitWorker.Companion.WORK_TAG
-import com.example.series_collector.utils.workers.Workers
+import com.example.series_collector.utils.workers.SeriesWork
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 
@@ -27,61 +16,55 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val seriesRepository: SeriesRepository,
     private val categoryRepository: CategoryRepository,
-    private val workers: Workers,
-    @ApplicationContext appContext: Context
+    private val seriesWork: SeriesWork,
 ) : ViewModel() {
 
-    val outputInitWorkInfos: LiveData<List<WorkInfo>> = WorkManager.getInstance(appContext)
-        .getWorkInfosByTagLiveData(WORK_TAG)
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> = _isLoading
 
     private val _seriesContents = MutableLiveData<List<Category>>()
     val seriesContents: LiveData<List<Category>> = _seriesContents
 
-    init {
-        viewModelScope.launch {
-            seriesRepository.run {
-                if (isEmpty()) {
-                    workers.buildInitWorker(appContext)
-                } else {
-                    insertUpdatedSeries()
-                }
+    private val updateExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        throwable.printStackTrace()
 
-                val list: MutableList<Category> = categoryRepository.getCategorys()
-
-                list.map { category ->
-                    category.seriesList = getSeriesList(category.categoryId)
-                }
-                _seriesContents.value = list
+        when (throwable) {
+            is Exception -> {
+                _isLoading.postValue(false)
             }
         }
     }
 
-    private suspend fun getSeriesList(categoryId: Int): List<Series> =
-        withContext(Dispatchers.IO) {
-            categoryRepository.getCategoryList(categoryId)
-                .map { series ->
-                    series.apply {
-                        if (thumbnail.isNullOrEmpty()) {
-                            thumbnail = seriesRepository.getThumbnailImage(series.seriesId)
-                            seriesRepository.insertSeries(series)
-                        }
+    init {
+        _isLoading.value = true
+        viewModelScope.launch(updateExceptionHandler) {
+            seriesWork.updateSeriesStream()
+                .collect { workInfo ->
+                    if (workInfo.state == WorkInfo.State.SUCCEEDED
+                        || workInfo.state == WorkInfo.State.FAILED
+                    ) {
+                        refreshSeriesContents()
+                        _isLoading.value = false
                     }
                 }
         }
+    }
 
+    private suspend fun refreshSeriesContents() {
+        withContext(Dispatchers.IO) {
+            val categorys: MutableList<Category> = categoryRepository.getCategorys()
 
-    private fun insertUpdatedSeries() {
-        viewModelScope.launch {
-            val lastDate = seriesRepository.getLastUpdateDate()
-            val list = seriesRepository.getUpdatedSeries(lastDate)
-            insertSeries(list)
+            val seriesContents = categorys.map { category ->
+                category.copy(seriesList = getSeriesByCategory(category.categoryId))
+            }.toList()
+
+            _seriesContents.postValue(seriesContents)
         }
     }
 
-    private fun insertSeries(taskAsync: List<Series>) =
-        viewModelScope.launch {
-            seriesRepository.insertAllSeries(taskAsync)
-        }
+
+    private suspend fun getSeriesByCategory(categoryId: Int): List<Series> =
+        categoryRepository.getSeriesByCategory(categoryId)
 
 
 }

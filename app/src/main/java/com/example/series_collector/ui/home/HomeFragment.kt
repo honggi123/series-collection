@@ -1,6 +1,7 @@
 package com.example.series_collector.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeFragment() : Fragment() {
 
     lateinit private var binding: FragmentHomeSeriesListBinding
-    private val viewModel: HomeViewModel by viewModels()
+    private val homeViewModel: HomeViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,33 +26,21 @@ class HomeFragment() : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeSeriesListBinding.inflate(inflater, container, false)
-
-        viewModel.outputInitWorkInfos.observe(viewLifecycleOwner, workInfosObserver())
-
-        val adapter = CategoryAdapter()
-        binding.rvCategorys.adapter = adapter
-        subscribeUi(adapter)
+        binding.apply {
+            val adapter = CategoryAdapter()
+            viewModel = homeViewModel
+            lifecycleOwner = viewLifecycleOwner
+            rvCategorys.adapter = adapter
+            subscribeUi(adapter)
+        }
 
         return binding.root
     }
 
-
-    private fun workInfosObserver(): Observer<List<WorkInfo>> {
-        return Observer { listOfWorkInfo ->
-            if (!listOfWorkInfo.isNullOrEmpty()) {
-                if (listOfWorkInfo[0].state.isFinished) {
-                    binding.isLoading = false
-                    return@Observer
-                }else{
-                    binding.isLoading = true
-                }
-            }
-        }
-    }
-
     private fun subscribeUi(adapter: CategoryAdapter) {
-        viewModel.seriesContents.observe(viewLifecycleOwner) { contents ->
+        homeViewModel.seriesContents.observe(viewLifecycleOwner) { contents ->
             adapter.submitList(contents)
         }
     }
+
 }

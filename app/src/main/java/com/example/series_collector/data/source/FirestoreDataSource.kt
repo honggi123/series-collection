@@ -9,10 +9,17 @@ import java.util.*
 import javax.inject.Inject
 
 class FirestoreDataSource @Inject constructor() {
+
+    suspend fun getAllSeries(): List<Series> =
+        Firebase.firestore.collection("Series")
+            .get()
+            .await().toObjects(Series::class.java)
+
+
     suspend fun getUpdatedSeries(lastUpdate: Calendar): List<Series> {
         return lastUpdate.let {
             Firebase.firestore.collection("Series")
-                .whereGreaterThanOrEqualTo("updateAt", it.time)
+                .whereGreaterThanOrEqualTo("createdAt", it.time)
                 .get()
                 .await().toObjects(Series::class.java)
         }
