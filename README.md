@@ -19,7 +19,9 @@ Mvvm Pattern, Coroutine, Data-Binding, LiveData, Hilt, WorkManager, Room, Navigt
 - Nested scroll view를 통한 중첩 스크롤 구현의 리사이클러뷰 재활용 문제 
 
 ### 화면
-TODO
+|home|detail|inventory|
+|----|---|---|
+|<img src="https://github.com/f-lab-edu/series-collector/assets/89631493/2a0200d3-111a-4b2f-af05-ac6d5c372400" width="100%" height="50%"/>|<img src="https://github.com/f-lab-edu/series-collector/assets/89631493/6da51a76-432e-49b7-b28a-7ff349a7981f" width="100%" height="50%"/>|<img src="https://github.com/f-lab-edu/series-collector/assets/89631493/088d5a35-2756-434d-8235-fdd9698b038e" width="100%" height="50%"/>|
 
 ### 아키텍처
 ![Activity  Fragment](https://github.com/f-lab-edu/series-collector/assets/89631493/5b326730-ebe2-4276-abd9-5dd60b5bf02e)
