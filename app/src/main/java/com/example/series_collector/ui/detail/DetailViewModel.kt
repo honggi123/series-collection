@@ -43,17 +43,16 @@ class DetailViewModel @Inject constructor(
 
     init {
         _isLoading.value = true
-        viewModelScope.launch {
-            seriesRepository.getSeriesStream(seriesId)
-                .map {
-                    _series.value = it
-                    _isLoading.value = false
-                }
-                .launchIn(viewModelScope)
+        seriesRepository.getSeriesStream(seriesId)
+            .onEach {
+                _series.value = it
+                _isLoading.value = false
+            }
+            .launchIn(viewModelScope)
 
+        viewModelScope.launch {
             _seriesPageInfo.value =
                 seriesRepository.getPageInfo(seriesId)
-
         }
     }
 
