@@ -44,16 +44,12 @@ class CategoryAdapter : ListAdapter<Category, RecyclerView.ViewHolder>(CategoryD
         fun bind(item: Category, context: Context, sharedPool: RecyclerView.RecycledViewPool) {
             binding.apply {
                 category = item
-                if (category?.categoryId == CATEGORY_TRAVEL || category?.categoryId == CATEGORY_FICTION) {
-                    rvSeries.layoutManager =
-                        GridLayoutManager(context, 2, RecyclerView.HORIZONTAL, false)
-                }
                 (rvSeries.layoutManager as LinearLayoutManager).recycleChildrenOnDetach = true
                 rvSeries.adapter = adapter
                 rvSeries.setRecycledViewPool(sharedPool)
+                rvSeries.setNestedScrollingEnabled(false)
 
                 snapHelper.attachToRecyclerView(rvSeries)
-
                 adapter.submitList(item.seriesList)
 
                 executePendingBindings()

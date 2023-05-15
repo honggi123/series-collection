@@ -10,14 +10,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.work.WorkInfo
-import com.example.series_collector.databinding.FragmentHomeSeriesListBinding
+import com.example.series_collector.databinding.FragmentHomeSeriesBinding
 import com.example.series_collector.ui.adapters.CategoryAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment() : Fragment() {
 
-    lateinit private var binding: FragmentHomeSeriesListBinding
+    lateinit private var binding: FragmentHomeSeriesBinding
     private val homeViewModel: HomeViewModel by viewModels()
 
     override fun onCreateView(
@@ -25,7 +25,7 @@ class HomeFragment() : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentHomeSeriesListBinding.inflate(inflater, container, false)
+        binding = FragmentHomeSeriesBinding.inflate(inflater, container, false)
         binding.apply {
             val adapter = CategoryAdapter()
             viewModel = homeViewModel

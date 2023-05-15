@@ -45,20 +45,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="right"
-                    android:padding="10dp">
+                    android:padding="@dimen/toolbar_padding">
 
                     <androidx.appcompat.widget.AppCompatButton
-                        android:id="@+id/title"
+                        android:id="@+id/btn_add"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/btn_selector"
-                        android:drawableStart="@drawable/ic_baseline_add_24"
-                        android:onClick="@{() -> callback.toggle(viewModel.isFollowed)}"
                         android:paddingStart="14dp"
                         android:paddingEnd="14dp"
-                        android:text="보고싶어요"
-                        android:textSize="14sp"
-                        app:isFollowed="@{viewModel.isFollowed}" />
+                        android:onClick="@{() -> callback.toggle(viewModel.isFollowed)}"
+                        android:drawableStart="@drawable/ic_baseline_add_24"
+                        android:background="@drawable/btn_selector"
+                        app:isFollowed="@{viewModel.isFollowed}"
+                        android:text="@string/add_series"
+                        />
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
 
@@ -84,7 +84,9 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_normal"
+                    >
 
                     <ImageView
                         android:id="@+id/series_detail_thumbnail"
@@ -95,7 +97,8 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
+                        app:layout_constraintTop_toTopOf="parent"
+                     />
 
                     <ImageView
                         android:id="@+id/series_detail_play_btn"
@@ -105,7 +108,7 @@
                         app:layout_constraintEnd_toEndOf="@+id/series_detail_thumbnail"
                         app:layout_constraintStart_toStartOf="@+id/series_detail_thumbnail"
                         app:layout_constraintTop_toTopOf="@+id/series_detail_thumbnail"
-                        app:srcCompat="@drawable/ic_baseline_play_arrow_24" />
+                        app:srcCompat="@drawable/ic_baseline_play_circle_24" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -118,7 +121,8 @@
                     android:text="@{viewModel.series.name}"
                     android:textAppearance="?attr/textAppearanceHeadline5"
                     android:textColor="?attr/colorOnPrimary"
-                    tools:text="시리즈 이름" />
+                    android:textStyle="bold"
+                    tools:text="series title" />
 
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:layout_width="match_parent"
@@ -156,35 +160,34 @@
                         tools:text="#회차개수"/>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
+=======
+                    android:layout_marginBottom="@dimen/margin_normal"
+                    android:gravity="center"
+                    android:text="@{viewModel.subDescription}"
+                    android:textAppearance="?attr/textAppearanceSubtitle1"
+                    android:textColor="?attr/colorSecondary"
+                    tools:text="#genre #channel #video count" />
+>>>>>>> b17afd2 (홈, 디테일 툴바 변경 및 시리즈 아이템 radius 적용)
 
                 <TextView
                     android:id="@+id/series_description"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_small"
-                    android:maxLines="5"
+                    android:layout_marginBottom="@dimen/margin_normal"
+                    android:maxLines="@integer/detail_descpription_max_lines"
                     android:text="@{viewModel.series.description}"
                     android:textAppearance="?attr/textAppearanceSubtitle1"
                     android:textColor="?attr/colorSecondary"
                     tools:text="description about the series" />
 
-                <TextView
-                    android:id="@+id/series_description_more"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="더보기"
-                    android:textAppearance="?attr/textAppearanceSubtitle1"
-                    android:textColor="?attr/colorSecondary"
-                    android:visibility="gone" />
-
 
                 <TextView
-                    android:id="@+id/tvSeriesVideolists"
+                    android:id="@+id/series_viedeo_info_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_small"
+                    android:layout_marginBottom="@dimen/margin_normal"
                     android:gravity="center"
-                    android:text="회차정보"
+                    android:text="@string/series_videos_info_title"
                     android:textAppearance="?attr/textAppearanceHeadline5"
                     android:textColor="?attr/colorOnPrimary" />
 

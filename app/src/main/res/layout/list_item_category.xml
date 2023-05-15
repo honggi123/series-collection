@@ -12,7 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/chapter_card_bottom_margin"
+        android:layout_marginBottom="@dimen/category_card_bottom_margin"
         android:orientation="vertical"
         >
 
@@ -28,6 +28,7 @@
                 android:text="@{category.title}"
                 android:textAppearance="?attr/textAppearanceHeadline5"
                 android:textStyle="bold"
+                android:paddingBottom="6dp"
                 android:textColor="?attr/colorOnPrimary"
                 tools:text="인기 시리즈"
               />
@@ -37,6 +38,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="@integer/span"
                 tools:listitem="@layout/list_item_home_series" />

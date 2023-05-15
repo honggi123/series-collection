@@ -33,6 +33,10 @@ class SeriesVideoAdapter : PagingDataAdapter<SeriesVideo, SeriesVideoAdapter.Ser
         private val binding: ListItemSeriesVideoBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
+        init {
+            binding.videoItemThumbnail.clipToOutline = true
+        }
+
         fun bind(item: SeriesVideo) {
             binding.apply {
                 seriesVideo = item
