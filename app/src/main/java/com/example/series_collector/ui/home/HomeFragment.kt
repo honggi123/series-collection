@@ -1,18 +1,15 @@
 package com.example.series_collector.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
-import androidx.work.WorkInfo
 import com.example.series_collector.databinding.FragmentHomeSeriesBinding
 import com.example.series_collector.ui.adapters.CategoryAdapter
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class HomeFragment() : Fragment() {
@@ -31,6 +28,12 @@ class HomeFragment() : Fragment() {
             viewModel = homeViewModel
             lifecycleOwner = viewLifecycleOwner
             rvCategorys.adapter = adapter
+
+            refreshLayout.setOnRefreshListener(){
+                homeViewModel.updateSeries()
+                refreshLayout.isRefreshing = false
+            }
+
             subscribeUi(adapter)
         }
 

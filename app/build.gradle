@@ -63,6 +63,7 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
     implementation "androidx.paging:paging-runtime-ktx:$rootProject.pagingVersion"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$rootProject.freshLayoutVersion"
 
     // WorkManager Hilt
     implementation 'androidx.hilt:hilt-work:1.0.0'

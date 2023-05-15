@@ -36,8 +36,12 @@ class HomeViewModel @Inject constructor(
     }
 
     init {
-        _isLoading.value = true
+        updateSeries()
+    }
+
+    fun updateSeries(){
         viewModelScope.launch(updateExceptionHandler) {
+            _isLoading.value = true
             seriesWork.updateSeriesStream()
                 .collect { workInfo ->
                     if (workInfo.state == WorkInfo.State.SUCCEEDED
@@ -68,3 +72,4 @@ class HomeViewModel @Inject constructor(
 
 
 }
+

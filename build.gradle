@@ -28,7 +28,7 @@ buildscript {
         retrofitVersion = '2.9.0'
         okhttpLoggingVersion = '4.9.3'
         pagingVersion = '3.1.1'
-
+        freshLayoutVersion = '1.1.0'
     }
 
     repositories {
