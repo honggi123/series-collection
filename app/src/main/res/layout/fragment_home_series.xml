@@ -26,11 +26,11 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                app:contentInsetStart="12dp"
-                app:titleTextAppearance="@style/Toolbar.TitleText"
                 android:layout_height="?attr/actionBarSize"
+                app:contentInsetStart="12dp"
                 app:layout_scrollFlags="scroll|enterAlways"
-                app:title="@string/home_title" />
+                app:title="@string/home_title"
+                app:titleTextAppearance="@style/Toolbar.TitleText" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -40,23 +40,35 @@
             style="?android:attr/progressBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:indeterminateTint="@color/sc_pink"
             android:layout_gravity="center"
+            android:indeterminateTint="@color/sc_pink"
             android:progressDrawable="@drawable/circular_progress_bar"
-            app:isGone="@{!viewModel.isLoading}"/>
+            app:isGone="@{!viewModel.isLoading}" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvCategorys"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/home_side_margin"
-            android:paddingEnd="@dimen/home_side_margin"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:id="@+id/refreshLayout"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            tools:listitem="@layout/list_item_category" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvCategorys"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/home_side_margin"
+                android:paddingEnd="@dimen/home_side_margin"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/list_item_category" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
 </layout>
+
 

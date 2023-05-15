@@ -19,14 +19,6 @@
         android:fitsSystemWindows="true"
         tools:ignore="MergeRootFrame">
 
-        <ProgressBar
-            android:id="@+id/progress_circular"
-            style="?android:attr/progressBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:progressDrawable="@drawable/circular_progress_bar"
-            app:isGone="@{!viewModel.isLoading}" />
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"
@@ -72,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:fillViewport="true"
-            app:isGone="@{viewModel.isLoading}">
+            >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -160,14 +152,6 @@
                         tools:text="#회차개수"/>
 
                 </androidx.appcompat.widget.LinearLayoutCompat>
-=======
-                    android:layout_marginBottom="@dimen/margin_normal"
-                    android:gravity="center"
-                    android:text="@{viewModel.subDescription}"
-                    android:textAppearance="?attr/textAppearanceSubtitle1"
-                    android:textColor="?attr/colorSecondary"
-                    tools:text="#genre #channel #video count" />
->>>>>>> b17afd2 (홈, 디테일 툴바 변경 및 시리즈 아이템 radius 적용)
 
                 <TextView
                     android:id="@+id/series_description"

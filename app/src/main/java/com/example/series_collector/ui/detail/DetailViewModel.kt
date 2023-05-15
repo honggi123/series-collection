@@ -28,9 +28,6 @@ class DetailViewModel @Inject constructor(
 
     val isFollowed = seriesFollowedRepository.isFollowed(seriesId).asLiveData()
 
-    private val _isLoading = MutableLiveData<Boolean>()
-    val isLoading: LiveData<Boolean> = _isLoading
-
     private val _series = MutableLiveData<Series>()
     val series: LiveData<Series> = _series
 
@@ -42,18 +39,16 @@ class DetailViewModel @Inject constructor(
 
 
     init {
-        _isLoading.value = true
-        seriesRepository.getSeriesStream(seriesId)
-            .onEach {
-                _series.value = it
-                _isLoading.value = false
-            }
-            .launchIn(viewModelScope)
-
         viewModelScope.launch {
             _seriesPageInfo.value =
                 seriesRepository.getPageInfo(seriesId)
         }
+
+        seriesRepository.getSeriesStream(seriesId)
+            .map {
+                _series.value = it
+            }
+            .launchIn(viewModelScope)
     }
 
     fun toggleSeriesFollowed(isFollowed: Boolean) {
