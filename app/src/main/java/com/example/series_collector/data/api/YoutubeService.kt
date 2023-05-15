@@ -16,8 +16,9 @@ interface YoutubeService {
         @Query("key") apiKey: String = BuildConfig.GOOGLE_API_KEY,
         @Query("part") part: String = "id, snippet",
         @Query("playlistId") id: String,
+        @Query("pageToken") pageToken: String = "",
         @Query("maxResults") maxResults: Int,
-    ): PlayListThumbnailRespons
+    ): PlayListsResponse
 
     companion object {
         private const val BASE_URL = "https://www.googleapis.com/youtube/v3/"

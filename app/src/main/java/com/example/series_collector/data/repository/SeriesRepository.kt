@@ -19,6 +19,16 @@ class SeriesRepository @Inject constructor(
 
     suspend fun isEmpty() = seriesDao.isEmpty()
 
+    fun getSeriesStream(seriesId: String) =
+        seriesDao.flowSeries(seriesId)
+
+    fun getPlaylistResultStream(seriesId: String) =
+        youtubeDataSource.getSearchResultStream(seriesId)
+
+    suspend fun getPageInfo(seriesId: String) = withContext(Dispatchers.IO) {
+        youtubeDataSource.getPageInfo(seriesId)
+    }
+
     suspend fun insertAllSeries(list: List<Series?>) =
         seriesDao.insertAllSeries(list)
 

@@ -5,12 +5,14 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.example.series_collector.data.SeriesFollowed
 import com.example.series_collector.data.Series
 
-@Database(entities = [Series::class], version = 3, exportSchema = false)
+@Database(entities = [Series::class, SeriesFollowed::class], version = 3, exportSchema = false)
 @TypeConverters(Converter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun seriesDao(): SeriesDao
+    abstract fun seriesFollwedDao(): SeriesFollowedDao
 
     companion object {
         // For Singleton instantiation

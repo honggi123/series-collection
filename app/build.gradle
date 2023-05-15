@@ -3,6 +3,7 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'dagger.hilt.android.plugin'
+apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 android {
     compileSdk rootProject.compileSdkVersion
@@ -41,6 +42,7 @@ dependencies {
     kapt "androidx.room:room-compiler:$rootProject.roomVersion"
     kapt "com.google.dagger:hilt-android-compiler:$rootProject.hiltVersion"
     kapt "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
+    kapt("androidx.hilt:hilt-compiler:1.0.0")
 
     implementation platform("com.google.firebase:firebase-bom:$fireBaseVersion")
     implementation 'com.google.firebase:firebase-firestore-ktx'
@@ -60,11 +62,10 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttpLoggingVersion"
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
     implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    implementation "androidx.paging:paging-runtime-ktx:$rootProject.pagingVersion"
 
     // WorkManager Hilt
     implementation 'androidx.hilt:hilt-work:1.0.0'
-    // When using Kotlin.
-    kapt("androidx.hilt:hilt-compiler:1.0.0")
 
 
     //test

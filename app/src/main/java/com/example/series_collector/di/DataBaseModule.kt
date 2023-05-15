@@ -2,6 +2,7 @@ package com.example.series_collector.di
 
 import android.content.Context
 import com.example.series_collector.data.room.AppDatabase
+import com.example.series_collector.data.room.SeriesFollowedDao
 import com.example.series_collector.data.room.SeriesDao
 
 import dagger.Module
@@ -24,6 +25,11 @@ class DataModule {
     @Provides
     fun provideSeriesDao(appDatabase: AppDatabase): SeriesDao {
         return appDatabase.seriesDao()
+    }
+
+    @Provides
+    fun provideSeriesFollowedDao(appDatabase: AppDatabase): SeriesFollowedDao {
+        return appDatabase.seriesFollwedDao()
     }
 
 

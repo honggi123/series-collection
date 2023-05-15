@@ -15,6 +15,9 @@ fun bindIsGone(view: View, isGone: Boolean) {
     }
 }
 
+
+
+
 @BindingAdapter("imageFromUrl")
 fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
     if (!imageUrl.isNullOrEmpty()) {

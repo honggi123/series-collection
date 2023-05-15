@@ -11,6 +11,10 @@ import java.util.*
 
 @Dao
 interface SeriesDao {
+
+    @Query("SELECT * FROM Series WHERE id = :seriesId")
+    fun flowSeries(seriesId: String): Flow<Series>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAllSeries(series: List<Series?>)
 
