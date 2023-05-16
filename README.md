@@ -15,9 +15,11 @@ Mvvm Pattern, Coroutine, Data-Binding, LiveData, Hilt, WorkManager, Room, Navigt
 ### 주요 이슈 
 - 로딩 시간을 줄이기 위한 로컬 캐싱
 - 네트워크 연결이 안 되는 오프라인 상황에서 지원
-- 중첩 리사이클러의 뷰풀 공유를 통한 성능 개선
-- 다수의 이미지 URL을 가져오기 코루틴 병렬 실행과 오류 핸들
-- NestedScrollView에 리사이클러뷰 구현시 뷰 재활용 문제 
+- 중첩 리사이클러의 뷰풀 공유를 통한 성능 개선 과정 <br>
+https://codingheung.tistory.com/78
+- 다수의 이미지 URL을 가져오기 코루틴 병렬 실행과 오류 핸들 
+- NestedScrollView에 리사이클러뷰 구현시 뷰 재활용 문제 해결 <br>
+https://codingheung.tistory.com/77
 
 ### 화면
 |home|detail|inventory|
@@ -30,5 +32,5 @@ Mvvm Pattern, Coroutine, Data-Binding, LiveData, Hilt, WorkManager, Room, Navigt
 - Local : Room db
 - Remote : Firebase FireStore 
 
-### 어플 디자인
+### 어플 기획 및 디자인
 https://ovenapp.io/project/CbZ5G3hIG2UjVuFgwp9SkVRAbf1FJWgo#62N57
