@@ -19,8 +19,8 @@ class CategoryRepository @Inject constructor(
     }
 
     suspend fun getSeriesByCategory(categoryId: Int): List<Series> = withContext(Dispatchers.IO) {
-        val series = CategoryType.valueOf(categoryId.toString())
-        val list = series.getSeriesList(seriesDao)
+        val series = CategoryType.find(categoryId.toString())
+        val list = if (series == null) emptyList() else series.getSeriesList(seriesDao)
         fetchSeriesThumbnail(list)
     }
 
@@ -49,4 +49,10 @@ enum class CategoryType(
     };
 
     abstract suspend fun getSeriesList(seriesDao: SeriesDao): List<Series>
+
+    companion object {
+        private val map = values().associateBy(CategoryType::label)
+        fun find(type: String) = map[type]
+    }
 }
+

@@ -13,6 +13,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -40,15 +41,13 @@ class DetailViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _seriesPageInfo.value =
-                seriesRepository.getPageInfo(seriesId)
-        }
+            _seriesPageInfo.value = seriesRepository.getPageInfo(seriesId)
 
-        seriesRepository.getSeriesStream(seriesId)
-            .map {
-                _series.value = it
-            }
-            .launchIn(viewModelScope)
+            seriesRepository.getSeriesStream(seriesId)
+                .onEach { series ->
+                    _series.value = series
+                }
+        }
     }
 
     fun toggleSeriesFollowed(isFollowed: Boolean) {
@@ -60,7 +59,6 @@ class DetailViewModel @Inject constructor(
             }
         }
     }
-
 
 
     fun searchSeriesVideoList(seriesId: String): Flow<PagingData<SeriesVideo>> {
@@ -76,5 +74,6 @@ class DetailViewModel @Inject constructor(
     }
 
 }
+
 
 

@@ -9,6 +9,7 @@ import com.example.series_collector.data.repository.SeriesRepository
 import com.example.series_collector.utils.workers.SeriesWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 
@@ -44,9 +45,8 @@ class HomeViewModel @Inject constructor(
             _isLoading.value = true
             seriesWorker.updateStream()
                 .collect { workInfo ->
-                    if (workInfo.state == WorkInfo.State.SUCCEEDED
-                        || workInfo.state == WorkInfo.State.FAILED
-                    ) {
+                    // isFinished return : true for SUCCEEDED, FAILED, and CANCELLED states
+                    if (workInfo.state.isFinished) {
                         refreshSeriesContents()
                         _isLoading.value = false
                     }
