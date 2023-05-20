@@ -20,6 +20,8 @@ https://codingheung.tistory.com/78
 - 다수의 이미지 URL을 가져오기 코루틴 병렬 실행과 오류 핸들 
 - NestedScrollView에 리사이클러뷰 구현시 뷰 재활용 문제 해결 <br>
 https://codingheung.tistory.com/77
+- 카테고리를 추가할때 확장성 문제 해결 <br>
+https://codingheung.tistory.com/79
 
 ### 화면
 |home|detail|inventory|
