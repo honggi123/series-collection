@@ -67,7 +67,7 @@ class HomeViewModel @Inject constructor(
     }
 
 
-    private suspend fun getSeriesByCategory(categoryId: Int): List<Series> =
+    private suspend fun getSeriesByCategory(categoryId: String): List<Series> =
         categoryRepository.getSeriesByCategory(categoryId)
 
 

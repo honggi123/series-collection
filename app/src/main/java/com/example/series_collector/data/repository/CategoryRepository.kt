@@ -18,9 +18,9 @@ class CategoryRepository @Inject constructor(
         firestoreDataSource.getCategorys()
     }
 
-    suspend fun getSeriesByCategory(categoryId: Int): List<Series> = withContext(Dispatchers.IO) {
-        val series = CategoryType.find(categoryId.toString())
-        val list = if (series == null) emptyList() else series.getSeriesList(seriesDao)
+    suspend fun getSeriesByCategory(categoryId: String): List<Series> = withContext(Dispatchers.IO) {
+        val categoryType = CategoryType.find(categoryId)
+        val list = if (categoryType == null) emptyList() else categoryType.getSeriesList(seriesDao)
         fetchSeriesThumbnail(list)
     }
 
@@ -29,21 +29,21 @@ class CategoryRepository @Inject constructor(
 }
 
 enum class CategoryType(
-    val label: String
+    val id: String
 ) {
-    RECENT(label = "1") {
+    RECENT(id = "category_recent") {
         override suspend fun getSeriesList(seriesDao: SeriesDao) =
             seriesDao.getRecentSeries()
     },
-    POPULAR(label = "2") {
+    POPULAR(id = "category_popular") {
         override suspend fun getSeriesList(seriesDao: SeriesDao) =
             seriesDao.getPopularSeries()
     },
-    FICTION(label = "3") {
+    FICTION(id = "category_fiction") {
         override suspend fun getSeriesList(seriesDao: SeriesDao) =
             seriesDao.getFictionSeries()
     },
-    TRAVEL(label = "4") {
+    TRAVEL(id = "category_travel") {
         override suspend fun getSeriesList(seriesDao: SeriesDao) =
             seriesDao.getTravelSeries()
     };
@@ -51,8 +51,9 @@ enum class CategoryType(
     abstract suspend fun getSeriesList(seriesDao: SeriesDao): List<Series>
 
     companion object {
-        private val map = values().associateBy(CategoryType::label)
+        private val map = values().associateBy(CategoryType::id)
         fun find(type: String) = map[type]
     }
 }
+
 
