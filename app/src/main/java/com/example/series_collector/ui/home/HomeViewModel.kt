@@ -40,7 +40,7 @@ class HomeViewModel @Inject constructor(
         updateSeries()
     }
 
-    fun updateSeries(){
+    fun updateSeries() {
         viewModelScope.launch(updateExceptionHandler) {
             _isLoading.value = true
             seriesWorker.updateStream()

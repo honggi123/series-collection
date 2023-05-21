@@ -1,6 +1,7 @@
 package com.example.series_collector.utils.workers
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.asFlow
 import androidx.work.*
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -31,7 +32,7 @@ class SeriesWorkerImpl @Inject constructor(
 
     private fun enqueueOneTimeWorker(workerName: String, request: OneTimeWorkRequest) =
         workManager
-            .beginUniqueWork(workerName, ExistingWorkPolicy.REPLACE, request)
+            .beginUniqueWork(workerName, ExistingWorkPolicy.APPEND_OR_REPLACE, request)
             .enqueue()
 
     private fun getUpdateWorkerRequest() =
