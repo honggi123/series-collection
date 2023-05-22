@@ -38,7 +38,8 @@ class DetailViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _seriesPageInfo.value = seriesRepository.getPageInfo(seriesId)
+            _seriesPageInfo.value =
+                seriesRepository.getPageInfo(seriesId)
 
             seriesRepository.getSeriesStream(seriesId)
                 .collect { series ->

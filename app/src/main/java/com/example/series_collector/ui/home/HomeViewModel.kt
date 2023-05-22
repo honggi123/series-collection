@@ -26,27 +26,20 @@ class HomeViewModel @Inject constructor(
     private val _seriesContents = MutableLiveData<List<Category>>()
     val seriesContents: LiveData<List<Category>> = _seriesContents
 
-    private val updateExceptionHandler = CoroutineExceptionHandler { _, throwable ->
-        throwable.printStackTrace()
-
-        when (throwable) {
-            is Exception -> {
-                _isLoading.postValue(false)
-            }
-        }
-    }
-
     init {
         updateSeries()
     }
 
+    private var updateJob: Job? = null
+
     fun updateSeries() {
-        viewModelScope.launch(updateExceptionHandler) {
+        updateJob?.cancel()
+        updateJob = viewModelScope.launch {
             _isLoading.value = true
             seriesWorker.updateStream()
                 .collect { workInfo ->
-                    // isFinished return : true for SUCCEEDED, FAILED, and CANCELLED states
                     if (workInfo.state.isFinished) {
+                        // isFinished return : true for SUCCEEDED, FAILED, and CANCELLED states
                         refreshSeriesContents()
                         _isLoading.value = false
                     }
