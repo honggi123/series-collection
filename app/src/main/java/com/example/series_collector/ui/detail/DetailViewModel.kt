@@ -10,10 +10,7 @@ import com.example.series_collector.data.api.SeriesVideo
 import com.example.series_collector.data.repository.SeriesFollowedRepository
 import com.example.series_collector.data.repository.SeriesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -41,10 +38,11 @@ class DetailViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _seriesPageInfo.value = seriesRepository.getPageInfo(seriesId)
+            _seriesPageInfo.value =
+                seriesRepository.getPageInfo(seriesId)
 
             seriesRepository.getSeriesStream(seriesId)
-                .onEach { series ->
+                .collect { series ->
                     _series.value = series
                 }
         }
