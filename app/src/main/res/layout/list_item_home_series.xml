@@ -11,7 +11,7 @@
 
         <variable
             name="series"
-            type="com.example.series_collector.data.Series" />
+            type="com.example.series_collector.data.entitiy.Series" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/series_item_thumbnail"
+                android:id="@+id/img_series_thumbnail"
                 android:layout_width="@dimen/home_series_item_image_width"
                 android:layout_height="@dimen/home_series_item_image_height"
                 android:scaleType="centerCrop"
@@ -41,24 +41,24 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/series_item_title"
+                android:id="@+id/tv_series_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@{series.name}"
                 android:textAppearance="?attr/textAppearanceListItem"
                 android:textColor="?attr/colorOnPrimary"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/series_item_thumbnail"
+                app:layout_constraintTop_toBottomOf="@id/img_series_thumbnail"
                 tools:text="Series title" />
 
             <TextView
-                android:id="@+id/series_item_channel_name"
+                android:id="@+id/tv_series_channel_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@{series.channel}"
                 android:textAppearance="?attr/textAppearanceSubtitle2"
                 android:textColor="?attr/colorSecondary"
-                app:layout_constraintTop_toBottomOf="@+id/series_item_title"
+                app:layout_constraintTop_toBottomOf="@+id/tv_series_title"
                 tools:text="channel name" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

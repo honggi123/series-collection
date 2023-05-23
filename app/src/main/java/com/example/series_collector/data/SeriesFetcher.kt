@@ -1,5 +1,6 @@
 package com.example.series_collector.data
 
+import com.example.series_collector.data.entitiy.Series
 import com.example.series_collector.data.source.YoutubeDataSource
 import kotlinx.coroutines.*
 import javax.inject.Inject

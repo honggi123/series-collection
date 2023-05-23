@@ -29,9 +29,9 @@ class HomeFragment() : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             rvCategorys.adapter = adapter
 
-            refreshLayout.setOnRefreshListener(){
+            layoutRefresh.setOnRefreshListener(){
                 homeViewModel.updateSeries()
-                refreshLayout.isRefreshing = false
+                layoutRefresh.isRefreshing = false
             }
 
             subscribeUi(adapter)

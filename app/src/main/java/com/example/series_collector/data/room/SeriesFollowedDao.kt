@@ -4,8 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
-import com.example.series_collector.data.Series
-import com.example.series_collector.data.SeriesFollowed
+import com.example.series_collector.data.entitiy.Series
+import com.example.series_collector.data.entitiy.SeriesFollowed
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -7,14 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.map
-import com.example.series_collector.data.Series
 import com.example.series_collector.databinding.FragmentInventoryBinding
 import com.example.series_collector.ui.adapters.SeriesFollowedAdapter
-import com.example.series_collector.ui.adapters.SeriesVideoAdapter
-import com.example.series_collector.ui.home.HomeViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint

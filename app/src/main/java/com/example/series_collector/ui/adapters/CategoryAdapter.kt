@@ -1,11 +1,10 @@
 package com.example.series_collector.ui.adapters
 
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.*
-import com.example.series_collector.data.Category
+import com.example.series_collector.data.entitiy.Category
 import com.example.series_collector.databinding.ListItemCategoryBinding
 
 

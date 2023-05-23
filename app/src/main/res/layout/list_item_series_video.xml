@@ -22,7 +22,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/video_item_thumbnail"
+                android:id="@+id/img_series_thumbnail"
                 android:layout_width="@dimen/series_item_image_width_normal"
                 android:layout_height="@dimen/series_item_image_height_normal"
                 android:background="@drawable/round_radius_shape"
@@ -30,7 +30,7 @@
                 app:imageFromUrl="@{seriesVideo.snippet.thumbnails.standard.url}" />
 
             <TextView
-                android:id="@+id/video_item_title"
+                android:id="@+id/tv_series_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/margin_extra_small"

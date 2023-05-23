@@ -1,6 +1,6 @@
 package com.example.series_collector.data.repository
 
-import com.example.series_collector.data.Series
+import com.example.series_collector.data.entitiy.Series
 import com.example.series_collector.data.SeriesFetcher
 import com.example.series_collector.data.room.SeriesDao
 import com.example.series_collector.data.source.FirestoreDataSource
@@ -18,11 +18,21 @@ class CategoryRepository @Inject constructor(
         firestoreDataSource.getCategorys()
     }
 
-    suspend fun getSeriesByCategory(categoryId: String): List<Series> = withContext(Dispatchers.IO) {
-        val categoryType = CategoryType.find(categoryId)
-        val list = if (categoryType == null) emptyList() else categoryType.getSeriesList(seriesDao)
-        fetchSeriesThumbnail(list)
-    }
+    suspend fun getSeriesByCategory(categoryId: String): List<Series> =
+        withContext(Dispatchers.IO) {
+            val categoryType: CategoryType? = CategoryType.find(categoryId)
+            seriesDao.run {
+                val list = when (categoryType) {
+                    CategoryType.RECENT -> getRecentSeries()
+                    CategoryType.POPULAR -> getPopularSeries()
+                    CategoryType.FICTION -> getFictionSeries()
+                    CategoryType.TRAVEL -> getTravelSeries()
+                    null -> emptyList()
+                }
+                fetchSeriesThumbnail(list)
+            }
+        }
+
 
     private suspend fun fetchSeriesThumbnail(list: List<Series>): List<Series> =
         seriesFetcher.fetchSeriesThumbnail(list)
@@ -31,28 +41,12 @@ class CategoryRepository @Inject constructor(
 enum class CategoryType(
     val id: String
 ) {
-    RECENT(id = "category_recent") {
-        override suspend fun getSeriesList(seriesDao: SeriesDao) =
-            seriesDao.getRecentSeries()
-    },
-    POPULAR(id = "category_popular") {
-        override suspend fun getSeriesList(seriesDao: SeriesDao) =
-            seriesDao.getPopularSeries()
-    },
-    FICTION(id = "category_fiction") {
-        override suspend fun getSeriesList(seriesDao: SeriesDao) =
-            seriesDao.getFictionSeries()
-    },
-    TRAVEL(id = "category_travel") {
-        override suspend fun getSeriesList(seriesDao: SeriesDao) =
-            seriesDao.getTravelSeries()
-    };
-
-    abstract suspend fun getSeriesList(seriesDao: SeriesDao): List<Series>
+    RECENT(id = "category_recent"), POPULAR(id = "category_popular"),
+    FICTION(id = "category_fiction"), TRAVEL(id = "category_travel");
 
     companion object {
         private val map = values().associateBy(CategoryType::id)
-        fun find(type: String) = map[type]
+        fun find(id: String) = map[id]
     }
 }
 

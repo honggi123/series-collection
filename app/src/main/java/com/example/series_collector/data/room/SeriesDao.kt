@@ -4,8 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.series_collector.data.Category
-import com.example.series_collector.data.Series
+import com.example.series_collector.data.entitiy.Series
 import kotlinx.coroutines.flow.Flow
 import java.util.*
 

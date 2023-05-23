@@ -1,4 +1,6 @@
-package com.example.series_collector.data
+package com.example.series_collector.data.entitiy
+
+import com.example.series_collector.data.entitiy.Series
 
 
 data class Category(

@@ -6,7 +6,7 @@
     <data>
         <variable
             name="category"
-            type="com.example.series_collector.data.Category"/>
+            type="com.example.series_collector.data.entitiy.Category"/>
     </data>
 
     <LinearLayout
@@ -22,7 +22,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/tvSubjectName"
+                android:id="@+id/tv_category_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{category.title}"
@@ -34,7 +34,7 @@
               />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvSeries"
+                android:id="@+id/rv_series"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
