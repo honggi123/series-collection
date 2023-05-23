@@ -34,7 +34,7 @@ class SeriesVideoAdapter : PagingDataAdapter<SeriesVideo, SeriesVideoAdapter.Ser
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.videoItemThumbnail.clipToOutline = true
+            binding.imgSeriesThumbnail.clipToOutline = true
         }
 
         fun bind(item: SeriesVideo) {

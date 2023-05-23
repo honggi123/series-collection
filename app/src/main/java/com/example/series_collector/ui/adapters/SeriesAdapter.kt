@@ -36,7 +36,7 @@ class SeriesAdapter : ListAdapter<Series, RecyclerView.ViewHolder>(SeriesDiffCal
 
         init {
             binding.apply {
-                seriesItemThumbnail.clipToOutline = true
+                imgSeriesThumbnail.clipToOutline = true
                 setClickListener {
                     series?.let { series ->
                         navigateToDetail(series, it)
