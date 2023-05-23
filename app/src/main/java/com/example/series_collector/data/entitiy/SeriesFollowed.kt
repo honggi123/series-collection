@@ -1,7 +1,7 @@
-package com.example.series_collector.data
+package com.example.series_collector.data.entitiy
 
 import androidx.room.*
-import com.example.series_collector.data.Series
+import com.example.series_collector.data.entitiy.Series
 import java.util.*
 
 

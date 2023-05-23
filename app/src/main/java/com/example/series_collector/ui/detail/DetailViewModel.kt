@@ -4,7 +4,7 @@ package com.example.series_collector.ui.detail
 import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.series_collector.data.Series
+import com.example.series_collector.data.entitiy.Series
 import com.example.series_collector.data.api.PageInfo
 import com.example.series_collector.data.api.SeriesVideo
 import com.example.series_collector.data.repository.SeriesFollowedRepository

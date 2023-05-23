@@ -1,15 +1,13 @@
 package com.example.series_collector.ui.home
 
 import androidx.lifecycle.*
-import androidx.work.WorkInfo
-import com.example.series_collector.data.Category
-import com.example.series_collector.data.Series
+import com.example.series_collector.data.entitiy.Category
+import com.example.series_collector.data.entitiy.Series
 import com.example.series_collector.data.repository.CategoryRepository
 import com.example.series_collector.data.repository.SeriesRepository
 import com.example.series_collector.utils.workers.SeriesWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.onEach
 import javax.inject.Inject
 
 

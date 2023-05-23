@@ -1,7 +1,7 @@
 package com.example.series_collector.data.source
 
-import com.example.series_collector.data.Category
-import com.example.series_collector.data.Series
+import com.example.series_collector.data.entitiy.Category
+import com.example.series_collector.data.entitiy.Series
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await

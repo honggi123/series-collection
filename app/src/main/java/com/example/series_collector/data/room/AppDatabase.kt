@@ -5,8 +5,8 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import com.example.series_collector.data.SeriesFollowed
-import com.example.series_collector.data.Series
+import com.example.series_collector.data.entitiy.SeriesFollowed
+import com.example.series_collector.data.entitiy.Series
 
 @Database(entities = [Series::class, SeriesFollowed::class], version = 3, exportSchema = false)
 @TypeConverters(Converter::class)

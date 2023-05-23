@@ -1,18 +1,13 @@
 package com.example.series_collector.ui.adapters
 
-import android.content.Intent
-import android.net.Uri
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.series_collector.data.Series
+import com.example.series_collector.data.entitiy.Series
 import com.example.series_collector.databinding.ListItemSeriesFollowedBinding
 import com.example.series_collector.ui.Inventory.InventoryItemCallback
-import com.example.series_collector.ui.home.HomeFragmentDirections
 
 class SeriesFollowedAdapter(
     private val inventoryItemCallback: InventoryItemCallback

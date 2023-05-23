@@ -1,6 +1,6 @@
 package com.example.series_collector.data.repository
 
-import com.example.series_collector.data.Series
+import com.example.series_collector.data.entitiy.Series
 import com.example.series_collector.data.SeriesFetcher
 import com.example.series_collector.data.room.SeriesDao
 import com.example.series_collector.data.source.FirestoreDataSource

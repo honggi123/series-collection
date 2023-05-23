@@ -8,7 +8,7 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.series_collector.data.Series
+import com.example.series_collector.data.entitiy.Series
 import com.example.series_collector.databinding.ListItemHomeSeriesBinding
 import com.example.series_collector.ui.home.HomeFragmentDirections
 

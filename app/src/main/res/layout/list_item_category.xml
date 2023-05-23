@@ -6,7 +6,7 @@
     <data>
         <variable
             name="category"
-            type="com.example.series_collector.data.Category"/>
+            type="com.example.series_collector.data.entitiy.Category"/>
     </data>
 
     <LinearLayout

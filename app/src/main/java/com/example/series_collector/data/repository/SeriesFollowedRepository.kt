@@ -1,6 +1,6 @@
 package com.example.series_collector.data.repository
 
-import com.example.series_collector.data.SeriesFollowed
+import com.example.series_collector.data.entitiy.SeriesFollowed
 import com.example.series_collector.data.room.SeriesFollowedDao
 import javax.inject.Inject
 

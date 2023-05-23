@@ -1,4 +1,4 @@
-package com.example.series_collector.data
+package com.example.series_collector.data.entitiy
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
