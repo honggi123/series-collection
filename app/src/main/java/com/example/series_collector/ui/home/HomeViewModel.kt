@@ -49,17 +49,21 @@ class HomeViewModel @Inject constructor(
         withContext(Dispatchers.IO) {
             val categorys: MutableList<Category> = categoryRepository.getCategorys()
 
-            val seriesContents = categorys.map { category ->
-                category.copy(seriesList = getSeriesByCategory(category.categoryId))
-            }.toList()
+            val seriesContents =
+                categorys.map { category ->
+                    category.copy(seriesList = getSeriesByCategory(category.categoryId))
+                }.toList()
 
             _seriesContents.postValue(seriesContents)
         }
     }
 
 
-    private suspend fun getSeriesByCategory(categoryId: String): List<Series> =
+    private suspend fun getSeriesByCategory(categoryId: String): List<Series> = kotlin.runCatching {
         categoryRepository.getSeriesByCategory(categoryId)
+    }.onFailure {
+        it.printStackTrace()
+    }.getOrDefault(emptyList())
 
 
 }

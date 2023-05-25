@@ -13,10 +13,10 @@ class YoutubeDataSource @Inject constructor(
     private val youTubeService: YoutubeService
 ) {
     suspend fun getThumbnailImageUrl(playListId: String): String =
-        youTubeService.run {
-            getYoutubePlayListItems(id = playListId, maxResults = 1)
-                .items.get(0).snippet.thumbnails.medium.url
-        }
+        youTubeService.getYoutubePlayListItems(id = playListId, maxResults = 1)
+            .items.get(0).snippet.thumbnails.medium.url
+
+
 
     fun getSearchResultStream(playlistId: String): Flow<PagingData<SeriesVideo>> {
         return Pager(

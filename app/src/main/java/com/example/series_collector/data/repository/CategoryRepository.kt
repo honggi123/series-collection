@@ -6,6 +6,7 @@ import com.example.series_collector.data.room.SeriesDao
 import com.example.series_collector.data.source.FirestoreDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.lang.NullPointerException
 import javax.inject.Inject
 
 class CategoryRepository @Inject constructor(
@@ -20,15 +21,17 @@ class CategoryRepository @Inject constructor(
 
     suspend fun getSeriesByCategory(categoryId: String): List<Series> =
         withContext(Dispatchers.IO) {
-            val categoryType: CategoryType? = CategoryType.find(categoryId)
+            val categoryType: CategoryType = CategoryType.find(categoryId)
+                ?: throw NullPointerException()
+
             seriesDao.run {
-                val list = when (categoryType) {
-                    CategoryType.RECENT -> getRecentSeries()
-                    CategoryType.POPULAR -> getPopularSeries()
-                    CategoryType.FICTION -> getFictionSeries()
-                    CategoryType.TRAVEL -> getTravelSeries()
-                    null -> emptyList()
-                }
+                val list =
+                    when (categoryType) {
+                        CategoryType.RECENT -> getRecentSeries()
+                        CategoryType.POPULAR -> getPopularSeries()
+                        CategoryType.FICTION -> getFictionSeries()
+                        CategoryType.TRAVEL -> getTravelSeries()
+                    }
                 fetchSeriesThumbnail(list)
             }
         }
