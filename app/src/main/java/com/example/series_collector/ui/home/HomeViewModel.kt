@@ -59,11 +59,12 @@ class HomeViewModel @Inject constructor(
     }
 
 
-    private suspend fun getSeriesByCategory(categoryId: String): List<Series> = kotlin.runCatching {
-        categoryRepository.getSeriesByCategory(categoryId)
-    }.onFailure {
-        it.printStackTrace()
-    }.getOrDefault(emptyList())
+    private suspend fun getSeriesByCategory(categoryId: String): List<Series> =
+        kotlin.runCatching {
+            categoryRepository.getSeriesByCategory(categoryId)
+        }.onFailure {
+            it.printStackTrace()
+        }.getOrDefault(emptyList())
 
 
 }

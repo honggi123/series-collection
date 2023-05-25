@@ -38,15 +38,21 @@ class DetailViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _seriesPageInfo.value =
-                seriesRepository.getPageInfo(seriesId)
-
+            setPageInfo()
             seriesRepository.getSeriesStream(seriesId)
                 .collect { series ->
                     _series.value = series
                 }
         }
     }
+
+    private fun setPageInfo() =
+        viewModelScope.launch {
+            _seriesPageInfo.value = seriesRepository
+                .getPlayLists(seriesId = seriesId, limit = 1)
+                .pageInfo
+        }
+
 
     fun toggleSeriesFollowed(isFollowed: Boolean) {
         viewModelScope.launch {

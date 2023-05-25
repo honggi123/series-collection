@@ -1,7 +1,7 @@
 package com.example.series_collector.data.repository
 
+import com.example.series_collector.data.SeriesThumbnailFetcher
 import com.example.series_collector.data.entitiy.Series
-import com.example.series_collector.data.SeriesFetcher
 import com.example.series_collector.data.room.SeriesDao
 import com.example.series_collector.data.source.FirestoreDataSource
 import kotlinx.coroutines.Dispatchers
@@ -12,7 +12,7 @@ import javax.inject.Inject
 class CategoryRepository @Inject constructor(
     private val seriesDao: SeriesDao,
     private val firestoreDataSource: FirestoreDataSource,
-    private val seriesFetcher: SeriesFetcher
+    private val seriesThumbnailFetcher: SeriesThumbnailFetcher
 ) {
 
     suspend fun getCategorys() = withContext(Dispatchers.IO) {
@@ -38,7 +38,7 @@ class CategoryRepository @Inject constructor(
 
 
     private suspend fun fetchSeriesThumbnail(list: List<Series>): List<Series> =
-        seriesFetcher.fetchSeriesThumbnail(list)
+        seriesThumbnailFetcher.invoke(list)
 }
 
 enum class CategoryType(
