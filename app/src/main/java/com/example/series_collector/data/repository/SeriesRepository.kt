@@ -1,7 +1,7 @@
 package com.example.series_collector.data.repository
 
 import com.example.series_collector.data.entitiy.Series
-import com.example.series_collector.data.SeriesFetcher
+import com.example.series_collector.data.SeriesThumbnailFetcher
 import com.example.series_collector.data.room.SeriesDao
 import com.example.series_collector.data.source.FirestoreDataSource
 import com.example.series_collector.data.source.YoutubeDataSource
@@ -13,7 +13,7 @@ class SeriesRepository @Inject constructor(
     private val seriesDao: SeriesDao,
     private val firestoreDataSource: FirestoreDataSource,
     private val youtubeDataSource: YoutubeDataSource,
-    private val seriesFetcher: SeriesFetcher
+    private val seriesThumbnailFetcher: SeriesThumbnailFetcher
 ) {
 
     suspend fun isEmpty() = seriesDao.isEmpty()
@@ -24,8 +24,8 @@ class SeriesRepository @Inject constructor(
     fun getPlaylistResultStream(seriesId: String) =
         youtubeDataSource.getSearchResultStream(seriesId)
 
-    suspend fun getPageInfo(seriesId: String) = withContext(Dispatchers.IO) {
-        youtubeDataSource.getPageInfo(seriesId)
+    suspend fun getPlayLists(seriesId: String, limit: Int) = withContext(Dispatchers.IO) {
+        youtubeDataSource.getPlayLists(seriesId, limit)
     }
 
     suspend fun insertAllSeries(list: List<Series?>) =
@@ -57,7 +57,7 @@ class SeriesRepository @Inject constructor(
     }
 
     private suspend fun fetchSeriesThumbnail(list: List<Series>): List<Series> =
-        seriesFetcher.fetchSeriesThumbnail(list)
+        seriesThumbnailFetcher.invoke(list)
 
 
 }

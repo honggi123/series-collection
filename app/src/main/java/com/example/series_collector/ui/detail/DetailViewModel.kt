@@ -38,9 +38,7 @@ class DetailViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            _seriesPageInfo.value =
-                seriesRepository.getPageInfo(seriesId)
-
+            setPageInfo()
             seriesRepository.getSeriesStream(seriesId)
                 .collect { series ->
                     _series.value = series
@@ -58,7 +56,6 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-
     fun searchSeriesVideoList(seriesId: String): Flow<PagingData<SeriesVideo>> {
         currentQueryValue = seriesId
         val newResult: Flow<PagingData<SeriesVideo>> =
@@ -66,6 +63,12 @@ class DetailViewModel @Inject constructor(
         currentSearchResult = newResult
         return newResult
     }
+
+    private fun setPageInfo() =
+        viewModelScope.launch {
+            val response = seriesRepository.getPlayLists(seriesId = seriesId, limit = 1)
+            _seriesPageInfo.value = response.pageInfo
+        }
 
     companion object {
         private const val SERIES_ID_SAVED_STATE_KEY = "seriesId"

@@ -1,17 +1,18 @@
 package com.example.series_collector.data.repository
 
+import com.example.series_collector.data.SeriesThumbnailFetcher
 import com.example.series_collector.data.entitiy.Series
-import com.example.series_collector.data.SeriesFetcher
 import com.example.series_collector.data.room.SeriesDao
 import com.example.series_collector.data.source.FirestoreDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.lang.NullPointerException
 import javax.inject.Inject
 
 class CategoryRepository @Inject constructor(
     private val seriesDao: SeriesDao,
     private val firestoreDataSource: FirestoreDataSource,
-    private val seriesFetcher: SeriesFetcher
+    private val seriesThumbnailFetcher: SeriesThumbnailFetcher
 ) {
 
     suspend fun getCategorys() = withContext(Dispatchers.IO) {
@@ -20,22 +21,24 @@ class CategoryRepository @Inject constructor(
 
     suspend fun getSeriesByCategory(categoryId: String): List<Series> =
         withContext(Dispatchers.IO) {
-            val categoryType: CategoryType? = CategoryType.find(categoryId)
+            val categoryType: CategoryType = CategoryType.find(categoryId)
+                ?: throw NullPointerException()
+
             seriesDao.run {
-                val list = when (categoryType) {
-                    CategoryType.RECENT -> getRecentSeries()
-                    CategoryType.POPULAR -> getPopularSeries()
-                    CategoryType.FICTION -> getFictionSeries()
-                    CategoryType.TRAVEL -> getTravelSeries()
-                    null -> emptyList()
-                }
+                val list =
+                    when (categoryType) {
+                        CategoryType.RECENT -> getRecentSeries()
+                        CategoryType.POPULAR -> getPopularSeries()
+                        CategoryType.FICTION -> getFictionSeries()
+                        CategoryType.TRAVEL -> getTravelSeries()
+                    }
                 fetchSeriesThumbnail(list)
             }
         }
 
 
     private suspend fun fetchSeriesThumbnail(list: List<Series>): List<Series> =
-        seriesFetcher.fetchSeriesThumbnail(list)
+        seriesThumbnailFetcher.invoke(list)
 }
 
 enum class CategoryType(
