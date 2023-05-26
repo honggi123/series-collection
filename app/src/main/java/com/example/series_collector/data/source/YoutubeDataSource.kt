@@ -1,5 +1,6 @@
 package com.example.series_collector.data.source
 
+import android.util.Log
 import com.example.series_collector.data.api.YoutubeService
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
@@ -12,7 +13,8 @@ class YoutubeDataSource @Inject constructor(
     private val youTubeService: YoutubeService
 ) {
     suspend fun getPlayLists(playListId: String, limit: Int) =
-            youTubeService.getYoutubePlayListItems(id = playListId, maxResults = limit)
+        youTubeService.getYoutubePlayListItems(id = playListId, maxResults = limit)
+
 
     fun getSearchResultStream(playlistId: String): Flow<PagingData<SeriesVideo>> {
         return Pager(

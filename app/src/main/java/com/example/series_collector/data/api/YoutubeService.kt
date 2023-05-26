@@ -18,7 +18,7 @@ interface YoutubeService {
         @Query("playlistId") id: String,
         @Query("pageToken") pageToken: String = "",
         @Query("maxResults") maxResults: Int,
-    ): PlayListsResponse
+    ): PlayListsInfo
 
     companion object {
         private const val BASE_URL = "https://www.googleapis.com/youtube/v3/"

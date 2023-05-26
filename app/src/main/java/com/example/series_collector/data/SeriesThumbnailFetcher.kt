@@ -3,6 +3,8 @@ package com.example.series_collector.data
 import com.example.series_collector.data.entitiy.Series
 import com.example.series_collector.data.source.YoutubeDataSource
 import kotlinx.coroutines.*
+import retrofit2.HttpException
+import java.io.IOException
 import javax.inject.Inject
 
 class SeriesThumbnailFetcher @Inject constructor(
@@ -12,20 +14,18 @@ class SeriesThumbnailFetcher @Inject constructor(
         withContext(Dispatchers.IO) {
             list.map { series ->
                 async {
-                    try {
-                        if (series.thumbnail.isBlank()) {
-                            val thumbnailUrl =
-                                youtubeDataSource.getPlayLists(playListId = series.seriesId, limit = 1)
-                                    .items.get(0).snippet.thumbnails.medium.url
-                            series.copy(thumbnail = thumbnailUrl)
-                        } else series
-                    } catch (e: Exception) {
-                        e.printStackTrace()
-                        series
-                    }
+                    if (series.thumbnail.isBlank()) {
+                        series.copy(thumbnail = getThumbnailUrl(series.seriesId))
+                    } else series
                 }
             }.awaitAll()
         }
+
+    private suspend fun getThumbnailUrl(seriesId: String): String =
+        runCatching {
+            youtubeDataSource.getPlayLists(playListId = seriesId, limit = 1)
+                .items.get(0).snippet.thumbnails.medium.url
+        }.getOrDefault("")
 
 
 }

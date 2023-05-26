@@ -46,14 +46,6 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    private fun setPageInfo() =
-        viewModelScope.launch {
-            _seriesPageInfo.value = seriesRepository
-                .getPlayLists(seriesId = seriesId, limit = 1)
-                .pageInfo
-        }
-
-
     fun toggleSeriesFollowed(isFollowed: Boolean) {
         viewModelScope.launch {
             if (isFollowed) {
@@ -64,7 +56,6 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-
     fun searchSeriesVideoList(seriesId: String): Flow<PagingData<SeriesVideo>> {
         currentQueryValue = seriesId
         val newResult: Flow<PagingData<SeriesVideo>> =
@@ -72,6 +63,12 @@ class DetailViewModel @Inject constructor(
         currentSearchResult = newResult
         return newResult
     }
+
+    private fun setPageInfo() =
+        viewModelScope.launch {
+            val response = seriesRepository.getPlayLists(seriesId = seriesId, limit = 1)
+            _seriesPageInfo.value = response.pageInfo
+        }
 
     companion object {
         private const val SERIES_ID_SAVED_STATE_KEY = "seriesId"
