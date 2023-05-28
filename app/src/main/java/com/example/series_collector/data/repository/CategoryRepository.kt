@@ -9,6 +9,18 @@ import kotlinx.coroutines.withContext
 import java.lang.NullPointerException
 import javax.inject.Inject
 
+enum class CategoryType(
+    val categoryId: String
+) {
+    RECENT(categoryId = "category_recent"), POPULAR(categoryId = "category_popular"),
+    FICTION(categoryId = "category_fiction"), TRAVEL(categoryId = "category_travel");
+
+    companion object {
+        private val map = values().associateBy(CategoryType::categoryId)
+        fun find(id: String) = map[id]
+    }
+}
+
 class CategoryRepository @Inject constructor(
     private val seriesDao: SeriesDao,
     private val firestoreDataSource: FirestoreDataSource,
@@ -27,10 +39,10 @@ class CategoryRepository @Inject constructor(
             seriesDao.run {
                 val list =
                     when (categoryType) {
-                        CategoryType.RECENT -> getRecentSeries()
-                        CategoryType.POPULAR -> getPopularSeries()
-                        CategoryType.FICTION -> getFictionSeries()
-                        CategoryType.TRAVEL -> getTravelSeries()
+                        CategoryType.RECENT -> getRecentSeries(limit = 8)
+                        CategoryType.POPULAR -> getPopularSeries(limit = 8)
+                        CategoryType.FICTION -> getFictionSeries(limit = 16)
+                        CategoryType.TRAVEL -> getTravelSeries(limit = 16)
                     }
                 fetchSeriesThumbnail(list)
             }
@@ -41,16 +53,6 @@ class CategoryRepository @Inject constructor(
         seriesThumbnailFetcher.invoke(list)
 }
 
-enum class CategoryType(
-    val id: String
-) {
-    RECENT(id = "category_recent"), POPULAR(id = "category_popular"),
-    FICTION(id = "category_fiction"), TRAVEL(id = "category_travel");
 
-    companion object {
-        private val map = values().associateBy(CategoryType::id)
-        fun find(id: String) = map[id]
-    }
-}
 
 
