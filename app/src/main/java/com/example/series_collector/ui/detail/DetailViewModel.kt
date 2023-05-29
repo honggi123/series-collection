@@ -7,8 +7,10 @@ import androidx.paging.cachedIn
 import com.example.series_collector.data.entitiy.Series
 import com.example.series_collector.data.api.PageInfo
 import com.example.series_collector.data.api.SeriesVideo
+import com.example.series_collector.data.entitiy.SeriesWithPageInfo
 import com.example.series_collector.data.repository.SeriesFollowedRepository
 import com.example.series_collector.data.repository.SeriesRepository
+import com.example.series_collector.ui.base.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -26,22 +28,18 @@ class DetailViewModel @Inject constructor(
 
     val isFollowed = seriesFollowedRepository.isFollowed(seriesId).asLiveData()
 
-    private val _series = MutableLiveData<Series>()
-    val series: LiveData<Series> = _series
-
-    private val _seriesPageInfo = MutableLiveData<PageInfo>()
-    val seriesPageInfo: LiveData<PageInfo> = _seriesPageInfo
+    private var _seriesInfo = MutableLiveData<SeriesWithPageInfo?>()
+    val seriesInfo: LiveData<SeriesWithPageInfo?> = _seriesInfo
 
     private var currentQueryValue: String? = null
     private var currentSearchResult: Flow<PagingData<SeriesVideo>>? = null
 
-
     init {
         viewModelScope.launch {
-            setPageInfo()
-            seriesRepository.getSeriesStream(seriesId)
-                .collect { series ->
-                    _series.value = series
+            seriesRepository.getSeriesWithPageInfoStream(seriesId = seriesId, limit = 1)
+                .filter { it is UiState.Success }
+                .collect {
+                    _seriesInfo.value = it.data
                 }
         }
     }
@@ -59,16 +57,11 @@ class DetailViewModel @Inject constructor(
     fun searchSeriesVideoList(seriesId: String): Flow<PagingData<SeriesVideo>> {
         currentQueryValue = seriesId
         val newResult: Flow<PagingData<SeriesVideo>> =
-            seriesRepository.getPlaylistResultStream(seriesId).cachedIn(viewModelScope)
+            seriesRepository.getPlaylistResultStream(playlistId = seriesId).cachedIn(viewModelScope)
         currentSearchResult = newResult
         return newResult
     }
 
-    private fun setPageInfo() =
-        viewModelScope.launch {
-            val response = seriesRepository.getPlayLists(seriesId = seriesId, limit = 1)
-            _seriesPageInfo.value = response.pageInfo
-        }
 
     companion object {
         private const val SERIES_ID_SAVED_STATE_KEY = "seriesId"

@@ -2,10 +2,15 @@ package com.example.series_collector.data.repository
 
 import com.example.series_collector.data.entitiy.Series
 import com.example.series_collector.data.SeriesThumbnailFetcher
+import com.example.series_collector.data.entitiy.SeriesWithPageInfo
 import com.example.series_collector.data.room.SeriesDao
 import com.example.series_collector.data.source.FirestoreDataSource
 import com.example.series_collector.data.source.YoutubeDataSource
+import com.example.series_collector.ui.base.UiState
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flatMapMerge
+import kotlinx.coroutines.flow.flow
 import java.util.*
 import javax.inject.Inject
 
@@ -18,15 +23,23 @@ class SeriesRepository @Inject constructor(
 
     suspend fun isEmpty() = seriesDao.isEmpty()
 
-    fun getSeriesStream(seriesId: String) =
-        seriesDao.flowSeries(seriesId)
+    fun getSeriesWithPageInfoStream(seriesId: String, limit: Int) =
+        seriesDao.flowSeries(seriesId).flatMapMerge { series ->
+            flow {
+                val response = youtubeDataSource.getPlayLists(seriesId, limit)
 
-    fun getPlaylistResultStream(seriesId: String) =
-        youtubeDataSource.getSearchResultStream(seriesId)
+                if (response.isSuccessful) {
+                    val seriesWithPageInfo =
+                        SeriesWithPageInfo(series,response.body()!!.pageInfo)
+                    emit(UiState.Success(seriesWithPageInfo))
+                } else {
+                    throw Exception("[${response.code()}] - ${response.raw()}")
+                }
+            }.catch { e -> UiState.Error(e) }
+        }
 
-    suspend fun getPlayLists(seriesId: String, limit: Int) = withContext(Dispatchers.IO) {
-        youtubeDataSource.getPlayLists(seriesId, limit)
-    }
+    fun getPlaylistResultStream(playlistId: String) =
+        youtubeDataSource.getSearchResultStream(playlistId)
 
     suspend fun insertAllSeries(list: List<Series?>) =
         seriesDao.insertAllSeries(list)
