@@ -1,16 +1,15 @@
 package com.example.series_collector.ui.detail
 
 
+import android.util.Log
 import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.series_collector.data.entitiy.Series
-import com.example.series_collector.data.api.PageInfo
+import com.example.series_collector.data.api.ApiResult
 import com.example.series_collector.data.api.SeriesVideo
 import com.example.series_collector.data.entitiy.SeriesWithPageInfo
 import com.example.series_collector.data.repository.SeriesFollowedRepository
 import com.example.series_collector.data.repository.SeriesRepository
-import com.example.series_collector.ui.base.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -31,15 +30,28 @@ class DetailViewModel @Inject constructor(
     private var _seriesInfo = MutableLiveData<SeriesWithPageInfo?>()
     val seriesInfo: LiveData<SeriesWithPageInfo?> = _seriesInfo
 
+    private var _errorMsg = MutableLiveData<String?>()
+    val errorMsg: LiveData<String?> = _errorMsg
+
     private var currentQueryValue: String? = null
     private var currentSearchResult: Flow<PagingData<SeriesVideo>>? = null
 
     init {
+        getSeriesInfoFlow(seriesId)
+    }
+
+    private fun getSeriesInfoFlow(seriesId: String) {
         viewModelScope.launch {
             seriesRepository.getSeriesWithPageInfoStream(seriesId = seriesId, limit = 1)
-                .filter { it is UiState.Success }
-                .collect {
-                    _seriesInfo.value = it.data
+                .collect { result ->
+                    when (result) {
+                        is ApiResult.Success ->
+                            _seriesInfo.postValue(result.value)
+                        is ApiResult.Empty ->
+                            _errorMsg.postValue("Response data is empty")
+                        is ApiResult.Error ->
+                            _errorMsg.postValue(result.exception?.message)
+                    }
                 }
         }
     }

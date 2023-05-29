@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -42,8 +43,7 @@ class DetailFragment : Fragment() {
             callback = Callback { isFollowed ->
                 detailViewModel.toggleSeriesFollowed(isFollowed)
                 val toggleMsg =
-                    if (isFollowed) R.string.removed_series_from_inventory
-                    else R.string.added_series_to_inventory
+                    if (isFollowed) R.string.removed_series_from_inventory else R.string.added_series_to_inventory
                 Snackbar.make(root, toggleMsg, Snackbar.LENGTH_LONG)
                     .show()
             }
@@ -58,9 +58,16 @@ class DetailFragment : Fragment() {
 
         }
 
+        subscribeErrorMsg()
         searchSeriesVideoList(args.seriesId)
 
         return binding.root
+    }
+
+    private fun subscribeErrorMsg() {
+        detailViewModel.errorMsg.observe(viewLifecycleOwner){ msg ->
+            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun searchSeriesVideoList(seriesId: String) {
@@ -76,7 +83,7 @@ class DetailFragment : Fragment() {
             Intent(Intent.ACTION_VIEW)
                 .setData(Uri.parse("https://www.youtube.com/watch?list=$playListId"))
                 .setPackage("com.google.android.youtube")
-        );
+        )
     }
 
 
