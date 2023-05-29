@@ -24,7 +24,7 @@ class SeriesThumbnailFetcher @Inject constructor(
     private suspend fun getThumbnailUrl(seriesId: String): String =
         runCatching {
             youtubeDataSource.getPlayLists(playListId = seriesId, limit = 1)
-                .items.get(0).snippet.thumbnails.medium.url
+                .body()!!.items.get(0).snippet.thumbnails.medium.url
         }.getOrDefault("")
 
 

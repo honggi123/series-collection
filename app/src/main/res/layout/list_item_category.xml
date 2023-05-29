@@ -26,9 +26,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{category.title}"
-                android:textAppearance="?attr/textAppearanceHeadline5"
+                android:textAppearance="?attr/textAppearanceHeadline6"
                 android:textStyle="bold"
-                android:paddingBottom="6dp"
+                android:paddingBottom="10dp"
                 android:textColor="?attr/colorOnPrimary"
                 tools:text="인기 시리즈"
               />

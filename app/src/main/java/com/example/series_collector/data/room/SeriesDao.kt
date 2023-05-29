@@ -26,15 +26,17 @@ interface SeriesDao {
     @Query("SELECT (SELECT COUNT(*) FROM Series) == 0")
     suspend fun isEmpty(): Boolean
 
-    @Query("SELECT * FROM Series ORDER BY last_update_date DESC LIMIT 8")
-    suspend fun getRecentSeries(): List<Series>
+    @Query("SELECT * FROM Series ORDER BY last_update_date DESC LIMIT :limit")
+    suspend fun getRecentSeries(limit: Int): List<Series>
 
-    @Query("SELECT * FROM Series ORDER BY have_count DESC LIMIT 8")
-    suspend fun getPopularSeries(): List<Series>
+    @Query("SELECT * FROM Series ORDER BY have_count DESC LIMIT :limit")
+    suspend fun getPopularSeries(limit: Int): List<Series>
 
-    @Query("SELECT * FROM Series WHERE genre == 1 LIMIT 16")
-    suspend fun getFictionSeries(): List<Series>
+    @Query("SELECT * FROM Series WHERE genre == 1 LIMIT :limit")
+    suspend fun getFictionSeries(limit: Int): List<Series>
 
-    @Query("SELECT * FROM Series  WHERE genre == 2 LIMIT 16")
-    suspend fun getTravelSeries(): List<Series>
+    @Query("SELECT * FROM Series  WHERE genre == 2 LIMIT :limit")
+    suspend fun getTravelSeries(limit: Int): List<Series>
+
+
 }

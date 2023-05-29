@@ -16,12 +16,12 @@ class PlaylistPagingSource(
         val page = params.key ?: STARTING_PAGE_TOKEN
         return try {
             val response = service.getYoutubePlayListItems(id = playlistId, pageToken = page, maxResults = 5)
-            val items = response.items
+            val items = response.body()!!.items
             LoadResult.Page(
                 data = items,
-                prevKey = if (page == STARTING_PAGE_TOKEN) null else response.prevPageToken,
+                prevKey = if (page == STARTING_PAGE_TOKEN) null else response.body()!!.prevPageToken,
                 nextKey = if (items.isEmpty()) null
-                else response.nextPageToken
+                else response.body()!!.nextPageToken
             )
         } catch (exception: Exception) {
             LoadResult.Error(exception)

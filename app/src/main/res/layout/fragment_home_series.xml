@@ -26,11 +26,16 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:contentInsetStart="12dp"
-                app:layout_scrollFlags="scroll|enterAlways"
-                app:title="@string/home_title"
-                app:titleTextAppearance="@style/Toolbar.TitleText" />
+                android:layout_height="match_parent"
+                app:layout_scrollFlags="scroll|enterAlways">
+
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/home_title"
+                    android:textAppearance="@style/Toolbar.TitleText" />
+            </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -45,21 +50,20 @@
             android:progressDrawable="@drawable/circular_progress_bar"
             app:isGone="@{!viewModel.isLoading}" />
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/layout_refresh"
-            xmlns:android="http://schemas.android.com/apk/res/android"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            android:id="@+id/layout_refresh"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            >
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_categorys"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/home_side_margin"
+                android:paddingTop="@dimen/home_side_margin"
                 android:paddingEnd="@dimen/home_side_margin"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/list_item_category" />

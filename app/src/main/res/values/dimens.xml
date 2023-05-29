@@ -7,8 +7,8 @@
     <dimen name="margin_small">8dp</dimen>
     <dimen name="margin_extra_small">4dp</dimen>
 
-    <dimen name="card_side_margin">4dp</dimen>
-    <dimen name="card_bottom_margin">8dp</dimen>
+    <dimen name="card_side_margin">8dp</dimen>
+    <dimen name="card_bottom_margin">16dp</dimen>
     <dimen name="card_elevation">2dp</dimen>
 
     <dimen name="toolbar_elevation">1dp</dimen>
@@ -20,8 +20,8 @@
     <dimen name="home_side_margin">12dp</dimen>
     <dimen name="home_header_margin">72dp</dimen>
 
-    <dimen name="home_series_item_image_height">120dp</dimen>
-    <dimen name="home_series_item_image_width">220dp</dimen>
+    <dimen name="home_series_item_image_height">160dp</dimen>
+    <dimen name="home_series_item_image_width">280dp</dimen>
 
     <dimen name="category_card_bottom_margin">14dp</dimen>
 
@@ -30,6 +30,6 @@
     <dimen name="detail_thumbnail_image_height">220dp</dimen>
     <dimen name="detail_series_play_btn_size">40dp</dimen>
 
-    <dimen name="inventory_item_remove_btn_size">30dp</dimen>
+    <dimen name="inventory_item_remove_btn_size">20dp</dimen>
 
 </resources>

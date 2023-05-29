@@ -85,7 +85,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/detail_thumbnail_image_height"
                         android:scaleType="centerCrop"
-                        app:imageFromUrl="@{viewModel.series.thumbnail}"
+                        app:imageFromUrl="@{viewModel.seriesInfo.series.thumbnail}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -110,7 +110,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin_small"
                     android:gravity="center"
-                    android:text="@{viewModel.series.name}"
+                    android:text="@{viewModel.seriesInfo.series.name}"
                     android:textAppearance="?attr/textAppearanceHeadline5"
                     android:textColor="?attr/colorOnPrimary"
                     android:textStyle="bold"
@@ -126,7 +126,7 @@
                         android:id="@+id/series_genre_description"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:genreHashtag="@{viewModel.series.genre}"
+                        app:genreHashtag="@{viewModel.seriesInfo.series.genre}"
                         android:textAppearance="?attr/textAppearanceSubtitle1"
                         android:textColor="?attr/colorSecondary"
                         tools:text="#장르"/>
@@ -136,7 +136,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_small"
-                        app:hashtag="@{viewModel.series.channel}"
+                        app:hashtag="@{viewModel.seriesInfo.series.channel}"
                         android:textAppearance="?attr/textAppearanceSubtitle1"
                         android:textColor="?attr/colorSecondary"
                         tools:text="#채널명"/>
@@ -146,7 +146,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_small"
-                        app:hashtagTotalPage="@{viewModel.seriesPageInfo.totalResults}"
+                        app:hashtagTotalPage="@{viewModel.seriesInfo.pageInfo.totalResults}"
                         android:textAppearance="?attr/textAppearanceSubtitle1"
                         android:textColor="?attr/colorSecondary"
                         tools:text="#회차개수"/>
@@ -159,7 +159,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin_normal"
                     android:maxLines="@integer/detail_descpription_max_lines"
-                    android:text="@{viewModel.series.description}"
+                    android:text="@{viewModel.seriesInfo.series.description}"
                     android:textAppearance="?attr/textAppearanceSubtitle1"
                     android:textColor="?attr/colorSecondary"
                     tools:text="description about the series" />
