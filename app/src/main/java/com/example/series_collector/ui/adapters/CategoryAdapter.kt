@@ -33,7 +33,6 @@ class CategoryAdapter : ListAdapter<Category, RecyclerView.ViewHolder>(CategoryD
     class CategoryViewHolder(
         private val binding: ListItemCategoryBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
-        private var snapHelper: SnapHelper = LinearSnapHelper()
         private var adapter: SeriesAdapter = SeriesAdapter()
 
         fun bind(item: Category, sharedPool: RecyclerView.RecycledViewPool) {
@@ -44,7 +43,6 @@ class CategoryAdapter : ListAdapter<Category, RecyclerView.ViewHolder>(CategoryD
                 rvSeries.setRecycledViewPool(sharedPool)
                 rvSeries.setNestedScrollingEnabled(false)
 
-                snapHelper.attachToRecyclerView(rvSeries)
                 adapter.submitList(item.seriesList)
 
                 executePendingBindings()
