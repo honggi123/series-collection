@@ -1,9 +1,10 @@
 package com.example.series_collector.data.repository
 
-import com.example.series_collector.data.room.entity.Series
+import com.example.series_collector.data.room.entity.SeriesEntity
 import com.example.series_collector.data.SeriesThumbnailFetcher
 import com.example.series_collector.data.api.ApiResult
 import com.example.series_collector.data.model.SeriesWithPageInfo
+import com.example.series_collector.data.model.mapper.toSeriesWithPageInfo
 import com.example.series_collector.data.room.SeriesDao
 import com.example.series_collector.data.source.FirestoreDataSource
 import com.example.series_collector.data.source.YoutubeDataSource
@@ -35,7 +36,7 @@ class SeriesRepository @Inject constructor(
     }
 
     private suspend fun getSeriesWithPageInfo(
-        series: Series,
+        seriesEntity: SeriesEntity,
         seriesId: String,
         limit: Int = 1
     ): ApiResult<SeriesWithPageInfo> {
@@ -44,10 +45,10 @@ class SeriesRepository @Inject constructor(
         if (!response.isSuccessful) throw HttpException(response)
 
         val seriesWithPageInfo =
-            SeriesWithPageInfo(
-                series = series,
+            seriesEntity.toSeriesWithPageInfo(
                 pageInfo = response.body()?.pageInfo ?: return ApiResult.Empty
             )
+
         return ApiResult.Success(seriesWithPageInfo)
     }
 
@@ -76,6 +77,8 @@ class SeriesRepository @Inject constructor(
     private suspend fun getRemoteUpdatedSeries(lastUpdate: Calendar) = withContext(Dispatchers.IO) {
         firestoreDataSource.getUpdatedSeries(lastUpdate)
     }
-
 }
+
+
+
 

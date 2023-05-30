@@ -1,8 +1,9 @@
 package com.example.series_collector.data.repository
 
 import com.example.series_collector.data.SeriesThumbnailFetcher
-import com.example.series_collector.data.model.CategoryContent
-import com.example.series_collector.data.room.entity.Series
+import com.example.series_collector.data.model.Series
+import com.example.series_collector.data.model.mapper.toCategoryContent
+import com.example.series_collector.data.model.mapper.asDomain
 import com.example.series_collector.data.room.SeriesDao
 import com.example.series_collector.data.source.FirestoreDataSource
 import kotlinx.coroutines.Dispatchers
@@ -30,8 +31,7 @@ class CategoryRepository @Inject constructor(
 
     suspend fun getCategoryContents() = withContext(Dispatchers.IO) {
         firestoreDataSource.getCategorys().map {
-            CategoryContent(
-                category = it,
+            it.toCategoryContent(
                 seriesList = getSeriesByCategory(categoryId = it.categoryId)
             )
         }
@@ -49,12 +49,13 @@ class CategoryRepository @Inject constructor(
                     CategoryType.FICTION -> getFictionSeries(limit = 16)
                     CategoryType.TRAVEL -> getTravelSeries(limit = 16)
                 }
-            seriesThumbnailFetcher(list)
+            seriesThumbnailFetcher(list).asDomain()
         }
     }.getOrDefault(emptyList())
-
-
 }
+
+
+
 
 
 

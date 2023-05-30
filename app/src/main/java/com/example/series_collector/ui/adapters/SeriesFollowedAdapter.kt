@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.series_collector.data.room.entity.Series
+import com.example.series_collector.data.model.Series
 import com.example.series_collector.databinding.ListItemSeriesFollowedBinding
 import com.example.series_collector.ui.Inventory.InventoryItemCallback
 

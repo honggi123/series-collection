@@ -4,8 +4,8 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
-import com.example.series_collector.data.room.entity.Series
-import com.example.series_collector.data.room.entity.SeriesFollowed
+import com.example.series_collector.data.room.entity.SeriesEntity
+import com.example.series_collector.data.room.entity.SeriesFollowedEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -16,10 +16,10 @@ interface SeriesFollowedDao {
 
     @Transaction
     @Query("SELECT * FROM series WHERE id IN (SELECT DISTINCT(series_id) FROM series_followed)")
-    fun getSeriesInSeriesFollowed(): Flow<List<Series>>
+    fun getSeriesInSeriesFollowed(): Flow<List<SeriesEntity>>
 
     @Insert
-    suspend fun insertSeriesFollowed(seriesFollowed: SeriesFollowed)
+    suspend fun insertSeriesFollowed(seriesFollowedEntity: SeriesFollowedEntity)
 
     @Query("DELETE FROM series_followed WHERE series_id = :seriesId")
     suspend fun deleteSeriesFollowed(seriesId: String)

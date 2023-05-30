@@ -54,7 +54,7 @@ class CategoryAdapter : ListAdapter<CategoryContent, RecyclerView.ViewHolder>(Ca
 private class CategoryDiffCallback : DiffUtil.ItemCallback<CategoryContent>() {
 
     override fun areItemsTheSame(oldItem: CategoryContent, newItem: CategoryContent): Boolean {
-        return oldItem.category?.categoryId == newItem.category?.categoryId
+        return oldItem.categoryId == newItem.categoryId
     }
 
     override fun areContentsTheSame(oldItem: CategoryContent, newItem: CategoryContent): Boolean {

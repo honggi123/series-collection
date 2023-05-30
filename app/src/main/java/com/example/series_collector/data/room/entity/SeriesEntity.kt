@@ -7,23 +7,23 @@ import com.google.firebase.firestore.DocumentId
 import java.util.*
 
 @Entity(tableName = "Series")
-data class Series(
+data class SeriesEntity(
     @PrimaryKey
     @DocumentId
     @ColumnInfo(name = "id")
-    val seriesId: String = "",
+    val seriesId: String,
     @ColumnInfo(name = "name")
-    val name: String = "",
+    val name: String,
     @ColumnInfo(name = "description")
-    val description: String = "",
+    val description: String,
     @ColumnInfo(name = "channel")
-    val channel: String = "",
+    val channel: String,
     @ColumnInfo(name = "have_count")
-    val haveCount: Int = 0,
+    val haveCount: Int,
     @ColumnInfo(name = "genre")
-    val genre: Int = 0,
+    val genre: Int,
     @ColumnInfo(name = "thumbnail")
-    val thumbnail: String = ""
+    val thumbnail: String
 ){
     @ColumnInfo(name = "last_update_date")
     var lastUpdateDate: Calendar = Calendar.getInstance()
