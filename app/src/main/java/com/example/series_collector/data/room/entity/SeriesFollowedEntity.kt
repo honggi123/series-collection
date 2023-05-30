@@ -7,11 +7,11 @@ import java.util.*
 @Entity(
     tableName = "series_followed",
     foreignKeys = [
-        ForeignKey(entity = Series::class, parentColumns = ["id"], childColumns = ["series_id"])
+        ForeignKey(entity = SeriesEntity::class, parentColumns = ["id"], childColumns = ["series_id"])
     ],
     indices = [Index("series_id")]
 )
-data class SeriesFollowed(
+data class SeriesFollowedEntity(
     @ColumnInfo(name = "series_id") val seriesId: String,
 
     @ColumnInfo(name = "put_date") val putDate: Calendar = Calendar.getInstance(),

@@ -1,8 +1,9 @@
 package com.example.series_collector.data.model
 
-import com.example.series_collector.data.room.entity.Series
+import com.example.series_collector.data.room.entity.SeriesEntity
 
 data class CategoryContent(
-    val category: Category? = null,
-    val seriesList: List<Series>? = null
+    val categoryId: String,
+    val title: String,
+    val seriesList: List<SeriesEntity>
 )

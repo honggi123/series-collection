@@ -1,6 +1,6 @@
 package com.example.series_collector.data.repository
 
-import com.example.series_collector.data.room.entity.SeriesFollowed
+import com.example.series_collector.data.room.entity.SeriesFollowedEntity
 import com.example.series_collector.data.room.SeriesFollowedDao
 import javax.inject.Inject
 
@@ -12,8 +12,8 @@ class SeriesFollowedRepository @Inject constructor(
     fun getSeriesFollowedList() = seriesFollowedDao.getSeriesInSeriesFollowed()
 
     suspend fun followSeries(seriesId: String) {
-        val seriesFollowed = SeriesFollowed(seriesId)
-        seriesFollowedDao.insertSeriesFollowed(seriesFollowed)
+        val seriesFollowedEntity = SeriesFollowedEntity(seriesId)
+        seriesFollowedDao.insertSeriesFollowed(seriesFollowedEntity)
     }
 
     suspend fun unFollowSeries(seriesId: String) =

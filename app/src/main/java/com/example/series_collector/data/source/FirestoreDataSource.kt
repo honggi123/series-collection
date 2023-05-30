@@ -1,7 +1,7 @@
 package com.example.series_collector.data.source
 
-import com.example.series_collector.data.model.Category
-import com.example.series_collector.data.room.entity.Series
+import com.example.series_collector.data.model.CategoryDto
+import com.example.series_collector.data.room.entity.SeriesEntity
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
@@ -12,22 +12,22 @@ class FirestoreDataSource @Inject constructor() {
 
     private val firestore = Firebase.firestore
 
-    suspend fun getAllSeries(): List<Series> =
+    suspend fun getAllSeries(): List<SeriesEntity> =
         collection("Series")
             .get()
-            .await().toObjects(Series::class.java)
+            .await().toObjects(SeriesEntity::class.java)
 
-    suspend fun getUpdatedSeries(lastUpdate: Calendar): List<Series> =
+    suspend fun getUpdatedSeries(lastUpdate: Calendar): List<SeriesEntity> =
         collection("Series")
             .whereGreaterThanOrEqualTo("createdAt", lastUpdate.time)
             .get()
-            .await().toObjects(Series::class.java)
+            .await().toObjects(SeriesEntity::class.java)
 
 
-    suspend fun getCategorys(): List<Category> =
+    suspend fun getCategorys(): List<CategoryDto> =
         collection("Category")
             .get()
-            .await().toObjects(Category::class.java)
+            .await().toObjects(CategoryDto::class.java)
 
     private fun collection(path: String) = firestore.collection(path)
 

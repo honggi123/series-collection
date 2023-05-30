@@ -1,9 +1,13 @@
 package com.example.series_collector.data.model
 
 import com.example.series_collector.data.api.PageInfo
-import com.example.series_collector.data.room.entity.Series
 
 data class SeriesWithPageInfo(
-    val series: Series? = null,
-    val pageInfo: PageInfo? = null
+    val name: String,
+    val description: String,
+    val channel: String,
+    val haveCount: Int,
+    val genre: Int,
+    val thumbnail: String,
+    val pageInfo: PageInfo
 )

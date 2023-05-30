@@ -8,12 +8,12 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.series_collector.data.room.entity.Series
+import com.example.series_collector.data.room.entity.SeriesEntity
 import com.example.series_collector.databinding.ListItemHomeSeriesBinding
 import com.example.series_collector.ui.home.HomeFragmentDirections
 
 
-class SeriesAdapter : ListAdapter<Series, RecyclerView.ViewHolder>(SeriesDiffCallback()) {
+class SeriesAdapter : ListAdapter<SeriesEntity, RecyclerView.ViewHolder>(SeriesDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return SeriesViewHolder(
@@ -46,7 +46,7 @@ class SeriesAdapter : ListAdapter<Series, RecyclerView.ViewHolder>(SeriesDiffCal
         }
 
         private fun navigateToDetail(
-            series: Series,
+            series: SeriesEntity,
             view: View
         ) {
             val direction =
@@ -55,7 +55,7 @@ class SeriesAdapter : ListAdapter<Series, RecyclerView.ViewHolder>(SeriesDiffCal
         }
 
 
-        fun bind(item: Series) {
+        fun bind(item: SeriesEntity) {
             binding.apply {
                 binding.series = item
                 executePendingBindings()
@@ -64,13 +64,13 @@ class SeriesAdapter : ListAdapter<Series, RecyclerView.ViewHolder>(SeriesDiffCal
     }
 }
 
-private class SeriesDiffCallback : DiffUtil.ItemCallback<Series>() {
+private class SeriesDiffCallback : DiffUtil.ItemCallback<SeriesEntity>() {
 
-    override fun areItemsTheSame(oldItem: Series, newItem: Series): Boolean {
+    override fun areItemsTheSame(oldItem: SeriesEntity, newItem: SeriesEntity): Boolean {
         return oldItem.seriesId == newItem.seriesId
     }
 
-    override fun areContentsTheSame(oldItem: Series, newItem: Series): Boolean {
+    override fun areContentsTheSame(oldItem: SeriesEntity, newItem: SeriesEntity): Boolean {
         return oldItem == newItem
     }
 }

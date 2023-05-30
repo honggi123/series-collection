@@ -11,7 +11,7 @@
 
         <variable
             name="series"
-            type="com.example.series_collector.data.room.entity.Series" />
+            type="com.example.series_collector.data.room.entity.SeriesEntity" />
     </data>
 
     <androidx.cardview.widget.CardView

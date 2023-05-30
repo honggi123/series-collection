@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.series_collector.data.room.entity.Series
+import com.example.series_collector.data.room.entity.SeriesEntity
 import kotlinx.coroutines.flow.Flow
 import java.util.*
 
@@ -12,10 +12,10 @@ import java.util.*
 interface SeriesDao {
 
     @Query("SELECT * FROM Series WHERE id = :seriesId")
-    fun flowSeries(seriesId: String): Flow<Series>
+    fun flowSeries(seriesId: String): Flow<SeriesEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertSeries(series: Series)
+    suspend fun insertSeries(series: SeriesEntity)
 
     @Query("SELECT last_update_date FROM Series ORDER BY last_update_date DESC LIMIT 1")
     suspend fun getLastUpdateDate(): Calendar
@@ -24,16 +24,16 @@ interface SeriesDao {
     suspend fun isEmpty(): Boolean
 
     @Query("SELECT * FROM Series ORDER BY last_update_date DESC LIMIT :limit")
-    suspend fun getRecentSeries(limit: Int): List<Series>
+    suspend fun getRecentSeries(limit: Int): List<SeriesEntity>
 
     @Query("SELECT * FROM Series ORDER BY have_count DESC LIMIT :limit")
-    suspend fun getPopularSeries(limit: Int): List<Series>
+    suspend fun getPopularSeries(limit: Int): List<SeriesEntity>
 
     @Query("SELECT * FROM Series WHERE genre == 1 LIMIT :limit")
-    suspend fun getFictionSeries(limit: Int): List<Series>
+    suspend fun getFictionSeries(limit: Int): List<SeriesEntity>
 
     @Query("SELECT * FROM Series  WHERE genre == 2 LIMIT :limit")
-    suspend fun getTravelSeries(limit: Int): List<Series>
+    suspend fun getTravelSeries(limit: Int): List<SeriesEntity>
 
 
 }

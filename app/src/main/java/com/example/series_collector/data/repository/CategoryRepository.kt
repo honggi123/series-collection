@@ -2,7 +2,7 @@ package com.example.series_collector.data.repository
 
 import com.example.series_collector.data.SeriesThumbnailFetcher
 import com.example.series_collector.data.model.CategoryContent
-import com.example.series_collector.data.room.entity.Series
+import com.example.series_collector.data.room.entity.SeriesEntity
 import com.example.series_collector.data.room.SeriesDao
 import com.example.series_collector.data.source.FirestoreDataSource
 import kotlinx.coroutines.Dispatchers
@@ -32,12 +32,12 @@ class CategoryRepository @Inject constructor(
         firestoreDataSource.getCategorys().map {
             CategoryContent(
                 category = it,
-                seriesList = getSeriesByCategory(categoryId = it.categoryId)
+                seriesEntityList = getSeriesByCategory(categoryId = it.categoryId)
             )
         }
     }
 
-    private suspend fun getSeriesByCategory(categoryId: String): List<Series> = runCatching {
+    private suspend fun getSeriesByCategory(categoryId: String): List<SeriesEntity> = runCatching {
         val categoryType: CategoryType = CategoryType.find(categoryId)
             ?: throw NullPointerException()
 

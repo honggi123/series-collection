@@ -1,6 +1,6 @@
 package com.example.series_collector.data.repository
 
-import com.example.series_collector.data.room.entity.Series
+import com.example.series_collector.data.room.entity.SeriesEntity
 import com.example.series_collector.data.SeriesThumbnailFetcher
 import com.example.series_collector.data.api.ApiResult
 import com.example.series_collector.data.model.SeriesWithPageInfo
@@ -35,7 +35,7 @@ class SeriesRepository @Inject constructor(
     }
 
     private suspend fun getSeriesWithPageInfo(
-        series: Series,
+        seriesEntity: SeriesEntity,
         seriesId: String,
         limit: Int = 1
     ): ApiResult<SeriesWithPageInfo> {
@@ -45,7 +45,7 @@ class SeriesRepository @Inject constructor(
 
         val seriesWithPageInfo =
             SeriesWithPageInfo(
-                series = series,
+                series = seriesEntity,
                 pageInfo = response.body()?.pageInfo ?: return ApiResult.Empty
             )
         return ApiResult.Success(seriesWithPageInfo)
