@@ -8,12 +8,13 @@ import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.series_collector.data.model.Series
 import com.example.series_collector.data.room.entity.SeriesEntity
 import com.example.series_collector.databinding.ListItemHomeSeriesBinding
 import com.example.series_collector.ui.home.HomeFragmentDirections
 
 
-class SeriesAdapter : ListAdapter<SeriesEntity, RecyclerView.ViewHolder>(SeriesDiffCallback()) {
+class SeriesAdapter : ListAdapter<Series, RecyclerView.ViewHolder>(SeriesDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return SeriesViewHolder(
@@ -46,7 +47,7 @@ class SeriesAdapter : ListAdapter<SeriesEntity, RecyclerView.ViewHolder>(SeriesD
         }
 
         private fun navigateToDetail(
-            series: SeriesEntity,
+            series: Series,
             view: View
         ) {
             val direction =
@@ -55,7 +56,7 @@ class SeriesAdapter : ListAdapter<SeriesEntity, RecyclerView.ViewHolder>(SeriesD
         }
 
 
-        fun bind(item: SeriesEntity) {
+        fun bind(item: Series) {
             binding.apply {
                 binding.series = item
                 executePendingBindings()
@@ -64,13 +65,13 @@ class SeriesAdapter : ListAdapter<SeriesEntity, RecyclerView.ViewHolder>(SeriesD
     }
 }
 
-private class SeriesDiffCallback : DiffUtil.ItemCallback<SeriesEntity>() {
+private class SeriesDiffCallback : DiffUtil.ItemCallback<Series>() {
 
-    override fun areItemsTheSame(oldItem: SeriesEntity, newItem: SeriesEntity): Boolean {
+    override fun areItemsTheSame(oldItem: Series, newItem: Series): Boolean {
         return oldItem.seriesId == newItem.seriesId
     }
 
-    override fun areContentsTheSame(oldItem: SeriesEntity, newItem: SeriesEntity): Boolean {
+    override fun areContentsTheSame(oldItem: Series, newItem: Series): Boolean {
         return oldItem == newItem
     }
 }

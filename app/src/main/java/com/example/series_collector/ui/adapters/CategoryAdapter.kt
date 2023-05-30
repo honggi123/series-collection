@@ -43,7 +43,7 @@ class CategoryAdapter : ListAdapter<CategoryContent, RecyclerView.ViewHolder>(Ca
                 rvSeries.setRecycledViewPool(sharedPool)
                 rvSeries.setNestedScrollingEnabled(false)
 
-                adapter.submitList(item.seriesEntityList)
+                adapter.submitList(item.seriesList)
 
                 executePendingBindings()
             }
@@ -54,7 +54,7 @@ class CategoryAdapter : ListAdapter<CategoryContent, RecyclerView.ViewHolder>(Ca
 private class CategoryDiffCallback : DiffUtil.ItemCallback<CategoryContent>() {
 
     override fun areItemsTheSame(oldItem: CategoryContent, newItem: CategoryContent): Boolean {
-        return oldItem.categoryDto?.categoryId == newItem.category?.categoryId
+        return oldItem.categoryId == newItem.categoryId
     }
 
     override fun areContentsTheSame(oldItem: CategoryContent, newItem: CategoryContent): Boolean {

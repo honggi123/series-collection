@@ -9,7 +9,7 @@
             type="android.view.View.OnClickListener"/>
         <variable
             name="series"
-            type="com.example.series_collector.data.room.entity.SeriesEntity" />
+            type="com.example.series_collector.data.model.Series" />
     </data>
 
     <androidx.cardview.widget.CardView

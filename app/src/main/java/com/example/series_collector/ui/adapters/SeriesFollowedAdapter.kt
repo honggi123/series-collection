@@ -5,13 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.series_collector.data.room.entity.SeriesEntity
+import com.example.series_collector.data.model.Series
 import com.example.series_collector.databinding.ListItemSeriesFollowedBinding
 import com.example.series_collector.ui.Inventory.InventoryItemCallback
 
 class SeriesFollowedAdapter(
     private val inventoryItemCallback: InventoryItemCallback
-) : ListAdapter<SeriesEntity, RecyclerView.ViewHolder>(SeriesFollowedDiffCallback()) {
+) : ListAdapter<Series, RecyclerView.ViewHolder>(SeriesFollowedDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return SeriesFollowedViewHolder(
@@ -42,12 +42,12 @@ class SeriesFollowedAdapter(
             }
         }
 
-        private fun deleteSeries(series: SeriesEntity) {
+        private fun deleteSeries(series: Series) {
             inventoryItemCallback.deleteItem(series.seriesId)
         }
 
 
-        fun bind(item: SeriesEntity) {
+        fun bind(item: Series) {
             binding.apply {
                 binding.series = item
                 executePendingBindings()
@@ -56,13 +56,13 @@ class SeriesFollowedAdapter(
     }
 }
 
-private class SeriesFollowedDiffCallback : DiffUtil.ItemCallback<SeriesEntity>() {
+private class SeriesFollowedDiffCallback : DiffUtil.ItemCallback<Series>() {
 
-    override fun areItemsTheSame(oldItem: SeriesEntity, newItem: SeriesEntity): Boolean {
+    override fun areItemsTheSame(oldItem: Series, newItem: Series): Boolean {
         return oldItem.seriesId == newItem.seriesId
     }
 
-    override fun areContentsTheSame(oldItem: SeriesEntity, newItem: SeriesEntity): Boolean {
+    override fun areContentsTheSame(oldItem: Series, newItem: Series): Boolean {
         return oldItem == newItem
     }
 }
