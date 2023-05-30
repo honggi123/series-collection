@@ -1,8 +1,7 @@
 package com.example.series_collector.ui.home
 
 import androidx.lifecycle.*
-import com.example.series_collector.data.entitiy.Category
-import com.example.series_collector.data.entitiy.Series
+import com.example.series_collector.data.model.CategoryContent
 import com.example.series_collector.data.repository.CategoryRepository
 import com.example.series_collector.data.repository.SeriesRepository
 import com.example.series_collector.utils.workers.SeriesWorker
@@ -21,8 +20,8 @@ class HomeViewModel @Inject constructor(
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _categoryContents = MutableLiveData<List<Category>>()
-    val categoryContents: LiveData<List<Category>> = _categoryContents
+    private val _categoryContents = MutableLiveData<List<CategoryContent>>()
+    val categoryContents: LiveData<List<CategoryContent>> = _categoryContents
 
     init {
         updateSeries()
@@ -45,23 +44,12 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private suspend fun refreshCategoryContents() {
+    private suspend fun refreshCategoryContents() =
         withContext(Dispatchers.IO) {
-            val categoryContents =
-                categoryRepository.getCategorys().map { category ->
-                    category.copy(seriesList = getSeriesByCategory(category.categoryId))
-                }
+            val categoryContents = categoryRepository.getCategoryContents()
             _categoryContents.postValue(categoryContents)
         }
-    }
 
-
-    private suspend fun getSeriesByCategory(categoryId: String) =
-        runCatching {
-            categoryRepository.getSeriesByCategory(categoryId)
-        }.onFailure {
-            it.printStackTrace()
-        }.getOrDefault(emptyList())
 
 
 }

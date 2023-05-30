@@ -1,9 +1,9 @@
 package com.example.series_collector.data.repository
 
-import com.example.series_collector.data.entitiy.Series
+import com.example.series_collector.data.room.entity.Series
 import com.example.series_collector.data.SeriesThumbnailFetcher
 import com.example.series_collector.data.api.ApiResult
-import com.example.series_collector.data.entitiy.SeriesWithPageInfo
+import com.example.series_collector.data.model.SeriesWithPageInfo
 import com.example.series_collector.data.room.SeriesDao
 import com.example.series_collector.data.source.FirestoreDataSource
 import com.example.series_collector.data.source.YoutubeDataSource
@@ -25,7 +25,7 @@ class SeriesRepository @Inject constructor(
 
     fun getSeriesWithPageInfoStream(
         seriesId: String,
-        limit: Int
+        limit: Int = 1
     ): Flow<ApiResult<SeriesWithPageInfo>> {
         return seriesDao.flowSeries(seriesId).flatMapMerge { series ->
             flow {
@@ -37,7 +37,7 @@ class SeriesRepository @Inject constructor(
     private suspend fun getSeriesWithPageInfo(
         series: Series,
         seriesId: String,
-        limit: Int
+        limit: Int = 1
     ): ApiResult<SeriesWithPageInfo> {
         val response = youtubeDataSource.getPlayLists(seriesId, limit)
 

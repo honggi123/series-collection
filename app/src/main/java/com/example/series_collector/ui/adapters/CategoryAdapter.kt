@@ -4,11 +4,11 @@ package com.example.series_collector.ui.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.*
-import com.example.series_collector.data.entitiy.Category
+import com.example.series_collector.data.model.CategoryContent
 import com.example.series_collector.databinding.ListItemCategoryBinding
 
 
-class CategoryAdapter : ListAdapter<Category, RecyclerView.ViewHolder>(CategoryDiffCallback()) {
+class CategoryAdapter : ListAdapter<CategoryContent, RecyclerView.ViewHolder>(CategoryDiffCallback()) {
 
     private val viewPool: RecyclerView.RecycledViewPool = RecyclerView.RecycledViewPool()
 
@@ -35,9 +35,9 @@ class CategoryAdapter : ListAdapter<Category, RecyclerView.ViewHolder>(CategoryD
     ) : RecyclerView.ViewHolder(binding.root) {
         private var adapter: SeriesAdapter = SeriesAdapter()
 
-        fun bind(item: Category, sharedPool: RecyclerView.RecycledViewPool) {
+        fun bind(item: CategoryContent, sharedPool: RecyclerView.RecycledViewPool) {
             binding.apply {
-                category = item
+                categoryContent = item
                 (rvSeries.layoutManager as LinearLayoutManager).recycleChildrenOnDetach = true
                 rvSeries.adapter = adapter
                 rvSeries.setRecycledViewPool(sharedPool)
@@ -51,13 +51,13 @@ class CategoryAdapter : ListAdapter<Category, RecyclerView.ViewHolder>(CategoryD
     }
 }
 
-private class CategoryDiffCallback : DiffUtil.ItemCallback<Category>() {
+private class CategoryDiffCallback : DiffUtil.ItemCallback<CategoryContent>() {
 
-    override fun areItemsTheSame(oldItem: Category, newItem: Category): Boolean {
-        return oldItem.categoryId == newItem.categoryId
+    override fun areItemsTheSame(oldItem: CategoryContent, newItem: CategoryContent): Boolean {
+        return oldItem.category?.categoryId == newItem.category?.categoryId
     }
 
-    override fun areContentsTheSame(oldItem: Category, newItem: Category): Boolean {
+    override fun areContentsTheSame(oldItem: CategoryContent, newItem: CategoryContent): Boolean {
         return oldItem == newItem
     }
 }

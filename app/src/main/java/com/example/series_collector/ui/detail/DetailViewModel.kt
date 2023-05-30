@@ -1,13 +1,12 @@
 package com.example.series_collector.ui.detail
 
 
-import android.util.Log
 import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.series_collector.data.api.ApiResult
 import com.example.series_collector.data.api.SeriesVideo
-import com.example.series_collector.data.entitiy.SeriesWithPageInfo
+import com.example.series_collector.data.model.SeriesWithPageInfo
 import com.example.series_collector.data.repository.SeriesFollowedRepository
 import com.example.series_collector.data.repository.SeriesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
