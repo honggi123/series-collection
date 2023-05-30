@@ -1,9 +1,9 @@
 package com.example.series_collector.data.repository
 
-import com.example.series_collector.data.entitiy.Series
+import com.example.series_collector.data.room.entity.Series
 import com.example.series_collector.data.SeriesThumbnailFetcher
 import com.example.series_collector.data.api.ApiResult
-import com.example.series_collector.data.entitiy.SeriesWithPageInfo
+import com.example.series_collector.data.model.SeriesWithPageInfo
 import com.example.series_collector.data.room.SeriesDao
 import com.example.series_collector.data.source.FirestoreDataSource
 import com.example.series_collector.data.source.YoutubeDataSource
@@ -23,11 +23,9 @@ class SeriesRepository @Inject constructor(
     private val seriesThumbnailFetcher: SeriesThumbnailFetcher
 ) {
 
-    suspend fun isEmpty() = seriesDao.isEmpty()
-
     fun getSeriesWithPageInfoStream(
         seriesId: String,
-        limit: Int
+        limit: Int = 1
     ): Flow<ApiResult<SeriesWithPageInfo>> {
         return seriesDao.flowSeries(seriesId).flatMapMerge { series ->
             flow {
@@ -39,7 +37,7 @@ class SeriesRepository @Inject constructor(
     private suspend fun getSeriesWithPageInfo(
         series: Series,
         seriesId: String,
-        limit: Int
+        limit: Int = 1
     ): ApiResult<SeriesWithPageInfo> {
         val response = youtubeDataSource.getPlayLists(seriesId, limit)
 
@@ -56,37 +54,28 @@ class SeriesRepository @Inject constructor(
     fun getPlaylistResultStream(playlistId: String) =
         youtubeDataSource.getSearchResultStream(playlistId)
 
-    suspend fun insertAllSeries(list: List<Series?>) =
-        seriesDao.insertAllSeries(list)
-
-    suspend fun getLastUpdateDate() = withContext(Dispatchers.IO) {
-        seriesDao.getLastUpdateDate()
-    }
-
     suspend fun updateSeries(forceInit: Boolean) {
-        val list = if (forceInit) {
-            getRemoteAllSeries()
-        } else {
-            val lastUpdate = getLastUpdateDate()
-            getRemoteUpdatedSeries(lastUpdate)
-        }
+        seriesDao.run {
+            val list =
+                if (forceInit) getRemoteAllSeries()
+                else getRemoteUpdatedSeries(lastUpdate = getLastUpdateDate())
 
-        insertAllSeries(list)
+            seriesThumbnailFetcher(list)
+                .forEach { series ->
+                    insertSeries(series)
+                }
+        }
     }
+
+    suspend fun isEmpty() = seriesDao.isEmpty()
 
     private suspend fun getRemoteAllSeries() = withContext(Dispatchers.IO) {
-        val list = firestoreDataSource.getAllSeries()
-        fetchSeriesThumbnail(list)
+        firestoreDataSource.getAllSeries()
     }
 
     private suspend fun getRemoteUpdatedSeries(lastUpdate: Calendar) = withContext(Dispatchers.IO) {
-        val list = firestoreDataSource.getUpdatedSeries(lastUpdate)
-        fetchSeriesThumbnail(list)
+        firestoreDataSource.getUpdatedSeries(lastUpdate)
     }
-
-    private suspend fun fetchSeriesThumbnail(list: List<Series>): List<Series> =
-        seriesThumbnailFetcher.invoke(list)
-
 
 }
 

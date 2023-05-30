@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.example.series_collector.data.entitiy.Series
+import com.example.series_collector.data.room.entity.Series
 import kotlinx.coroutines.flow.Flow
 import java.util.*
 
@@ -13,9 +13,6 @@ interface SeriesDao {
 
     @Query("SELECT * FROM Series WHERE id = :seriesId")
     fun flowSeries(seriesId: String): Flow<Series>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAllSeries(series: List<Series?>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSeries(series: Series)

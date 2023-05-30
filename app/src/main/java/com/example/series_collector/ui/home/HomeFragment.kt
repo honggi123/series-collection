@@ -41,7 +41,7 @@ class HomeFragment() : Fragment() {
     }
 
     private fun subscribeUi(adapter: CategoryAdapter) {
-        homeViewModel.seriesContents.observe(viewLifecycleOwner) { contents ->
+        homeViewModel.categoryContents.observe(viewLifecycleOwner) { contents ->
             adapter.submitList(contents)
         }
     }

@@ -1,8 +1,7 @@
 package com.example.series_collector.ui.home
 
 import androidx.lifecycle.*
-import com.example.series_collector.data.entitiy.Category
-import com.example.series_collector.data.entitiy.Series
+import com.example.series_collector.data.model.CategoryContent
 import com.example.series_collector.data.repository.CategoryRepository
 import com.example.series_collector.data.repository.SeriesRepository
 import com.example.series_collector.utils.workers.SeriesWorker
@@ -21,8 +20,8 @@ class HomeViewModel @Inject constructor(
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _seriesContents = MutableLiveData<List<Category>>()
-    val seriesContents: LiveData<List<Category>> = _seriesContents
+    private val _categoryContents = MutableLiveData<List<CategoryContent>>()
+    val categoryContents: LiveData<List<CategoryContent>> = _categoryContents
 
     init {
         updateSeries()
@@ -38,33 +37,19 @@ class HomeViewModel @Inject constructor(
                 .collect { workInfo ->
                     if (workInfo.state.isFinished) {
                         // isFinished return : true for SUCCEEDED, FAILED, and CANCELLED states
-                        refreshSeriesContents()
+                        refreshCategoryContents()
                         _isLoading.value = false
                     }
                 }
         }
     }
 
-    private suspend fun refreshSeriesContents() {
+    private suspend fun refreshCategoryContents() =
         withContext(Dispatchers.IO) {
-            val categorys: MutableList<Category> = categoryRepository.getCategorys()
-
-            val seriesContents =
-                categorys.map { category ->
-                    category.copy(seriesList = getSeriesByCategory(category.categoryId))
-                }.toList()
-
-            _seriesContents.postValue(seriesContents)
+            val categoryContents = categoryRepository.getCategoryContents()
+            _categoryContents.postValue(categoryContents)
         }
-    }
 
-
-    private suspend fun getSeriesByCategory(categoryId: String): List<Series> =
-        runCatching {
-            categoryRepository.getSeriesByCategory(categoryId)
-        }.onFailure {
-            it.printStackTrace()
-        }.getOrDefault(emptyList())
 
 
 }
