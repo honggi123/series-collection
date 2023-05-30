@@ -44,13 +44,9 @@ class CategoryRepository @Inject constructor(
                         CategoryType.FICTION -> getFictionSeries(limit = 16)
                         CategoryType.TRAVEL -> getTravelSeries(limit = 16)
                     }
-                fetchSeriesThumbnail(list)
+                seriesThumbnailFetcher(list)
             }
         }
-
-
-    private suspend fun fetchSeriesThumbnail(list: List<Series>): List<Series> =
-        seriesThumbnailFetcher.invoke(list)
 }
 
 

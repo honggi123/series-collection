@@ -23,8 +23,6 @@ class SeriesRepository @Inject constructor(
     private val seriesThumbnailFetcher: SeriesThumbnailFetcher
 ) {
 
-    suspend fun isEmpty() = seriesDao.isEmpty()
-
     fun getSeriesWithPageInfoStream(
         seriesId: String,
         limit: Int
@@ -56,19 +54,20 @@ class SeriesRepository @Inject constructor(
     fun getPlaylistResultStream(playlistId: String) =
         youtubeDataSource.getSearchResultStream(playlistId)
 
-
     suspend fun updateSeries(forceInit: Boolean) {
         seriesDao.run {
-            val list = if (forceInit) {
-                getRemoteAllSeries()
-            } else {
-                getRemoteUpdatedSeries(getLastUpdateDate())
-            }
-            seriesThumbnailFetcher(list)
+            val list =
+                if (forceInit) getRemoteAllSeries()
+                else getRemoteUpdatedSeries(lastUpdate = getLastUpdateDate())
 
-            insertAllSeries(list)
+            seriesThumbnailFetcher(list)
+                .forEach { series ->
+                    insertSeries(series)
+                }
         }
     }
+
+    suspend fun isEmpty() = seriesDao.isEmpty()
 
     private suspend fun getRemoteAllSeries() = withContext(Dispatchers.IO) {
         firestoreDataSource.getAllSeries()
