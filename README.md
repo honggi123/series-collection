@@ -10,24 +10,31 @@
 - 디자인 패턴 적용을 통해서 확장에 유연한 코드를 만들고자 합니다.
 
 ### 기술 스택
-Mvvm Pattern, Coroutine, Data-Binding, LiveData, Hilt, WorkManager, Room, Navigtaion, Paging3, Retrofit2
+- Mvvm Pattern
+- Coroutine
+- Data-Binding
+- LiveData
+- Hilt
+- WorkManager
+- Room
+- Navigtaion
+- Paging3
+- Retrofit2 
+- Glide
 
 ### 주요 이슈 
 - 로딩 시간을 줄이기 위한 로컬 캐싱
 - 네트워크 연결이 안 되는 오프라인 상황에서 지원
-- 중첩 리사이클러의 뷰풀 공유를 통한 성능 개선 과정 <br>
-https://codingheung.tistory.com/78
+- 중첩 리사이클러의 뷰풀 공유를 통한 성능 개선 <br>
 - 다수의 이미지 URL을 가져오기 코루틴 병렬 실행과 오류 핸들 
 - NestedScrollView에 리사이클러뷰 구현시 뷰 재활용 문제 해결 <br>
-https://codingheung.tistory.com/77
-- 카테고리를 추가할때 확장성 문제 해결 <br>
-https://codingheung.tistory.com/79
+- 카테고리를 추가하는 상황에서의 유지보수성 향상 <br>
 
 ### 아키텍처
 ![Activity  Fragment](https://github.com/f-lab-edu/series-collector/assets/89631493/5b326730-ebe2-4276-abd9-5dd60b5bf02e)
 
 - Local : Room db
-- Remote : Firebase FireStore 
+- Remote : Firebase FireStore
 
 ### 어플 기획 및 디자인
 https://ovenapp.io/project/CbZ5G3hIG2UjVuFgwp9SkVRAbf1FJWgo#62N57
