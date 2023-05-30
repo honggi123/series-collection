@@ -56,37 +56,27 @@ class SeriesRepository @Inject constructor(
     fun getPlaylistResultStream(playlistId: String) =
         youtubeDataSource.getSearchResultStream(playlistId)
 
-    suspend fun insertAllSeries(list: List<Series?>) =
-        seriesDao.insertAllSeries(list)
-
-    suspend fun getLastUpdateDate() = withContext(Dispatchers.IO) {
-        seriesDao.getLastUpdateDate()
-    }
 
     suspend fun updateSeries(forceInit: Boolean) {
-        val list = if (forceInit) {
-            getRemoteAllSeries()
-        } else {
-            val lastUpdate = getLastUpdateDate()
-            getRemoteUpdatedSeries(lastUpdate)
-        }
+        seriesDao.run {
+            val list = if (forceInit) {
+                getRemoteAllSeries()
+            } else {
+                getRemoteUpdatedSeries(getLastUpdateDate())
+            }
+            seriesThumbnailFetcher(list)
 
-        insertAllSeries(list)
+            insertAllSeries(list)
+        }
     }
 
     private suspend fun getRemoteAllSeries() = withContext(Dispatchers.IO) {
-        val list = firestoreDataSource.getAllSeries()
-        fetchSeriesThumbnail(list)
+        firestoreDataSource.getAllSeries()
     }
 
     private suspend fun getRemoteUpdatedSeries(lastUpdate: Calendar) = withContext(Dispatchers.IO) {
-        val list = firestoreDataSource.getUpdatedSeries(lastUpdate)
-        fetchSeriesThumbnail(list)
+        firestoreDataSource.getUpdatedSeries(lastUpdate)
     }
-
-    private suspend fun fetchSeriesThumbnail(list: List<Series>): List<Series> =
-        seriesThumbnailFetcher.invoke(list)
-
 
 }
 

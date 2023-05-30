@@ -21,8 +21,8 @@ class HomeViewModel @Inject constructor(
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _seriesContents = MutableLiveData<List<Category>>()
-    val seriesContents: LiveData<List<Category>> = _seriesContents
+    private val _categoryContents = MutableLiveData<List<Category>>()
+    val categoryContents: LiveData<List<Category>> = _categoryContents
 
     init {
         updateSeries()
@@ -38,28 +38,25 @@ class HomeViewModel @Inject constructor(
                 .collect { workInfo ->
                     if (workInfo.state.isFinished) {
                         // isFinished return : true for SUCCEEDED, FAILED, and CANCELLED states
-                        refreshSeriesContents()
+                        refreshCategoryContents()
                         _isLoading.value = false
                     }
                 }
         }
     }
 
-    private suspend fun refreshSeriesContents() {
+    private suspend fun refreshCategoryContents() {
         withContext(Dispatchers.IO) {
-            val categorys: MutableList<Category> = categoryRepository.getCategorys()
-
-            val seriesContents =
-                categorys.map { category ->
+            val categoryContents =
+                categoryRepository.getCategorys().map { category ->
                     category.copy(seriesList = getSeriesByCategory(category.categoryId))
-                }.toList()
-
-            _seriesContents.postValue(seriesContents)
+                }
+            _categoryContents.postValue(categoryContents)
         }
     }
 
 
-    private suspend fun getSeriesByCategory(categoryId: String): List<Series> =
+    private suspend fun getSeriesByCategory(categoryId: String) =
         runCatching {
             categoryRepository.getSeriesByCategory(categoryId)
         }.onFailure {
