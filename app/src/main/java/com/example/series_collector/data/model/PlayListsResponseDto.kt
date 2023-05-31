@@ -1,6 +1,6 @@
 package com.example.series_collector.data.api
 
-data class PlayListsInfo(
+data class PlayListsResponseDto(
     val etag: String,
     val items: List<SeriesVideo>,
     val kind: String,
