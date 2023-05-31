@@ -32,12 +32,12 @@ class CategoryRepository @Inject constructor(
     suspend fun getCategoryContents() = withContext(Dispatchers.IO) {
         firestoreDataSource.getCategorys().map {
             it.toCategoryContent(
-                seriesList = getSeriesByCategory(categoryId = it.categoryId)
+                seriesList = getSeriesByCategory(categoryId = it.categoryId) ?: emptyList()
             )
         }
     }
 
-    private suspend fun getSeriesByCategory(categoryId: String): List<Series> = runCatching {
+    private suspend fun getSeriesByCategory(categoryId: String): List<Series>? = runCatching {
         val categoryType: CategoryType = CategoryType.find(categoryId)
             ?: throw NullPointerException()
 
@@ -51,7 +51,7 @@ class CategoryRepository @Inject constructor(
                 }
             seriesThumbnailFetcher(list).asDomain()
         }
-    }.getOrDefault(emptyList())
+    }.getOrNull()
 }
 
 

@@ -5,16 +5,20 @@ import com.example.series_collector.data.model.Series
 import com.example.series_collector.data.model.SeriesWithPageInfo
 import com.example.series_collector.data.room.entity.SeriesEntity
 
+fun SeriesEntity.asDomain(): Series{
+    return Series(
+        seriesId = this.seriesId,
+        name = this.name,
+        description = this.description,
+        channel = this.channel,
+        genre = this.genre,
+        thumbnail = this.thumbnail
+    )
+}
+
 fun List<SeriesEntity>.asDomain(): List<Series> {
     return this.map { seriesEntity ->
-        Series(
-            seriesId = seriesEntity.seriesId,
-            name = seriesEntity.name,
-            description = seriesEntity.description,
-            channel = seriesEntity.channel,
-            genre = seriesEntity.genre,
-            thumbnail = seriesEntity.thumbnail
-        )
+        seriesEntity.asDomain()
     }
 }
 
@@ -22,12 +26,8 @@ fun SeriesEntity.toSeriesWithPageInfo(
     pageInfo: PageInfo
 ): SeriesWithPageInfo {
     return SeriesWithPageInfo(
-        name = name,
-        description = description,
-        channel = channel,
-        haveCount = haveCount,
-        genre = genre,
-        thumbnail = thumbnail,
+        series = this.asDomain(),
         pageInfo = pageInfo
     )
 }
+
