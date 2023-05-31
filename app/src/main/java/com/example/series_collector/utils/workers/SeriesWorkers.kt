@@ -17,26 +17,16 @@ class SeriesWorkerImpl @Inject constructor(
 ) : SeriesWorker {
 
     private val workManager = WorkManager.getInstance(appContext)
+    private val workerRequest = OneTimeWorkRequestBuilder<SeriesUpdateWorker>().build()
 
     override fun updateStream(): Flow<WorkInfo> = updateSeriesStream(workManager)
 
     private fun updateSeriesStream(workManager: WorkManager): Flow<WorkInfo> {
-        val request = startSeriesUpdateWorker()
-        return workManager.getWorkInfoByIdLiveData(request.id).asFlow()
-    }
-
-    private fun startSeriesUpdateWorker() =
-        getUpdateWorkerRequest().also {
-            enqueueOneTimeWorker(workerName = "update_work", request =  it)
-        }
-
-    private fun enqueueOneTimeWorker(workerName: String, request: OneTimeWorkRequest) =
         workManager
-            .beginUniqueWork(workerName, ExistingWorkPolicy.APPEND_OR_REPLACE, request)
+            .beginUniqueWork("update_work", ExistingWorkPolicy.APPEND_OR_REPLACE, workerRequest)
             .enqueue()
 
-    private fun getUpdateWorkerRequest() =
-        OneTimeWorkRequestBuilder<SeriesUpdateWorker>()
-            .build()
+        return workManager.getWorkInfoByIdLiveData(workerRequest.id).asFlow()
+    }
 
 }
