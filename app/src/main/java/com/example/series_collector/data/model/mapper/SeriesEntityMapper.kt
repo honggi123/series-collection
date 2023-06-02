@@ -12,7 +12,7 @@ fun SeriesEntity.asDomain(): Series{
         description = this.description,
         channel = this.channel,
         genre = this.genre,
-        thumbnail = this.thumbnail
+        thumbnail = this.thumbnail ?: ""
     )
 }
 
@@ -23,11 +23,11 @@ fun List<SeriesEntity>.asDomain(): List<Series> {
 }
 
 fun SeriesEntity.toSeriesWithPageInfo(
-    pageInfo: PageInfo
+    pageInfo: PageInfo?
 ): SeriesWithPageInfo {
     return SeriesWithPageInfo(
         series = this.asDomain(),
-        pageInfo = pageInfo
+        totalPage = pageInfo?.totalResults ?: 0,
     )
 }
 

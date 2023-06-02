@@ -23,7 +23,7 @@ data class SeriesEntity(
     @ColumnInfo(name = "genre")
     val genre: Int = 0,
     @ColumnInfo(name = "thumbnail")
-    val thumbnail: String = ""
+    val thumbnail: String? = ""
 ) {
     @ColumnInfo(name = "last_update_date")
     var lastUpdateDate: Calendar = Calendar.getInstance()

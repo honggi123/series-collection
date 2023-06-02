@@ -6,7 +6,7 @@ data class PlayListsResponseDto(
     val kind: String,
     val prevPageToken: String,
     val nextPageToken: String,
-    val pageInfo: PageInfo
+    val pageInfo: PageInfo?
 )
 
 data class SeriesVideo(
@@ -18,7 +18,7 @@ data class SeriesVideo(
 
 data class PageInfo(
     val resultsPerPage: Int,
-    val totalResults: Int
+    val totalResults: Int?,
 )
 
 data class Snippet(
@@ -29,7 +29,7 @@ data class Snippet(
     val position: Int,
     val publishedAt: String,
     val resourceId: ResourceId,
-    val thumbnails: Thumbnails,
+    val thumbnails: Thumbnails?,
     val title: String,
     val videoOwnerChannelId: String,
     val videoOwnerChannelTitle: String

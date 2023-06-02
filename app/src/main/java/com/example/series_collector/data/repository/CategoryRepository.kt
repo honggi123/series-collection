@@ -38,14 +38,15 @@ class CategoryRepository @Inject constructor(
     fun getCategoryContentsStream(onComplete: () -> Unit) = flow {
         val categoryContents = firestoreDataSource.getCategorys().map {
             it.toCategoryContent(
-                seriesList = getSeriesByCategory(categoryId = it.categoryId)?.asDomain()
-                    ?: emptyList()
+                seriesList = getSeriesByCategory(categoryId = it.categoryId)
+                    .getOrDefault(emptyList())
+                    .asDomain()
             )
         }
         emit(categoryContents)
     }.onCompletion { onComplete() }.flowOn(Dispatchers.IO)
 
-    private suspend fun getSeriesByCategory(categoryId: String): List<SeriesEntity>? = runCatching {
+    private suspend fun getSeriesByCategory(categoryId: String) = runCatching {
         val categoryType: CategoryType = CategoryType.find(categoryId)
             ?: throw NullPointerException()
 
@@ -59,7 +60,7 @@ class CategoryRepository @Inject constructor(
                 }
             seriesThumbnailFetcher(list)
         }
-    }.getOrNull()
+    }
 }
 
 
