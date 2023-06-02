@@ -7,6 +7,10 @@ import com.example.series_collector.data.repository.SeriesRepository
 import com.example.series_collector.utils.workers.SeriesWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 
@@ -20,8 +24,17 @@ class HomeViewModel @Inject constructor(
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _categoryContents = MutableLiveData<List<CategoryContent>>()
-    val categoryContents: LiveData<List<CategoryContent>> = _categoryContents
+    private val workState: MutableStateFlow<Boolean> = MutableStateFlow(false)
+
+    val categoryContents: LiveData<List<CategoryContent>> = workState.flatMapLatest { isFinished ->
+        if (isFinished) {
+            categoryRepository.getCategoryContentsStream(
+                onComplete = { _isLoading.postValue(false) }
+            )
+        } else {
+            flow { emit(emptyList()) }
+        }
+    }.asLiveData()
 
     init {
         updateSeries()
@@ -35,21 +48,10 @@ class HomeViewModel @Inject constructor(
             _isLoading.value = true
             seriesWorker.updateStream()
                 .collect { workInfo ->
-                    if (workInfo.state.isFinished) {
-                        // isFinished return : true for SUCCEEDED, FAILED, and CANCELLED states
-                        refreshCategoryContents()
-                        _isLoading.value = false
-                    }
+                    workState.value = workInfo.state.isFinished
                 }
         }
     }
-
-    private suspend fun refreshCategoryContents() =
-        withContext(Dispatchers.IO) {
-            val categoryContents = categoryRepository.getCategoryContents()
-            _categoryContents.postValue(categoryContents)
-        }
-
 
 
 }
