@@ -46,8 +46,6 @@ class DetailViewModel @Inject constructor(
                     when (result) {
                         is ApiResult.Success ->
                             _seriesInfo.postValue(result.value)
-                        is ApiResult.Empty ->
-                            _errorMsg.postValue("Response data is empty")
                         is ApiResult.Error ->
                             _errorMsg.postValue(result.exception?.message)
                     }

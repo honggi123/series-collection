@@ -1,5 +1,6 @@
 package com.example.series_collector.data.repository
 
+import android.util.Log
 import com.example.series_collector.data.room.entity.SeriesEntity
 import com.example.series_collector.data.SeriesThumbnailFetcher
 import com.example.series_collector.data.api.ApiResult
@@ -46,7 +47,7 @@ class SeriesRepository @Inject constructor(
 
         val seriesWithPageInfo =
             seriesEntity.toSeriesWithPageInfo(
-                pageInfo = response.body()?.pageInfo ?: return ApiResult.Empty
+                pageInfo = response.body()?.pageInfo
             )
 
         return ApiResult.Success(seriesWithPageInfo)

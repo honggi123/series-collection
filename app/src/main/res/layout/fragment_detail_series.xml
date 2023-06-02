@@ -146,7 +146,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/margin_small"
-                        app:hashtagTotalPage="@{viewModel.seriesInfo.pageInfo.totalResults}"
+                        app:hashtagTotalPage="@{viewModel.seriesInfo.totalPage}"
                         android:textAppearance="?attr/textAppearanceSubtitle1"
                         android:textColor="?attr/colorSecondary"
                         tools:text="#회차개수"/>
