@@ -58,16 +58,9 @@ class DetailFragment : Fragment() {
 
         }
 
-        subscribeErrorMsg()
         searchSeriesVideoList(args.seriesId)
 
         return binding.root
-    }
-
-    private fun subscribeErrorMsg() {
-        detailViewModel.errorMsg.observe(viewLifecycleOwner){ msg ->
-            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show()
-        }
     }
 
     private fun searchSeriesVideoList(seriesId: String) {

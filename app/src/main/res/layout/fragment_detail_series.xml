@@ -17,7 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:ignore="MergeRootFrame">
+        tools:ignore="MergeRootFrame"
+        app:toast="@{viewModel.errorMsg}">>
 
 
         <com.google.android.material.appbar.AppBarLayout
@@ -90,7 +91,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                     />
+                        />
 
                     <ImageView
                         android:id="@+id/series_detail_play_btn"
@@ -188,5 +189,6 @@
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </layout>
+
 
 

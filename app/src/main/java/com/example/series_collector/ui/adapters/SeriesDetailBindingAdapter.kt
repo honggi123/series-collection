@@ -1,6 +1,8 @@
 package com.example.series_collector.ui.adapters
 
+import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.databinding.BindingAdapter
 import com.example.series_collector.R
@@ -32,6 +34,14 @@ fun bindHashtag(textview: TextView, text: String?) {
         textview.text = hashTaggedString
     }
 }
+
+@BindingAdapter("toast")
+fun bindToast(view: View, msg: String?) {
+    if (!msg.isNullOrEmpty()) {
+        Toast.makeText(view.context, msg, Toast.LENGTH_SHORT).show()
+    }
+}
+
 
 @BindingAdapter("hashtagTotalPage")
 fun bindHashtagTotalPage(textview: TextView, count: Int) {
