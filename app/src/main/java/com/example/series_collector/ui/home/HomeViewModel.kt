@@ -1,5 +1,6 @@
 package com.example.series_collector.ui.home
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.series_collector.data.model.CategoryContent
 import com.example.series_collector.data.repository.CategoryRepository
@@ -7,10 +8,7 @@ import com.example.series_collector.data.repository.SeriesRepository
 import com.example.series_collector.utils.workers.SeriesWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 
@@ -24,17 +22,14 @@ class HomeViewModel @Inject constructor(
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val workState: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val updatedState: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    val categoryContents: LiveData<List<CategoryContent>> = workState.flatMapLatest { isFinished ->
-        if (isFinished) {
+    val categoryContents: LiveData<List<CategoryContent>> = updatedState.filter { it == false }
+        .flatMapLatest {
             categoryRepository.getCategoryContentsStream(
                 onComplete = { _isLoading.postValue(false) }
             )
-        } else {
-            flow { emit(emptyList()) }
-        }
-    }.asLiveData()
+        }.asLiveData()
 
     init {
         updateSeries()
@@ -47,8 +42,9 @@ class HomeViewModel @Inject constructor(
         updateJob = viewModelScope.launch {
             _isLoading.value = true
             seriesWorker.updateStream()
+                .onStart { updatedState.value = false }
                 .collect { workInfo ->
-                    workState.value = workInfo.state.isFinished
+                    updatedState.value = workInfo.state.isFinished
                 }
         }
     }

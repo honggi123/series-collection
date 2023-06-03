@@ -26,6 +26,8 @@ class DetailViewModel @Inject constructor(
 
     val isFollowed = seriesFollowedRepository.isFollowed(seriesId).asLiveData()
 
+    private val seriesInfoFlow = seriesRepository.getSeriesWithPageInfoStream(seriesId = seriesId, limit = 1)
+
     private var _seriesInfo = MutableLiveData<SeriesWithPageInfo?>()
     val seriesInfo: LiveData<SeriesWithPageInfo?> = _seriesInfo
 
@@ -36,20 +38,19 @@ class DetailViewModel @Inject constructor(
     private var currentSearchResult: Flow<PagingData<SeriesVideo>>? = null
 
     init {
-        getSeriesInfoFlow(seriesId)
+        observeSeriesInfoFlow()
     }
 
-    private fun getSeriesInfoFlow(seriesId: String) {
+    private fun observeSeriesInfoFlow() {
         viewModelScope.launch {
-            seriesRepository.getSeriesWithPageInfoStream(seriesId = seriesId, limit = 1)
-                .collect { result ->
-                    when (result) {
-                        is ApiResult.Success ->
-                            _seriesInfo.postValue(result.value)
-                        is ApiResult.Error ->
-                            _errorMsg.postValue(result.exception?.message)
-                    }
+            seriesInfoFlow.collect { result ->
+                when (result) {
+                    is ApiResult.Success ->
+                        _seriesInfo.postValue(result.value)
+                    is ApiResult.Error ->
+                        _errorMsg.postValue(result.exception?.message)
                 }
+            }
         }
     }
 
