@@ -15,17 +15,26 @@
 - 디자인 패턴 적용을 통해서 확장에 유연한 코드를 만들고자 합니다.
 
 ## Tech Stack
-- Mvvm Pattern
-- Coroutine
-- Data-Binding
-- LiveData
-- Hilt
-- WorkManager
-- Room
-- Navigtaion
-- Paging3
-- Retrofit2 
-- Glide
+
+* Minimum SDK level 21
+* Kotlin based, Coroutines + Flow for asynchronous.
+* Foundation
+  - Appcompat
+  - Android KTX
+
+* JetPack
+  - DataBinding
+  - LiveData
+  - WorkManager
+  - Room
+  - Navigtaion
+  - Hilt
+
+* Thrid Party Library
+  - Coroutine
+  - Paging3
+  - Retrofit2 
+  - Glide
 
 ## Main Issue
 - 로딩 시간을 줄이기 위한 로컬 캐싱
@@ -44,10 +53,9 @@ Series Collection은 기본적으로 MVVM architecture와 Repository pattern를 
 <img src = "https://github.com/honggi123/series-collection/assets/89631493/5494dda1-9d28-45b0-add8-f8a395aad9e0" width="70%" height="50%">
 
 UDF에서 상태는 한 방향으로만 흐릅니다. 데이터 흐름을 수정하는 이벤트는 반대 방향으로 흐릅니다. <br>   
-즉 애플리케이션 데이터 흐름은 데이터 레이어에서 ViewModel로 향합니다. UI 상태 흐름은 ViewModel에서 UI 요소로 향하고 이벤트 흐름은 UI 요소에서 다시 ViewModel로 향합니다.
+즉 애플리케이션 데이터 흐름은 데이터 레이어에서 ViewModel로 향합니다. <br> UI 상태 흐름은 ViewModel에서 UI 요소로 향하고 이벤트 흐름은 UI 요소에서 다시 ViewModel로 향합니다.
 <br>
 <br>
-이 패턴은 데이터 일관성을 강화하고, 오류가 발생할 확률을 줄여 주며, 디버그하기 쉽습니다.
 
 ### Repository Pattern
 
