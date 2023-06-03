@@ -4,9 +4,8 @@
 유튜브 채널에는 개인이 보고싶거나, 또는 보고싶지 않은 시리즈들이 존재합니다. <br>
 시리즈들만 모아서 볼 수 있고, 개인이 원하는 시리즈들만 관리할 수 있는 프로젝트 입니다. 
 
-|<img src="https://github.com/honggi123/series-collection/assets/89631493/a27aa508-ebfd-43c3-abf7-ddc833321b66" height="20%"/>|<img width=“20”% src="https://github.com/honggi123/series-collection/assets/89631493/3556a33e-2331-47c3-b451-da92bc6e6a0a" width="20%" height="20%"/>|
-|----|----|
-
+|<img src="https://github.com/honggi123/series-collection/assets/89631493/a27aa508-ebfd-43c3-abf7-ddc833321b66" height="20%"/>|<img width=“20”% src="https://github.com/honggi123/series-collection/assets/89631493/a69e4adc-1bc4-4296-bde7-cf7b1b73755d" width="20%" height="20%"/>|<img width=“20”% src="https://github.com/honggi123/series-collection/assets/89631493/f2a3983f-30cc-40f5-b7e3-399e96e96512" width="20%" height="20%"/>
+|----|----|----|
 
 ## Goal
 - Mvvm 패턴 적용을 통한 각 레이어간 의존성을 줄이고 유지보수성을 높이고자 합니다.
