@@ -27,13 +27,13 @@
   - WorkManager
   - Room
   - Navigtaion
-  - Hilt
 
 * Thrid Party Library
   - Coroutine
   - Paging3
   - Retrofit2 
   - Glide
+  - Hilt
 
 ## Main Issue
 - 로딩 시간을 줄이기 위한 로컬 캐싱
