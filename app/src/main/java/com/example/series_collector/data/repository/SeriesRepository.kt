@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
+import java.io.IOException
 import java.util.*
 import javax.inject.Inject
 
@@ -32,7 +33,13 @@ class SeriesRepository @Inject constructor(
         return seriesDao.flowSeries(seriesId).flatMapMerge { series ->
             flow {
                 emit(getSeriesWithPageInfo(series, seriesId, limit))
-            }.catch { e -> emit(ApiResult.Error(exception = e)) }
+            }.catch { e ->
+                val networkResponse = when (e) {
+                    is IOException -> ApiResult.NetworkError(e)
+                    else -> ApiResult.Unexpected(e)
+                }
+                emit(networkResponse)
+            }
         }
     }
 
@@ -43,7 +50,10 @@ class SeriesRepository @Inject constructor(
     ): ApiResult<SeriesWithPageInfo> {
         val response = youtubeDataSource.getPlayLists(seriesId, limit)
 
-        if (!response.isSuccessful) throw HttpException(response)
+        if (!response.isSuccessful) return ApiResult.Failure(
+            code = response.code(),
+            msg = response.message()
+        )
 
         val seriesWithPageInfo =
             seriesEntity.toSeriesWithPageInfo(

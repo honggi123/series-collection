@@ -26,7 +26,8 @@ class DetailViewModel @Inject constructor(
 
     val isFollowed = seriesFollowedRepository.isFollowed(seriesId).asLiveData()
 
-    private val seriesInfoFlow = seriesRepository.getSeriesWithPageInfoStream(seriesId = seriesId, limit = 1)
+    private val seriesInfoFlow =
+        seriesRepository.getSeriesWithPageInfoStream(seriesId = seriesId, limit = 1)
 
     private var _seriesInfo = MutableLiveData<SeriesWithPageInfo?>()
     val seriesInfo: LiveData<SeriesWithPageInfo?> = _seriesInfo
@@ -47,7 +48,9 @@ class DetailViewModel @Inject constructor(
                 when (result) {
                     is ApiResult.Success ->
                         _seriesInfo.postValue(result.value)
-                    is ApiResult.Error ->
+                    is ApiResult.Failure ->
+                        _errorMsg.postValue(result.msg)
+                    is ApiResult.NetworkError ->
                         _errorMsg.postValue(result.exception?.message)
                 }
             }
@@ -56,10 +59,9 @@ class DetailViewModel @Inject constructor(
 
     fun toggleSeriesFollowed(isFollowed: Boolean) {
         viewModelScope.launch {
-            if (isFollowed) {
-                seriesFollowedRepository.unFollowSeries(seriesId)
-            } else {
-                seriesFollowedRepository.followSeries(seriesId)
+            seriesFollowedRepository.run {
+                if (isFollowed) unFollowSeries(seriesId)
+                else followSeries(seriesId)
             }
         }
     }
