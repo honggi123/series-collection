@@ -1,6 +1,7 @@
 package com.example.series_collector.utils.workers
 
 import android.content.Context
+import android.util.Log
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
@@ -17,9 +18,14 @@ class SeriesUpdateWorker @AssistedInject constructor(
 ) : CoroutineWorker(context, workerParams) {
     override suspend fun doWork(): Result = supervisorScope {
 
-        seriesRepository.run {
-            val forceInit = if (isEmpty()) true else false
-            updateSeries(forceInit)
+        try {
+            seriesRepository.run {
+                val forceInit = if (isEmpty()) true else false
+                updateSeries(forceInit)
+            }
+        } catch (ex: Exception) {
+            Log.e(TAG, "Error SeriesUpdate", ex)
+            Result.failure()
         }
 
         Result.success()
