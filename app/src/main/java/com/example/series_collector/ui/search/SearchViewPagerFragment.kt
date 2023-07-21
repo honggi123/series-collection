@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -21,7 +22,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class SearchViewPagerFragment() : Fragment() {
 
-    private val filterTypes: List<SearchFilterType> = SearchFilterType.values().asList()
+    private val searchViewModel: SearchViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -32,17 +33,28 @@ class SearchViewPagerFragment() : Fragment() {
         val tabLayout = binding.tabs
         val viewPager = binding.viewPager
 
-        viewPager.adapter = SearchPagerStateAdapter(this,filterTypes)
+        viewPager.adapter = SearchPagerStateAdapter(this, searchViewModel.filterTypes)
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = getTabTitle(position)
         }.attach()
 
+        binding.searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                searchViewModel.setSearchQuery(newText.toString())
+                return true
+            }
+        })
+
         return binding.root
     }
 
     private fun getTabTitle(position: Int): String? {
-        val filterType = filterTypes.get(position)
+        val filterType = searchViewModel.filterTypes.get(position)
         return when (filterType) {
             SearchFilterType.ALL_FILTER_PAGE -> getString(R.string.all_filter_title)
             SearchFilterType.TRAVEL_FILTER_PAGE -> getString(R.string.travel_filter_title)

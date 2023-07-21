@@ -23,6 +23,9 @@ interface SeriesDao {
     @Query("SELECT (SELECT COUNT(*) FROM Series) == 0")
     suspend fun isEmpty(): Boolean
 
+    @Query("SELECT * FROM Series  WHERE name LIKE :query")
+    suspend fun getSeriesByQuery(query: String): List<SeriesEntity>
+
     @Query("SELECT * FROM Series ORDER BY last_update_date DESC LIMIT :limit")
     suspend fun getRecentSeries(limit: Int): List<SeriesEntity>
 

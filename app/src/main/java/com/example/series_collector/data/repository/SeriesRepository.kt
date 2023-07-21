@@ -5,6 +5,7 @@ import com.example.series_collector.data.room.entity.SeriesEntity
 import com.example.series_collector.data.SeriesThumbnailFetcher
 import com.example.series_collector.data.api.ApiResult
 import com.example.series_collector.data.model.SeriesWithPageInfo
+import com.example.series_collector.data.model.mapper.asDomain
 import com.example.series_collector.data.model.mapper.toSeriesWithPageInfo
 import com.example.series_collector.data.room.SeriesDao
 import com.example.series_collector.data.source.FirestoreDataSource
@@ -25,6 +26,9 @@ class SeriesRepository @Inject constructor(
     private val youtubeDataSource: YoutubeDataSource,
     private val seriesThumbnailFetcher: SeriesThumbnailFetcher
 ) {
+
+    suspend fun searchBySeriesName(query: String) =
+        seriesDao.getSeriesByQuery(query).asDomain()
 
     fun getSeriesWithPageInfoStream(
         seriesId: String,

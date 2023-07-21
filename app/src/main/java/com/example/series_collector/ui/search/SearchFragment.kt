@@ -20,8 +20,9 @@ private const val SEARCH_PAGE_KEY = "searchKey"
 class SearchFragment : Fragment() {
 
     lateinit private var binding: FragmentSearchBinding
-    private val searchViewModel: SearchViewModel by viewModels()
-    private val filterTypes = SearchFilterType.values().toList()
+    private val searchViewModel: SearchViewModel by viewModels(
+        ownerProducer = { this.parentFragment as Fragment }
+    )
 
     override fun onCreateView(
         inflater: LayoutInflater,
