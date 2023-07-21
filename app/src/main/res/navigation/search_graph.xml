@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/search"
-    app:startDestination="@id/SearchFragment">
+    app:startDestination="@id/view_pager_fragment">
 
     <fragment
-        android:id="@+id/SearchFragment"
-        android:name="com.example.series_collector.ui.search.SearchFragment"
-        android:label="fragment_search"
-        tools:layout="@layout/fragment_search"></fragment>
+        android:id="@+id/view_pager_fragment"
+        android:name="com.example.series_collector.ui.search.SearchViewPagerFragment"
+        android:label="fragment_view_pager"
+        tools:layout="@layout/fragment_view_pager"></fragment>
 
 </navigation>
