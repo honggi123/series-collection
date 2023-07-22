@@ -1,6 +1,7 @@
 package com.example.series_collector.ui.search
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,7 @@ import kotlinx.coroutines.launch
 class SearchViewPagerFragment() : Fragment() {
 
     private val searchViewModel: SearchViewModel by viewModels()
+    private val filterTypes = SearchFilterType.values().toList()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -33,7 +35,7 @@ class SearchViewPagerFragment() : Fragment() {
         val tabLayout = binding.tabs
         val viewPager = binding.viewPager
 
-        viewPager.adapter = SearchPagerStateAdapter(this, searchViewModel.filterTypes)
+        viewPager.adapter = SearchPagerStateAdapter(this, filterTypes)
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = getTabTitle(position)
@@ -54,7 +56,7 @@ class SearchViewPagerFragment() : Fragment() {
     }
 
     private fun getTabTitle(position: Int): String? {
-        val filterType = searchViewModel.filterTypes.get(position)
+        val filterType = filterTypes.get(position)
         return when (filterType) {
             SearchFilterType.ALL_FILTER_PAGE -> getString(R.string.all_filter_title)
             SearchFilterType.TRAVEL_FILTER_PAGE -> getString(R.string.travel_filter_title)
