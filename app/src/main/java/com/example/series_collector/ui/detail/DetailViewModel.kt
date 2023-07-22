@@ -1,6 +1,7 @@
 package com.example.series_collector.ui.detail
 
 
+import android.util.Log
 import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
@@ -9,6 +10,7 @@ import com.example.series_collector.data.api.SeriesVideo
 import com.example.series_collector.data.model.SeriesWithPageInfo
 import com.example.series_collector.data.repository.SeriesFollowedRepository
 import com.example.series_collector.data.repository.SeriesRepository
+import com.example.series_collector.utils.getGenreName
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -29,6 +31,9 @@ class DetailViewModel @Inject constructor(
     private val seriesInfoFlow =
         seriesRepository.getSeriesWithPageInfoStream(seriesId = seriesId, limit = 1)
 
+    private var _tags = MutableLiveData<List<String?>>()
+    val tags: LiveData<List<String?>> = _tags
+
     private var _seriesInfo = MutableLiveData<SeriesWithPageInfo?>()
     val seriesInfo: LiveData<SeriesWithPageInfo?> = _seriesInfo
 
@@ -46,8 +51,10 @@ class DetailViewModel @Inject constructor(
         viewModelScope.launch {
             seriesInfoFlow.collect { result ->
                 when (result) {
-                    is ApiResult.Success ->
+                    is ApiResult.Success -> {
+                        _tags.postValue(getTagsBySeriesInfo(result.value))
                         _seriesInfo.postValue(result.value)
+                    }
                     is ApiResult.Failure ->
                         _errorMsg.postValue(result.msg)
                     is ApiResult.NetworkError ->
@@ -56,6 +63,14 @@ class DetailViewModel @Inject constructor(
             }
         }
     }
+
+    private fun getTagsBySeriesInfo(seriesInfo: SeriesWithPageInfo) =
+        listOf(
+            getGenreName(seriesInfo.series.genre),
+            seriesInfo.series.channel,
+            seriesInfo.totalPage.toString() + "화"
+            )
+
 
     fun toggleSeriesFollowed(isFollowed: Boolean) {
         viewModelScope.launch {

@@ -78,7 +78,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/margin_normal"
+                    android:layout_marginBottom="@dimen/margin_small"
                     >
 
                     <ImageView
@@ -105,54 +105,26 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <com.google.android.material.chip.ChipGroup
+                    android:id="@+id/tagview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:selectionRequired="false"
+                    android:layout_marginBottom="@dimen/margin_small"
+                    app:tags="@{viewModel.tags}"
+                    >
+                </com.google.android.material.chip.ChipGroup>
+
                 <TextView
                     android:id="@+id/series_detail_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin_small"
-                    android:gravity="center"
                     android:text="@{viewModel.seriesInfo.series.name}"
                     android:textAppearance="?attr/textAppearanceHeadline5"
                     android:textColor="?attr/colorOnPrimary"
                     android:textStyle="bold"
                     tools:text="series title" />
-
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center">
-
-                    <TextView
-                        android:id="@+id/series_genre_description"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        app:genreHashtag="@{viewModel.seriesInfo.series.genre}"
-                        android:textAppearance="?attr/textAppearanceSubtitle1"
-                        android:textColor="?attr/colorSecondary"
-                        tools:text="#장르"/>
-
-                    <TextView
-                        android:id="@+id/series_channel_description"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_small"
-                        app:hashtag="@{viewModel.seriesInfo.series.channel}"
-                        android:textAppearance="?attr/textAppearanceSubtitle1"
-                        android:textColor="?attr/colorSecondary"
-                        tools:text="#채널명"/>
-
-                    <TextView
-                        android:id="@+id/series_video_count_description"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_small"
-                        app:hashtagTotalPage="@{viewModel.seriesInfo.totalPage}"
-                        android:textAppearance="?attr/textAppearanceSubtitle1"
-                        android:textColor="?attr/colorSecondary"
-                        tools:text="#회차개수"/>
-
-                </androidx.appcompat.widget.LinearLayoutCompat>
 
                 <TextView
                     android:id="@+id/series_description"
@@ -171,7 +143,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin_normal"
-                    android:gravity="center"
                     android:text="@string/series_videos_info_title"
                     android:textAppearance="?attr/textAppearanceHeadline5"
                     android:textColor="?attr/colorOnPrimary" />

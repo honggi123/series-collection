@@ -1,14 +1,12 @@
 package com.example.series_collector.ui.adapters
 
 import android.view.View
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.databinding.BindingAdapter
 import com.example.series_collector.R
-import com.example.series_collector.utils.getGenreName
-
-private const val SUB_DESCRIPTION_PREFIX = "#"
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 
 @BindingAdapter("isFollowed")
 fun bindisFollowed(button: AppCompatButton, isFollowed: Boolean) {
@@ -21,20 +19,6 @@ fun bindisFollowed(button: AppCompatButton, isFollowed: Boolean) {
     }
 }
 
-@BindingAdapter("genreHashtag")
-fun bindGenreHashtag(textview: TextView, genre: Int) {
-    val genreHashTaggedString = SUB_DESCRIPTION_PREFIX + getGenreName(genre)
-    textview.text = genreHashTaggedString
-}
-
-@BindingAdapter("hashtag")
-fun bindHashtag(textview: TextView, text: String?) {
-    if (text != null) {
-        val hashTaggedString = SUB_DESCRIPTION_PREFIX + text
-        textview.text = hashTaggedString
-    }
-}
-
 @BindingAdapter("toast")
 fun bindToast(view: View, msg: String?) {
     if (!msg.isNullOrEmpty()) {
@@ -42,9 +26,15 @@ fun bindToast(view: View, msg: String?) {
     }
 }
 
-
-@BindingAdapter("hashtagTotalPage")
-fun bindHashtagTotalPage(textview: TextView, count: Int) {
-    val hashTaggedString = SUB_DESCRIPTION_PREFIX + count +"회차"
-    textview.text = hashTaggedString
+@BindingAdapter("tags")
+fun bindTags(chipGroup: ChipGroup, tags: List<String>?) {
+    tags?.forEach { tag ->
+        val tagView: Chip = Chip(chipGroup.context).apply {
+            text = tag
+            isCheckable = false
+            isCloseIconVisible = false
+            setChipBackgroundColorResource(R.color.sc_gray)
+        }
+        chipGroup.addView(tagView)
+    }
 }
