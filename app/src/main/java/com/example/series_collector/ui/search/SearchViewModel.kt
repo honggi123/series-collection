@@ -19,7 +19,7 @@ class SearchViewModel @Inject constructor(
 
     private val _searchQuery: MutableStateFlow<String> = MutableStateFlow("")
 
-    val _searchedResult = _searchQuery
+    val searchedResult = _searchQuery
         .debounce(300)
         .mapLatest { query ->
             seriesRepository.searchBySeriesName(query)
