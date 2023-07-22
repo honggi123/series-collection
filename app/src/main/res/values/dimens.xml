@@ -32,4 +32,6 @@
 
     <dimen name="inventory_item_remove_btn_size">20dp</dimen>
 
+    <dimen name="search_series_item_image_height">100dp</dimen>
+    <dimen name="search_series_item_image_width">200dp</dimen>
 </resources>
