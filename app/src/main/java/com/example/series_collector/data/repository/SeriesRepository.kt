@@ -4,16 +4,15 @@ import android.util.Log
 import com.example.series_collector.data.room.entity.SeriesEntity
 import com.example.series_collector.data.SeriesThumbnailFetcher
 import com.example.series_collector.data.api.ApiResult
+import com.example.series_collector.data.model.Series
 import com.example.series_collector.data.model.SeriesWithPageInfo
+import com.example.series_collector.data.model.mapper.asDomain
 import com.example.series_collector.data.model.mapper.toSeriesWithPageInfo
 import com.example.series_collector.data.room.SeriesDao
 import com.example.series_collector.data.source.FirestoreDataSource
 import com.example.series_collector.data.source.YoutubeDataSource
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flatMapMerge
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.*
 import retrofit2.HttpException
 import java.io.IOException
 import java.util.*
@@ -25,6 +24,14 @@ class SeriesRepository @Inject constructor(
     private val youtubeDataSource: YoutubeDataSource,
     private val seriesThumbnailFetcher: SeriesThumbnailFetcher
 ) {
+
+    suspend fun searchBySeriesName(query: String): List<Series> {
+        return seriesDao.getSeriesByQuery(query).map { tasks ->
+            withContext(Dispatchers.Default) {
+                tasks.asDomain()
+            }
+        }
+    }
 
     fun getSeriesWithPageInfoStream(
         seriesId: String,

@@ -14,6 +14,9 @@ interface SeriesDao {
     @Query("SELECT * FROM Series WHERE id = :seriesId")
     fun flowSeries(seriesId: String): Flow<SeriesEntity>
 
+    @Query("SELECT * FROM Series WHERE name LIKE '%' || :query || '%'")
+    suspend fun getSeriesByQuery(query: String): List<SeriesEntity>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSeries(series: SeriesEntity)
 

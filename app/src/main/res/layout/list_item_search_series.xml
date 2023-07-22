@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="series"
+            type="com.example.series_collector.data.model.Series" />
+    </data>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/card_side_margin"
+        android:layout_marginBottom="@dimen/card_bottom_margin"
+        android:clipChildren="true"
+        app:cardBackgroundColor="@android:color/transparent"
+        app:cardElevation="@dimen/card_elevation"
+        app:cardPreventCornerOverlap="false">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/img_series_thumbnail"
+                android:layout_width="@dimen/search_series_item_image_width"
+                android:layout_height="@dimen/search_series_item_image_height"
+                android:background="@drawable/round_radius_shape"
+                android:scaleType="centerCrop"
+                app:imageFromUrl="@{series.thumbnail}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_series_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="@{series.name}"
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:textColor="?attr/colorOnPrimary"
+                app:layout_constraintStart_toEndOf="@+id/img_series_thumbnail"
+                app:layout_constraintTop_toTopOf="@+id/img_series_thumbnail"
+                tools:text="Series title" />
+
+            <TextView
+                android:id="@+id/tv_series_channel_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="10dp"
+                android:text="@{series.channel}"
+                android:textAppearance="?attr/textAppearanceSubtitle2"
+                android:textColor="?attr/colorSecondary"
+                app:layout_constraintStart_toEndOf="@+id/img_series_thumbnail"
+                app:layout_constraintTop_toBottomOf="@+id/tv_series_title"
+                tools:text="channel name" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</layout>

@@ -6,6 +6,11 @@
         android:title="홈" />
 
     <item
+        android:id="@+id/search"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="검색" />
+
+    <item
         android:id="@+id/inventory"
         android:icon="@drawable/ic_baseline_inventory_24"
         android:title="보관함" />
