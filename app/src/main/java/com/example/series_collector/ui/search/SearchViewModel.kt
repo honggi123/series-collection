@@ -40,16 +40,16 @@ class SearchViewModel @Inject constructor(
         _filterType.value = requestType
     }
 
-    private fun filterSeries(tasks: List<Series>, filteringType: SearchFilterType): List<Series> {
+    private fun filterSeries(seriesContents: List<Series>, filteringType: SearchFilterType): List<Series> {
         val seriesToShow = ArrayList<Series>()
-        for (task in tasks) {
+        for (seriesContent in seriesContents) {
             when (filteringType) {
-                SearchFilterType.ALL_FILTER_PAGE -> seriesToShow.add(task)
-                SearchFilterType.FICTION_FILTER_PAGE -> if (task.genre == 1) {
-                    seriesToShow.add(task)
+                SearchFilterType.ALL_FILTER_PAGE -> seriesToShow.add(seriesContent)
+                SearchFilterType.FICTION_FILTER_PAGE -> if (seriesContent.genre == 1) {
+                    seriesToShow.add(seriesContent)
                 }
-                SearchFilterType.TRAVEL_FILTER_PAGE -> if (task.genre == 2) {
-                    seriesToShow.add(task)
+                SearchFilterType.TRAVEL_FILTER_PAGE -> if (seriesContent.genre == 2) {
+                    seriesToShow.add(seriesContent)
                 }
             }
         }
