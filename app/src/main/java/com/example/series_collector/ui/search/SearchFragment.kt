@@ -6,13 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.example.series_collector.data.model.Series
 import com.example.series_collector.databinding.FragmentSearchBinding
 import com.example.series_collector.ui.adapters.SearchSeriesAdapter
-import kotlinx.coroutines.launch
 
-private const val SEARCH_PAGE_KEY = "searchKey"
+private const val PAGE_POSITION_BUNDLE_KEY = "searchKey"
+private const val NO_PAGE_POSITION_INDEX = 0
 
 class SearchFragment : Fragment() {
 
@@ -41,9 +40,7 @@ class SearchFragment : Fragment() {
     }
 
     private fun subscribeUi() {
-        val pageIdx = arguments?.getInt(SEARCH_PAGE_KEY) ?: 0
-
-        lifecycleScope.launch {
+        val pageIdx = arguments?.getInt(PAGE_POSITION_BUNDLE_KEY) ?: NO_PAGE_POSITION_INDEX
             parentFragment?.let {
                 searchViewModel.searchedResult.observe(
                     it.viewLifecycleOwner, { contents ->
@@ -51,7 +48,6 @@ class SearchFragment : Fragment() {
                         adapter.submitList(newContents)
                     })
             }
-        }
     }
 
     private fun filterSeries(
@@ -76,7 +72,7 @@ class SearchFragment : Fragment() {
     companion object {
         fun newInstance(position: Int) = SearchFragment().apply {
             arguments = Bundle().apply {
-                putInt(SEARCH_PAGE_KEY, position)
+                putInt(PAGE_POSITION_BUNDLE_KEY, position)
             }
         }
     }
