@@ -16,9 +16,12 @@ import com.example.series_collector.databinding.FragmentViewPagerBinding
 import com.example.series_collector.ui.Inventory.InventoryItemCallback
 import com.example.series_collector.ui.Inventory.InventoryViewModel
 import com.example.series_collector.ui.adapters.*
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+
+private const val NO_PAGE_POSITION_INDEX = 0
 
 @AndroidEntryPoint
 class SearchViewPagerFragment() : Fragment() {
@@ -41,7 +44,30 @@ class SearchViewPagerFragment() : Fragment() {
             tab.text = getTabTitle(position)
         }.attach()
 
-        binding.searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+        setUpTabLayout(tabLayout)
+        setUpSearchView(binding.searchView)
+
+        return binding.root
+    }
+
+    private fun setUpTabLayout(tabLayout: TabLayout) {
+        tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                val filterType = filterTypes.get(tab?.position ?: NO_PAGE_POSITION_INDEX)
+                searchViewModel.setFiltering(filterType)
+            }
+
+            override fun onTabUnselected(tab: TabLayout.Tab?) {
+            }
+
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+            }
+        })
+    }
+
+    private fun setUpSearchView(searchView: androidx.appcompat.widget.SearchView) {
+        searchView.setOnQueryTextListener(object :
+            androidx.appcompat.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return true
             }
@@ -51,8 +77,6 @@ class SearchViewPagerFragment() : Fragment() {
                 return true
             }
         })
-
-        return binding.root
     }
 
     private fun getTabTitle(position: Int): String? {

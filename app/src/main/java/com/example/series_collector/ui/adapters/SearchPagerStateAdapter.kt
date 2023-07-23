@@ -14,6 +14,6 @@ class SearchPagerStateAdapter(
     override fun getItemCount(): Int = list.size
 
     override fun createFragment(position: Int): Fragment {
-        return SearchFragment.newInstance(position)
+        return SearchFragment()
     }
 }

@@ -17,16 +17,43 @@ class SearchViewModel @Inject constructor(
     seriesRepository: SeriesRepository
 ) : ViewModel() {
 
-    private val _searchQuery: MutableStateFlow<String> = MutableStateFlow("")
+    private val _filterType: MutableStateFlow<SearchFilterType> =
+        MutableStateFlow(SearchFilterType.ALL_FILTER_PAGE)
 
-    val searchedResult = _searchQuery
+    private val _searchQuery: MutableStateFlow<String> = MutableStateFlow("")
+    private val _searchedResult = _searchQuery
         .debounce(300)
         .mapLatest { query ->
             seriesRepository.searchBySeriesName(query)
+        }
+
+    val filteredSeries =
+        combine(_searchedResult, _filterType) { list, type ->
+            filterSeries(list, type)
         }.asLiveData()
 
     fun setSearchQuery(query: String) {
         _searchQuery.value = query
+    }
+
+    fun setFiltering(requestType: SearchFilterType) {
+        _filterType.value = requestType
+    }
+
+    private fun filterSeries(tasks: List<Series>, filteringType: SearchFilterType): List<Series> {
+        val seriesToShow = ArrayList<Series>()
+        for (task in tasks) {
+            when (filteringType) {
+                SearchFilterType.ALL_FILTER_PAGE -> seriesToShow.add(task)
+                SearchFilterType.FICTION_FILTER_PAGE -> if (task.genre == 1) {
+                    seriesToShow.add(task)
+                }
+                SearchFilterType.TRAVEL_FILTER_PAGE -> if (task.genre == 2) {
+                    seriesToShow.add(task)
+                }
+            }
+        }
+        return seriesToShow
     }
 
 }

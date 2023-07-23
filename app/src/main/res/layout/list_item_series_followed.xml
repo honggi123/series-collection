@@ -34,7 +34,6 @@
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
@@ -58,13 +57,15 @@
                     tools:text="update date" />
             </androidx.appcompat.widget.LinearLayoutCompat>
 
-            <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/btn_delete"
-                android:layout_width="@dimen/inventory_item_remove_btn_size"
-                android:layout_height="@dimen/inventory_item_remove_btn_size"
-                android:background="@drawable/ic_baseline_remove_circle_outline_24" />
-
         </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_delete"
+            android:layout_width="@dimen/inventory_item_remove_btn_size"
+            android:layout_height="@dimen/inventory_item_remove_btn_size"
+            android:background="@drawable/ic_baseline_remove_circle_outline_24"
+            android:layout_gravity="right"/>
+
     </androidx.cardview.widget.CardView>
 
 </layout>
