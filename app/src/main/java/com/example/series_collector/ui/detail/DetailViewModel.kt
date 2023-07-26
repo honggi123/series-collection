@@ -31,8 +31,8 @@ class DetailViewModel @Inject constructor(
     private val seriesInfoFlow =
         seriesRepository.getSeriesWithPageInfoStream(seriesId = seriesId, limit = 1)
 
-    private var _tags = MutableLiveData<List<String?>>()
-    val tags: LiveData<List<String?>> = _tags
+    private var _tags = MutableLiveData<List<String>>()
+    val tags: LiveData<List<String>> = _tags
 
     private var _seriesInfo = MutableLiveData<SeriesWithPageInfo?>()
     val seriesInfo: LiveData<SeriesWithPageInfo?> = _seriesInfo

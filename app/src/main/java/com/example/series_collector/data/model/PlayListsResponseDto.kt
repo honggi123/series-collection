@@ -39,7 +39,7 @@ data class Thumbnails(
     val default: Default,
     val high: High,
     val maxres: Maxres,
-    val medium: Medium,
+    val medium: Medium?,
     val standard: Standard
 )
 
@@ -57,7 +57,7 @@ data class Maxres(
 
 data class Medium(
     val height: Int,
-    val url: String,
+    val url: String?,
     val width: Int
 )
 

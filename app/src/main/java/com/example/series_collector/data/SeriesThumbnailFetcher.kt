@@ -15,18 +15,15 @@ class SeriesThumbnailFetcher @Inject constructor(
                 async {
                     if (seriesEntity.thumbnail.isNullOrBlank()) {
                         val url = getThumbnailUrl(seriesEntity.seriesId)
-                            .getOrDefault("")
                         seriesEntity.copy(thumbnail = url)
                     } else seriesEntity
                 }
             }.awaitAll()
         }
 
-    private suspend fun getThumbnailUrl(seriesId: String) =
-        runCatching {
-            youtubeDataSource.getPlayLists(playListId = seriesId, limit = 1)
-                .body()!!.items.get(0).snippet.thumbnails!!.medium.url
-        }
+    private suspend fun getThumbnailUrl(seriesId: String): String =
+        youtubeDataSource.getPlayLists(playListId = seriesId, limit = 1).body()
+            ?.items?.get(0)?.snippet?.thumbnails?.medium?.url ?: ""
 
 
 }
