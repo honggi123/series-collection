@@ -43,7 +43,6 @@ class HomeViewModel @Inject constructor(
         updateJob = viewModelScope.launch {
             _isLoading.value = true
             seriesWorker.updateStream()
-                .onStart { isUpdateFinished.value = false }
                 .collect { workInfo ->
                     isUpdateFinished.value = workInfo.state.isFinished
                 }
