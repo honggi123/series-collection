@@ -22,9 +22,10 @@ class HomeViewModel @Inject constructor(
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val updatedState: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    private val isUpdateFinished: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    val categoryContents: LiveData<List<CategoryContent>> = updatedState.filter { it == false }
+    val categoryContents: LiveData<List<CategoryContent>> = isUpdateFinished
+        .filter { it == false }
         .flatMapLatest {
             categoryRepository.getCategoryContentsStream(
                 onComplete = { _isLoading.postValue(false) }
@@ -42,9 +43,9 @@ class HomeViewModel @Inject constructor(
         updateJob = viewModelScope.launch {
             _isLoading.value = true
             seriesWorker.updateStream()
-                .onStart { updatedState.value = false }
+                .onStart { isUpdateFinished.value = false }
                 .collect { workInfo ->
-                    updatedState.value = workInfo.state.isFinished
+                    isUpdateFinished.value = workInfo.state.isFinished
                 }
         }
     }
