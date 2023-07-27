@@ -23,13 +23,13 @@ class SearchViewModel @Inject constructor(
     private val _searchQuery: MutableStateFlow<String> = MutableStateFlow("")
     private val _searchedResult = _searchQuery
         .debounce(300)
-        .mapLatest { query ->
-            seriesRepository.searchBySeriesName(query)
+        .mapLatest { searchQuery ->
+            seriesRepository.searchBySeriesName(searchQuery)
         }
 
     val filteredSeries =
-        combine(_searchedResult, _filterType) { list, type ->
-            filterSeries(list, type)
+        combine(_searchedResult, _filterType) { searchedResult, filterType ->
+            filterSeries(searchedResult, filterType)
         }.asLiveData()
 
     fun setSearchQuery(query: String) {
@@ -40,7 +40,10 @@ class SearchViewModel @Inject constructor(
         _filterType.value = requestType
     }
 
-    private fun filterSeries(seriesContents: List<Series>, filteringType: SearchFilterType): List<Series> {
+    private fun filterSeries(
+        seriesContents: List<Series>,
+        filteringType: SearchFilterType
+    ): List<Series> {
         val seriesToShow = ArrayList<Series>()
         for (seriesContent in seriesContents) {
             when (filteringType) {
