@@ -1,33 +1,17 @@
 package com.example.series_collector.data.repository
 
-import android.util.Log
 import com.example.series_collector.data.SeriesThumbnailFetcher
-import com.example.series_collector.data.model.Series
 import com.example.series_collector.data.model.mapper.toCategoryContent
 import com.example.series_collector.data.model.mapper.asDomain
 import com.example.series_collector.data.room.SeriesDao
-import com.example.series_collector.data.room.entity.SeriesEntity
 import com.example.series_collector.data.source.FirestoreDataSource
+import com.example.series_collector.ui.home.CategoryType
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.withContext
 import java.lang.NullPointerException
 import javax.inject.Inject
-
-enum class CategoryType(
-    val categoryId: String
-) {
-    RECENT(categoryId = "category_recent"), POPULAR(categoryId = "category_popular"),
-    FICTION(categoryId = "category_fiction"), TRAVEL(categoryId = "category_travel");
-
-    companion object {
-        private val map = values().associateBy(CategoryType::categoryId)
-        fun find(id: String) = map[id]
-    }
-}
 
 class CategoryRepository @Inject constructor(
     private val seriesDao: SeriesDao,
@@ -62,6 +46,7 @@ class CategoryRepository @Inject constructor(
         }
     }
 }
+
 
 
 
