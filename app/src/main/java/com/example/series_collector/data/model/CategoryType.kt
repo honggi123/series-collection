@@ -1,4 +1,4 @@
-package com.example.series_collector.ui.home
+package com.example.series_collector.data.model
 
 enum class CategoryType(
     val categoryId: String
