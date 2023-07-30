@@ -1,13 +1,14 @@
 package com.example.series_collector.ui.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.example.series_collector.databinding.FragmentHomeSeriesBinding
-import com.example.series_collector.ui.adapters.CategoryAdapter
+import com.example.series_collector.ui.adapters.HomeListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -24,7 +25,7 @@ class HomeFragment() : Fragment() {
     ): View? {
         binding = FragmentHomeSeriesBinding.inflate(inflater, container, false)
         binding.apply {
-            val adapter = CategoryAdapter()
+            val adapter = HomeListAdapter()
             viewModel = homeViewModel
             lifecycleOwner = viewLifecycleOwner
             rvCategorys.adapter = adapter
@@ -40,7 +41,7 @@ class HomeFragment() : Fragment() {
         return binding.root
     }
 
-    private fun subscribeUi(adapter: CategoryAdapter) {
+    private fun subscribeUi(adapter: HomeListAdapter) {
         homeViewModel.categoryContents.observe(viewLifecycleOwner) { contents ->
             adapter.submitList(contents)
         }

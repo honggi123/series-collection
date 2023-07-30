@@ -3,6 +3,7 @@ package com.example.series_collector.ui.home
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.series_collector.data.model.CategoryContent
+import com.example.series_collector.data.model.ListItem
 import com.example.series_collector.data.repository.CategoryRepository
 import com.example.series_collector.data.repository.SeriesRepository
 import com.example.series_collector.utils.workers.SeriesWorker
@@ -24,7 +25,7 @@ class HomeViewModel @Inject constructor(
 
     private val isUpdateFinished: MutableStateFlow<Boolean> = MutableStateFlow(false)
 
-    val categoryContents: LiveData<List<CategoryContent>> = isUpdateFinished
+    val categoryContents: LiveData<List<ListItem>> = isUpdateFinished
         .filter { it == false }
         .flatMapLatest {
             categoryRepository.getCategoryContentsStream(

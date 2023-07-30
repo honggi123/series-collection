@@ -1,6 +1,6 @@
 package com.example.series_collector.data.model.mapper
 
-import com.example.series_collector.data.api.PageInfo
+import com.example.series_collector.data.model.dto.PageInfo
 import com.example.series_collector.data.model.Series
 import com.example.series_collector.data.model.SeriesWithPageInfo
 import com.example.series_collector.data.room.entity.SeriesEntity

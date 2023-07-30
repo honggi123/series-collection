@@ -1,6 +1,7 @@
 package com.example.series_collector.data.api
 
 import com.example.series_collector.BuildConfig
+import com.example.series_collector.data.model.dto.PlayListsResponseDto
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response

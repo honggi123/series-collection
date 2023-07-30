@@ -38,5 +38,8 @@ interface SeriesDao {
     @Query("SELECT * FROM Series  WHERE genre == 2 LIMIT :limit")
     suspend fun getTravelSeries(limit: Int): List<SeriesEntity>
 
+    @Query("SELECT thumbnail FROM Series ORDER BY RANDOM() LIMIT :limit")
+    suspend fun getRandomThumbnails(limit: Int): List<String>
+
 
 }

@@ -1,12 +1,11 @@
 package com.example.series_collector.ui.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.series_collector.data.api.SeriesVideo
+import com.example.series_collector.data.model.dto.SeriesVideo
 import com.example.series_collector.databinding.ListItemSeriesVideoBinding
 
 

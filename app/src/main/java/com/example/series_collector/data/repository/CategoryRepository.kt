@@ -1,11 +1,10 @@
 package com.example.series_collector.data.repository
 
 import com.example.series_collector.data.SeriesThumbnailFetcher
-import com.example.series_collector.data.model.mapper.toCategoryContent
+import com.example.series_collector.data.model.*
 import com.example.series_collector.data.model.mapper.asDomain
 import com.example.series_collector.data.room.SeriesDao
 import com.example.series_collector.data.source.FirestoreDataSource
-import com.example.series_collector.ui.home.CategoryType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
@@ -21,11 +20,17 @@ class CategoryRepository @Inject constructor(
 
     fun getCategoryContentsStream(onComplete: () -> Unit) = flow {
         val categoryContents = firestoreDataSource.getCategorys().map {
-            it.toCategoryContent(
-                seriesList = getSeriesByCategory(categoryId = it.categoryId)
-                    .getOrDefault(emptyList())
-                    .asDomain()
-            )
+            when (it.viewType) {
+                ViewType.HORIZONTAL.name ->
+                    Horizontal(
+                        title = it.title,
+                        items = getSeriesByCategory(it.categoryId)
+                            .getOrDefault(emptyList())
+                            .asDomain()
+                    )
+                ViewType.VIEWPAGER.name -> ViewPager(items = getAds())
+                else -> Empty()
+            }
         }
         emit(categoryContents)
     }.onCompletion { onComplete() }.flowOn(Dispatchers.IO)
@@ -45,6 +50,16 @@ class CategoryRepository @Inject constructor(
             seriesThumbnailFetcher(list)
         }
     }
+
+    private suspend fun getAds(): List<ListItem> {
+        val list = mutableListOf<ListItem>()
+        seriesDao.getRandomThumbnails(limit = 5)
+            .forEach { url ->
+                list.add(Ad(imgUrl = url))
+            }
+        return list
+    }
+
 }
 
 

@@ -1,7 +1,8 @@
 package com.example.series_collector.data.source
 
-import com.example.series_collector.data.model.CategoryDto
+import com.example.series_collector.data.model.dto.CategoryDto
 import com.example.series_collector.data.room.entity.SeriesEntity
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
@@ -26,6 +27,7 @@ class FirestoreDataSource @Inject constructor() {
 
     suspend fun getCategorys(): List<CategoryDto> =
         collection("Category")
+            .orderBy("viewType",Query.Direction.DESCENDING)
             .get()
             .await().toObjects(CategoryDto::class.java)
 
