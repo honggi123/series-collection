@@ -1,6 +1,6 @@
 package com.example.series_collector.data.source
 
-import com.example.series_collector.data.model.CategoryDto
+import com.example.series_collector.data.model.dto.CategoryDto
 import com.example.series_collector.data.room.entity.SeriesEntity
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase

@@ -1,11 +1,10 @@
 package com.example.series_collector.data.source
 
-import android.util.Log
 import com.example.series_collector.data.api.YoutubeService
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.example.series_collector.data.api.SeriesVideo
+import com.example.series_collector.data.model.dto.SeriesVideo
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

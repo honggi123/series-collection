@@ -2,7 +2,7 @@ package com.example.series_collector.data.source
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.series_collector.data.api.SeriesVideo
+import com.example.series_collector.data.model.dto.SeriesVideo
 import com.example.series_collector.data.api.YoutubeService
 
 private const val STARTING_PAGE_TOKEN = ""
