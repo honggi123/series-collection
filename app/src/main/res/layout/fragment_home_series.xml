@@ -73,7 +73,7 @@
                 android:paddingTop="@dimen/home_side_margin"
                 android:paddingEnd="@dimen/home_side_margin"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                tools:listitem="@layout/list_item_category" />
+                tools:listitem="@layout/list_item_horizontal" />
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

@@ -1,9 +1,7 @@
 package com.example.series_collector.data.repository
 
-import android.util.Log
 import com.example.series_collector.data.SeriesThumbnailFetcher
 import com.example.series_collector.data.model.*
-import com.example.series_collector.data.model.mapper.toCategoryContent
 import com.example.series_collector.data.model.mapper.asDomain
 import com.example.series_collector.data.room.SeriesDao
 import com.example.series_collector.data.source.FirestoreDataSource
@@ -30,7 +28,7 @@ class CategoryRepository @Inject constructor(
                             .getOrDefault(emptyList())
                             .asDomain()
                     )
-                ViewType.FULLAD.name -> FullAd(items = getAds())
+                ViewType.VIEWPAGER.name -> ViewPager(items = getAds())
                 else -> Empty()
             }
         }
