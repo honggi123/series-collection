@@ -48,21 +48,9 @@
 
 Series Collection은 기본적으로 MVVM architecture와 Repository pattern를 기반으로 합니다.
 
-### Unidirection Data Flow
-
-<img src = "https://github.com/honggi123/series-collection/assets/89631493/5494dda1-9d28-45b0-add8-f8a395aad9e0" width="70%" height="50%">
-
-UDF에서 상태는 한 방향으로만 흐릅니다. 데이터 흐름을 수정하는 이벤트는 반대 방향으로 흐릅니다. <br>   
-즉 애플리케이션 데이터 흐름은 데이터 레이어에서 ViewModel로 향합니다. <br> UI 상태 흐름은 ViewModel에서 UI 요소로 향하고 이벤트 흐름은 UI 요소에서 다시 ViewModel로 향합니다.
-<br>
-<br>
-
 ### Repository Pattern
 
 <img src = "https://github.com/f-lab-edu/series-collector/assets/89631493/5b326730-ebe2-4276-abd9-5dd60b5bf02e" width="70%" height="50%">
-
-레포지토리 패턴은 데이터 레이어를 앱의 다른 레이어들과 분리하는 디자인 패턴입니다. <br>
-실제 앱에서 레포지토리는 네트워크에서 데이터를 가져올지 아니면 로컬 데이터베이스에 캐시된 결과를 사용할지 결정하는 로직을 구현합니다. <br>
 
 - Local : Room db
 - Remote : Firebase FireStore
@@ -70,6 +58,3 @@ UDF에서 상태는 한 방향으로만 흐릅니다. 데이터 흐름을 수정
 레포지토리를 사용하면 뷰 모델과 같은 호출 코드에 영향을 주지 않고 구현 세부정보를 교체할 수 있습니다.<br>
 이는 코드를 모듈식으로, 테스트 가능하게 만드는 데도 도움이 됩니다. 
 
-
-## App Design
-https://ovenapp.io/project/CbZ5G3hIG2UjVuFgwp9SkVRAbf1FJWgo#62N57
