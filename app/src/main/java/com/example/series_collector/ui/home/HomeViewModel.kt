@@ -1,8 +1,6 @@
 package com.example.series_collector.ui.home
 
-import android.util.Log
 import androidx.lifecycle.*
-import com.example.series_collector.data.model.CategoryContent
 import com.example.series_collector.data.model.ListItem
 import com.example.series_collector.data.repository.CategoryRepository
 import com.example.series_collector.data.repository.SeriesRepository
