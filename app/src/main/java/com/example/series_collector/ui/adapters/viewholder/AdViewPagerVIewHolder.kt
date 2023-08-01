@@ -1,5 +1,6 @@
 package com.example.series_collector.ui.adapters.viewholder
 
+import androidx.core.view.setPadding
 import com.example.series_collector.data.model.Horizontal
 import com.example.series_collector.data.model.ListItem
 import com.example.series_collector.data.model.ViewPager

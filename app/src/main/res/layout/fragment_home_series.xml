@@ -25,14 +25,17 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                app:contentInsetStart="0dp"
+                app:layout_scrollFlags="scroll|enterAlways"
+                >
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/toolbar_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/home_title"
-                    android:textAppearance="@style/Toolbar.TitleText" />
+                    android:layout_width="100dp"
+                    android:layout_height="?attr/actionBarSize"
+                    android:src="@drawable/logo" />
+
             </androidx.appcompat.widget.Toolbar>
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -42,7 +45,6 @@
             android:id="@+id/viewPager2"
             android:layout_width="match_parent"
             android:layout_height="260dp"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
