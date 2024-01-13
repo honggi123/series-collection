@@ -1,4 +1,4 @@
-package com.example.series_collector.data.model.mapper
+package com.example.series_collector.data.mapper
 
 import com.example.series_collector.data.model.dto.PageInfo
 import com.example.series_collector.data.model.Series

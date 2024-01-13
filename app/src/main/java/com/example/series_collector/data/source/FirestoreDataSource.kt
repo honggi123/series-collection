@@ -24,7 +24,6 @@ class FirestoreDataSource @Inject constructor() {
             .get()
             .await().toObjects(SeriesEntity::class.java)
 
-
     suspend fun getCategorys(): List<CategoryDto> =
         collection("Category")
             .orderBy("viewType",Query.Direction.DESCENDING)

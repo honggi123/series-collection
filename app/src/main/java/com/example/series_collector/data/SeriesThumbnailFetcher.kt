@@ -11,20 +11,19 @@ class SeriesThumbnailFetcher @Inject constructor(
 ) {
     suspend operator fun invoke(list: List<SeriesEntity>): List<SeriesEntity> =
         withContext(Dispatchers.IO) {
-            list.map { seriesEntity ->
+            list.map { series ->
                 async {
-                    if (seriesEntity.thumbnail.isNullOrBlank()) {
-                        val url = getThumbnailUrl(seriesEntity.seriesId)
-                        seriesEntity.copy(thumbnail = url)
-                    } else seriesEntity
+                    if (series.thumbnail.isNullOrBlank()) {
+                        val url = getThumbnailUrl(series.seriesId)
+                        series.copy(thumbnail = url)
+                    } else series
                 }
             }.awaitAll()
         }
 
-    private suspend fun getThumbnailUrl(seriesId: String): String =
-        youtubeDataSource.getPlayLists(playListId = seriesId, limit = 1).body()
-            ?.items?.get(0)?.snippet?.thumbnails?.medium?.url ?: ""
-
-
+    private suspend fun getThumbnailUrl(seriesId: String): String? {
+        val playlistsResponse = youtubeDataSource.getPlayLists(playListId = seriesId, limit = 1).body()
+        return playlistsResponse?.items?.firstOrNull()?.snippet?.thumbnails?.medium?.url
+    }
 }
 

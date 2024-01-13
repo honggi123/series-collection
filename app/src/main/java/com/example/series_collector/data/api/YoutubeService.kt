@@ -1,7 +1,7 @@
 package com.example.series_collector.data.api
 
 import com.example.series_collector.BuildConfig
-import com.example.series_collector.data.model.dto.PlayListsResponseDto
+import com.example.series_collector.data.model.dto.PlayListsDto
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Response
@@ -19,7 +19,7 @@ interface YoutubeService {
         @Query("playlistId") id: String,
         @Query("pageToken") pageToken: String = "",
         @Query("maxResults") maxResults: Int,
-    ): Response<PlayListsResponseDto>
+    ): Response<PlayListsDto>
 
     companion object {
         private const val BASE_URL = "https://www.googleapis.com/youtube/v3/"

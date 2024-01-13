@@ -2,7 +2,7 @@ package com.example.series_collector.data.repository
 
 import com.example.series_collector.data.SeriesThumbnailFetcher
 import com.example.series_collector.data.model.*
-import com.example.series_collector.data.model.mapper.asDomain
+import com.example.series_collector.data.mapper.asDomain
 import com.example.series_collector.data.room.SeriesDao
 import com.example.series_collector.data.source.FirestoreDataSource
 import kotlinx.coroutines.Dispatchers

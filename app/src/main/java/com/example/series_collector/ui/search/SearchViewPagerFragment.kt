@@ -73,7 +73,7 @@ class SearchViewPagerFragment() : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                searchViewModel.setSearchQuery(newText.toString())
+                searchViewModel.search(newText.toString())
                 return true
             }
         })

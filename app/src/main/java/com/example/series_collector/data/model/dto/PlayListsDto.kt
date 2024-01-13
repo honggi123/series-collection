@@ -1,6 +1,6 @@
 package com.example.series_collector.data.model.dto
 
-data class PlayListsResponseDto(
+data class PlayListsDto(
     val etag: String,
     val items: List<SeriesVideo>,
     val kind: String,

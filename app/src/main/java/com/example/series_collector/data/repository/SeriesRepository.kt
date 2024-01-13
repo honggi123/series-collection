@@ -6,8 +6,8 @@ import com.example.series_collector.data.SeriesThumbnailFetcher
 import com.example.series_collector.data.api.ApiResult
 import com.example.series_collector.data.model.Series
 import com.example.series_collector.data.model.SeriesWithPageInfo
-import com.example.series_collector.data.model.mapper.asDomain
-import com.example.series_collector.data.model.mapper.toSeriesWithPageInfo
+import com.example.series_collector.data.mapper.asDomain
+import com.example.series_collector.data.mapper.toSeriesWithPageInfo
 import com.example.series_collector.data.room.SeriesDao
 import com.example.series_collector.data.source.FirestoreDataSource
 import com.example.series_collector.data.source.YoutubeDataSource

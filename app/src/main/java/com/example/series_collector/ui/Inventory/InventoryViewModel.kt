@@ -12,7 +12,8 @@ import javax.inject.Inject
 class InventoryViewModel @Inject constructor(
     private val seriesFollowedRepository: SeriesFollowedRepository
 ) : ViewModel() {
-    val mySeriesList = seriesFollowedRepository.getSeriesFollowedList().asLiveData()
+
+    val mySeriesList = seriesFollowedRepository.getFollowedSeriesList().asLiveData()
 
     fun unFollowSeries(seriesId: String) {
         viewModelScope.launch {

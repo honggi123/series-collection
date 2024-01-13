@@ -13,7 +13,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val seriesRepository: SeriesRepository,
     private val categoryRepository: CategoryRepository,
     private val seriesWorker: SeriesWorker,
 ) : ViewModel() {

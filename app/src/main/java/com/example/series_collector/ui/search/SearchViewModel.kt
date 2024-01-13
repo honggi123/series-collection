@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.series_collector.data.model.GenreType
 import com.example.series_collector.data.model.Series
 import com.example.series_collector.data.repository.SeriesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,6 +22,7 @@ class SearchViewModel @Inject constructor(
         MutableStateFlow(SearchFilterType.ALL_FILTER_PAGE)
 
     private val _searchQuery: MutableStateFlow<String> = MutableStateFlow("")
+
     private val _searchedResult = _searchQuery
         .debounce(300)
         .mapLatest { searchQuery ->
@@ -28,35 +30,31 @@ class SearchViewModel @Inject constructor(
         }
 
     val filteredSeries =
-        combine(_searchedResult, _filterType) { searchedResult, filterType ->
-            filterSeries(searchedResult, filterType)
+        combine(_searchedResult, _filterType) { result, filterType ->
+            filterSeries(result, filterType)
         }.asLiveData()
 
-    fun setSearchQuery(query: String) {
+    fun search(query: String) {
         _searchQuery.value = query
     }
 
-    fun setFiltering(requestType: SearchFilterType) {
-        _filterType.value = requestType
+    fun setFiltering(type: SearchFilterType) {
+        _filterType.value = type
     }
 
     private fun filterSeries(
-        seriesContents: List<Series>,
+        contents: List<Series>,
         filteringType: SearchFilterType
     ): List<Series> {
-        val seriesToShow = ArrayList<Series>()
-        for (seriesContent in seriesContents) {
-            when (filteringType) {
-                SearchFilterType.ALL_FILTER_PAGE -> seriesToShow.add(seriesContent)
-                SearchFilterType.FICTION_FILTER_PAGE -> if (seriesContent.genre == 1) {
-                    seriesToShow.add(seriesContent)
-                }
-                SearchFilterType.TRAVEL_FILTER_PAGE -> if (seriesContent.genre == 2) {
-                    seriesToShow.add(seriesContent)
-                }
-            }
+        return when (filteringType) {
+            SearchFilterType.ALL_FILTER_PAGE -> contents.toList()
+            SearchFilterType.FICTION_FILTER_PAGE -> filterByGenre(contents, GenreType.FICTION)
+            SearchFilterType.TRAVEL_FILTER_PAGE -> filterByGenre(contents, GenreType.TRAVEL)
         }
-        return seriesToShow
     }
 
+    private fun filterByGenre(contents: List<Series>, genre: GenreType): List<Series> {
+        return contents.filter { it.genreType == genre }
+    }
 }
+
