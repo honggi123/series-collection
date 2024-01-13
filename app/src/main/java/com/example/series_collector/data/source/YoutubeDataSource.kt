@@ -14,13 +14,11 @@ class YoutubeDataSource @Inject constructor(
     suspend fun getPlayLists(playListId: String, limit: Int) =
         youTubeService.getYoutubePlayListItems(id = playListId, maxResults = limit)
 
-
     fun getSearchResultStream(playlistId: String): Flow<PagingData<SeriesVideo>> {
         return Pager(
             config = PagingConfig(enablePlaceholders = false, pageSize = 5),
             pagingSourceFactory = { PlaylistPagingSource(youTubeService, playlistId) }
         ).flow
     }
-
 
 }

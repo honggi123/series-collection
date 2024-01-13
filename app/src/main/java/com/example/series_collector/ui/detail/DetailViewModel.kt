@@ -12,7 +12,6 @@ import com.example.series_collector.data.model.Tag
 import com.example.series_collector.data.model.TagType
 import com.example.series_collector.data.repository.SeriesFollowedRepository
 import com.example.series_collector.data.repository.SeriesRepository
-import com.example.series_collector.utils.getGenreName
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -70,7 +69,7 @@ class DetailViewModel @Inject constructor(
 
     private fun getTagsBySeriesInfo(info: SeriesWithPageInfo): List<Tag> {
         return listOf(
-            Tag(TagType.GENRE, getGenreName(info.series.genre)),
+            Tag(TagType.GENRE, info.series.genreType?.displayName),
             Tag(TagType.CHANNEL, info.series.channel),
             Tag(TagType.TOTAL_PAGE, info.totalPage.toString())
         )

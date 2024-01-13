@@ -21,7 +21,7 @@ data class SeriesEntity(
     @ColumnInfo(name = "have_count")
     val haveCount: Int = 0,
     @ColumnInfo(name = "genre")
-    val genre: Int = 0,
+    val genreIndex: Int = 0,
     @ColumnInfo(name = "thumbnail")
     val thumbnail: String? = ""
 ) {

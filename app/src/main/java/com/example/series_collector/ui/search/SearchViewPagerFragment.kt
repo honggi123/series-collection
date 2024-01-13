@@ -82,9 +82,9 @@ class SearchViewPagerFragment() : Fragment() {
     private fun getTabTitle(position: Int): String? {
         val filterType = filterTypes.get(position)
         return when (filterType) {
-            SearchFilterType.ALL_FILTER_PAGE -> getString(R.string.all_filter_title)
-            SearchFilterType.TRAVEL_FILTER_PAGE -> getString(R.string.travel_filter_title)
-            SearchFilterType.FICTION_FILTER_PAGE -> getString(R.string.fiction_filter_title)
+            SearchFilterType.ALL -> getString(R.string.all_filter_title)
+            SearchFilterType.TRAVEL -> getString(R.string.travel_filter_title)
+            SearchFilterType.FICTION -> getString(R.string.fiction_filter_title)
         }
     }
 

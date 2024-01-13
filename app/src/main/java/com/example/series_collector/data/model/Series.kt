@@ -5,19 +5,19 @@ data class Series(
     val name: String,
     val description: String,
     val channel: String,
-    val genre: Int,
+    val genreIndex: Int,
     val thumbnail: String
 ) : ListItem {
     override val viewType: ViewType
         get() = ViewType.Series
 
     val genreType: GenreType?
-        get() = GenreType.find(genre)
+        get() = GenreType.find(genreIndex)
 }
 
-enum class GenreType(val value: Int) {
-    FICTION(1),
-    TRAVEL(2);
+enum class GenreType(val value: Int, val displayName: String) {
+    FICTION(1, "픽션"),
+    TRAVEL(2, "여행");
 
     companion object {
         fun find(value: Int): GenreType? =

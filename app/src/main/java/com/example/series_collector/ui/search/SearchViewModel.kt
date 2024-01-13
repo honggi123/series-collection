@@ -19,7 +19,7 @@ class SearchViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _filterType: MutableStateFlow<SearchFilterType> =
-        MutableStateFlow(SearchFilterType.ALL_FILTER_PAGE)
+        MutableStateFlow(SearchFilterType.ALL)
 
     private val _searchQuery: MutableStateFlow<String> = MutableStateFlow("")
 
@@ -47,9 +47,9 @@ class SearchViewModel @Inject constructor(
         filteringType: SearchFilterType
     ): List<Series> {
         return when (filteringType) {
-            SearchFilterType.ALL_FILTER_PAGE -> contents.toList()
-            SearchFilterType.FICTION_FILTER_PAGE -> filterByGenre(contents, GenreType.FICTION)
-            SearchFilterType.TRAVEL_FILTER_PAGE -> filterByGenre(contents, GenreType.TRAVEL)
+            SearchFilterType.ALL -> contents.toList()
+            SearchFilterType.FICTION -> filterByGenre(contents, GenreType.FICTION)
+            SearchFilterType.TRAVEL -> filterByGenre(contents, GenreType.TRAVEL)
         }
     }
 

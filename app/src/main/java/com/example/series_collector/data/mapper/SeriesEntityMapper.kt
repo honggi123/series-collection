@@ -11,7 +11,7 @@ fun SeriesEntity.asDomain(): Series{
         name = this.name,
         description = this.description,
         channel = this.channel,
-        genre = this.genre,
+        genreIndex = this.genreIndex,
         thumbnail = this.thumbnail ?: ""
     )
 }
