@@ -22,12 +22,3 @@ fun List<SeriesEntity>.asDomain(): List<Series> {
     }
 }
 
-fun SeriesEntity.toSeriesWithPageInfo(
-    pageInfo: PageInfo?
-): SeriesWithPageInfo {
-    return SeriesWithPageInfo(
-        series = this.asDomain(),
-        totalPage = pageInfo?.totalResults ?: 0,
-    )
-}
-

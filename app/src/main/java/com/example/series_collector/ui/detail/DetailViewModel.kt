@@ -4,8 +4,6 @@ package com.example.series_collector.ui.detail
 import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.series_collector.data.api.ApiResult
-import com.example.series_collector.data.model.Series
 import com.example.series_collector.data.model.dto.SeriesVideo
 import com.example.series_collector.data.model.SeriesWithPageInfo
 import com.example.series_collector.data.model.Tag
@@ -48,30 +46,18 @@ class DetailViewModel @Inject constructor(
     private fun observeSeriesInfoFlow() {
         viewModelScope.launch {
             seriesInfoFlow.collect { result ->
-                when (result) {
-                    is ApiResult.Success -> {
-                        val tags = getTagsBySeriesInfo(result.value)
-                        _tags.postValue(tags)
-                        _seriesInfo.postValue(result.value)
-                    }
-
-                    is ApiResult.Failure -> {
-                        _errorMsg.postValue(result.msg)
-                    }
-
-                    is ApiResult.NetworkError -> {
-                        _errorMsg.postValue(result.exception?.message)
-                    }
-                }
+                val tags = getTagsBySeriesInfo(result)
+                _tags.postValue(tags)
+                _seriesInfo.postValue(result)
             }
         }
     }
 
     private fun getTagsBySeriesInfo(info: SeriesWithPageInfo): List<Tag> {
         return listOf(
-            Tag(TagType.GENRE, info.series.genreType?.displayName),
-            Tag(TagType.CHANNEL, info.series.channel),
-            Tag(TagType.TOTAL_PAGE, info.totalPage.toString())
+            Tag(TagType.GENRE, info.series?.genreType?.displayName),
+            Tag(TagType.CHANNEL, info.series?.channel),
+            Tag(TagType.TOTAL_PAGE, info.pageInfo?.totalResults.toString())
         )
     }
 

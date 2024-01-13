@@ -1,7 +1,10 @@
 package com.example.series_collector.data
 
+import com.example.series_collector.data.api.ApiResultError
+import com.example.series_collector.data.api.ApiResultException
+import com.example.series_collector.data.api.ApiResultSuccess
 import com.example.series_collector.data.room.entity.SeriesEntity
-import com.example.series_collector.data.source.YoutubeDataSource
+import com.example.series_collector.data.source.youtube.YoutubeDataSource
 import kotlinx.coroutines.*
 import java.lang.NullPointerException
 import javax.inject.Inject
@@ -22,8 +25,11 @@ class SeriesThumbnailFetcher @Inject constructor(
         }
 
     private suspend fun getThumbnailUrl(seriesId: String): String? {
-        val playlistsResponse = youtubeDataSource.getPlayLists(playListId = seriesId, limit = 1).body()
-        return playlistsResponse?.items?.firstOrNull()?.snippet?.thumbnails?.medium?.url
+        val response = youtubeDataSource.getPlayLists(playListId = seriesId, limit = 1)
+        return when (response) {
+            is ApiResultSuccess -> response.data.items?.firstOrNull()?.snippet?.thumbnails?.medium?.url
+            is ApiResultException, is ApiResultError -> null
+        }
     }
 }
 

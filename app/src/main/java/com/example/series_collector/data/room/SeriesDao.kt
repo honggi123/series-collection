@@ -12,7 +12,7 @@ import java.util.*
 interface SeriesDao {
 
     @Query("SELECT * FROM Series WHERE id = :seriesId")
-    fun flowSeries(seriesId: String): Flow<SeriesEntity>
+    fun getSeries(seriesId: String): SeriesEntity
 
     @Query("SELECT * FROM Series WHERE name LIKE '%' || :query || '%'")
     suspend fun getSeriesByQuery(query: String): List<SeriesEntity>

@@ -19,25 +19,6 @@ interface YoutubeService {
         @Query("playlistId") id: String,
         @Query("pageToken") pageToken: String = "",
         @Query("maxResults") maxResults: Int,
-    ): Response<PlayListsDto>
+    ): ApiResponse<PlayListsDto>
 
-    companion object {
-        private const val BASE_URL = "https://www.googleapis.com/youtube/v3/"
-
-        fun create(): YoutubeService {
-            val logger =
-                HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BASIC }
-
-            val client = OkHttpClient.Builder()
-                .addInterceptor(logger)
-                .build()
-
-            return Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .client(client)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-                .create(YoutubeService::class.java)
-        }
-    }
 }

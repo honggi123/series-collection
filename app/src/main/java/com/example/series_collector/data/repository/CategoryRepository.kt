@@ -4,6 +4,7 @@ import com.example.series_collector.data.SeriesThumbnailFetcher
 import com.example.series_collector.data.model.*
 import com.example.series_collector.data.mapper.asDomain
 import com.example.series_collector.data.room.SeriesDao
+import com.example.series_collector.data.room.entity.SeriesEntity
 import com.example.series_collector.data.source.FirestoreDataSource
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
@@ -24,10 +25,10 @@ class CategoryRepository @Inject constructor(
                 ViewType.HORIZONTAL.name ->
                     Horizontal(
                         title = it.title,
-                        items = getSeriesByCategory(it.categoryId)
-                            .getOrDefault(emptyList())
+                        items = getSeriesListByCategory(it.categoryId)
                             .asDomain()
                     )
+
                 ViewType.VIEWPAGER.name -> ViewPager(items = getAds())
                 else -> Empty()
             }
@@ -35,11 +36,10 @@ class CategoryRepository @Inject constructor(
         emit(categoryContents)
     }.onCompletion { onComplete() }.flowOn(Dispatchers.IO)
 
-    private suspend fun getSeriesByCategory(categoryId: String) = runCatching {
-        val categoryType: CategoryType = CategoryType.find(categoryId)
-            ?: throw NullPointerException()
+    private suspend fun getSeriesListByCategory(categoryId: String): List<SeriesEntity> {
+        val categoryType: CategoryType = CategoryType.find(categoryId) ?: return emptyList()
 
-        seriesDao.run {
+        return seriesDao.run {
             val list =
                 when (categoryType) {
                     CategoryType.RECENT -> getRecentSeries(limit = 8)
@@ -47,17 +47,18 @@ class CategoryRepository @Inject constructor(
                     CategoryType.FICTION -> getFictionSeries(limit = 16)
                     CategoryType.TRAVEL -> getTravelSeries(limit = 16)
                 }
-            seriesThumbnailFetcher(list)
+            seriesThumbnailFetcher.invoke(list)
         }
     }
 
     private suspend fun getAds(): List<ListItem> {
+        // TODO change ads
         val list = mutableListOf<ListItem>()
-        seriesDao.getRandomThumbnails(limit = 5)
-            .forEach { url ->
-                list.add(Ad(imgUrl = url))
-            }
-        return list
+//        seriesDao.getRandomThumbnails(limit = 5)
+//            .forEach { url ->
+//                list.add(Ad(imgUrl = url))
+//            }
+        return emptyList()
     }
 
 }
