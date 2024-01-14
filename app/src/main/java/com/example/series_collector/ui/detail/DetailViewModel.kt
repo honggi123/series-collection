@@ -4,11 +4,10 @@ package com.example.series_collector.ui.detail
 import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.series_collector.data.model.dto.SeriesVideo
+import com.example.series_collector.data.api.model.SeriesVideo
 import com.example.series_collector.data.model.SeriesWithPageInfo
 import com.example.series_collector.data.model.Tag
 import com.example.series_collector.data.model.TagType
-import com.example.series_collector.data.repository.SeriesFollowedRepository
 import com.example.series_collector.data.repository.SeriesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -19,13 +18,12 @@ import javax.inject.Inject
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val seriesFollowedRepository: SeriesFollowedRepository,
     private val seriesRepository: SeriesRepository,
 ) : ViewModel() {
 
     val seriesId: String = savedStateHandle.get<String>(SERIES_ID_SAVED_STATE_KEY)!!
 
-    val isFollowed = seriesFollowedRepository.isFollowed(seriesId).asLiveData()
+    val isFollowed = seriesRepository.isFollowed(seriesId).asLiveData()
 
     private val seriesInfoFlow =
         seriesRepository.getSeriesWithPageInfoStream(seriesId = seriesId, limit = 1)
@@ -63,7 +61,7 @@ class DetailViewModel @Inject constructor(
 
     fun toggleSeriesFollowed(isFollowed: Boolean) {
         viewModelScope.launch {
-            seriesFollowedRepository.run {
+            seriesRepository.run {
                 if (isFollowed) unFollowSeries(seriesId)
                 else followSeries(seriesId)
             }

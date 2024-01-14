@@ -1,4 +1,4 @@
-package com.example.series_collector.data.model.dto
+package com.example.series_collector.data.api.model
 
 data class PlayListsDto(
     val etag: String,

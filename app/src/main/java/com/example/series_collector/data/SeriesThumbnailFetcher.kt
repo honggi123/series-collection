@@ -17,7 +17,7 @@ class SeriesThumbnailFetcher @Inject constructor(
             list.map { series ->
                 async {
                     if (series.thumbnail.isNullOrBlank()) {
-                        val url = getThumbnailUrl(series.seriesId)
+                        val url = getThumbnailUrl(series.id)
                         series.copy(thumbnail = url)
                     } else series
                 }

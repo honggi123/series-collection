@@ -12,7 +12,6 @@ import com.example.series_collector.data.room.entity.SeriesEntity
 @TypeConverters(Converter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun seriesDao(): SeriesDao
-    abstract fun seriesFollwedDao(): SeriesFollowedDao
 
     companion object {
         // For Singleton instantiation

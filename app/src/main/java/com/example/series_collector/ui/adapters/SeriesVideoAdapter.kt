@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.series_collector.data.model.dto.SeriesVideo
+import com.example.series_collector.data.api.model.SeriesVideo
 import com.example.series_collector.databinding.ListItemSeriesVideoBinding
 
 

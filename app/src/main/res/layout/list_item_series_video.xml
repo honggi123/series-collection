@@ -7,7 +7,7 @@
 
         <variable
             name="seriesVideo"
-            type="com.example.series_collector.data.model.dto.SeriesVideo" />
+            type="com.example.series_collector.data.api.model.SeriesVideo" />
     </data>
 
     <androidx.cardview.widget.CardView

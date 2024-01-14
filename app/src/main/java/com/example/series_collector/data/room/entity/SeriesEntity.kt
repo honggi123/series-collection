@@ -11,7 +11,7 @@ data class SeriesEntity(
     @PrimaryKey
     @DocumentId
     @ColumnInfo(name = "id")
-    val seriesId: String = "",
+    val id: String = "",
     @ColumnInfo(name = "name")
     val name: String = "",
     @ColumnInfo(name = "description")

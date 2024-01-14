@@ -1,17 +1,16 @@
 package com.example.series_collector.data.repository
 
-import com.example.series_collector.data.room.entity.SeriesEntity
 import com.example.series_collector.data.SeriesThumbnailFetcher
-import com.example.series_collector.data.api.ApiResponse
 import com.example.series_collector.data.api.ApiResultError
 import com.example.series_collector.data.api.ApiResultException
 import com.example.series_collector.data.api.ApiResultSuccess
 import com.example.series_collector.data.model.Series
 import com.example.series_collector.data.model.SeriesWithPageInfo
 import com.example.series_collector.data.mapper.asDomain
-import com.example.series_collector.data.model.dto.PageInfo
-import com.example.series_collector.data.model.dto.PlayListsDto
+import com.example.series_collector.data.api.model.PageInfo
+import com.example.series_collector.data.api.model.PlayListsDto
 import com.example.series_collector.data.room.SeriesDao
+import com.example.series_collector.data.room.entity.SeriesFollowedEntity
 import com.example.series_collector.data.source.FirestoreDataSource
 import com.example.series_collector.data.source.youtube.YoutubeDataSource
 import kotlinx.coroutines.*
@@ -27,6 +26,23 @@ class SeriesRepository @Inject constructor(
     private val seriesThumbnailFetcher: SeriesThumbnailFetcher
 ) {
 
+    fun isFollowed(seriesId: String): Flow<Boolean> {
+        return seriesDao.isFollowed(seriesId)
+    }
+
+    fun getFollowedSeriesList(): Flow<List<Series>> {
+        return seriesDao.getFollowedSeriesList()
+            .map { it.asDomain() }
+    }
+
+    suspend fun followSeries(seriesId: String) {
+        val seriesFollowedEntity = SeriesFollowedEntity(seriesId)
+        seriesDao.insertSeriesFollowed(seriesFollowedEntity)
+    }
+
+    suspend fun unFollowSeries(seriesId: String) =
+        seriesDao.deleteSeriesFollowed(seriesId)
+
     suspend fun searchBySeriesName(query: String): List<Series> {
         return seriesDao.getSeriesByQuery(query).map { result ->
             withContext(Dispatchers.Default) {
@@ -41,7 +57,7 @@ class SeriesRepository @Inject constructor(
     ): Flow<SeriesWithPageInfo> =
         flow {
             val series = seriesDao.getSeries(seriesId)
-            val pageInfo = getSeriesPageInfo(series.seriesId, limit)
+            val pageInfo = getSeriesPageInfo(series.id, limit)
             emit(
                 SeriesWithPageInfo(
                     series = series.asDomain(),

@@ -5,8 +5,8 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.series_collector.data.api.ApiResponse
 import com.example.series_collector.data.api.YoutubeService
-import com.example.series_collector.data.model.dto.PlayListsDto
-import com.example.series_collector.data.model.dto.SeriesVideo
+import com.example.series_collector.data.api.model.PlayListsDto
+import com.example.series_collector.data.api.model.SeriesVideo
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

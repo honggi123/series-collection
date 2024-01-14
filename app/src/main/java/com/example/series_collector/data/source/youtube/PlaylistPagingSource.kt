@@ -6,7 +6,7 @@ import com.example.series_collector.data.api.ApiResultError
 import com.example.series_collector.data.api.ApiResultException
 import com.example.series_collector.data.api.ApiResultSuccess
 import com.example.series_collector.data.api.YoutubeService
-import com.example.series_collector.data.model.dto.SeriesVideo
+import com.example.series_collector.data.api.model.SeriesVideo
 
 private const val STARTING_PAGE_TOKEN = ""
 class PlaylistPagingSource(

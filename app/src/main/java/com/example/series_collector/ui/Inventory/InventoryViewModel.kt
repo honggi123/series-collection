@@ -3,21 +3,21 @@ package com.example.series_collector.ui.Inventory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.series_collector.data.repository.SeriesFollowedRepository
+import com.example.series_collector.data.repository.SeriesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class InventoryViewModel @Inject constructor(
-    private val seriesFollowedRepository: SeriesFollowedRepository
+    private val seriesRepository: SeriesRepository
 ) : ViewModel() {
 
-    val mySeriesList = seriesFollowedRepository.getFollowedSeriesList().asLiveData()
+    val mySeriesList = seriesRepository.getFollowedSeriesList().asLiveData()
 
     fun unFollowSeries(seriesId: String) {
         viewModelScope.launch {
-            seriesFollowedRepository.unFollowSeries(seriesId)
+            seriesRepository.unFollowSeries(seriesId)
         }
     }
 
