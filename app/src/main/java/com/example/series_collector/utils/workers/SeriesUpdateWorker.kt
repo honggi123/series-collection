@@ -24,7 +24,6 @@ class SeriesUpdateWorker @AssistedInject constructor(
                 updateSeries(forceInit)
             }
         } catch (ex: Exception) {
-            Log.e(TAG, "Error SeriesUpdate", ex)
             Result.failure()
         }
 

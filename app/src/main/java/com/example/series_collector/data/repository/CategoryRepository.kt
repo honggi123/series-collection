@@ -1,16 +1,13 @@
 package com.example.series_collector.data.repository
 
 import com.example.series_collector.data.SeriesThumbnailFetcher
+import com.example.series_collector.data.api.model.asDomain
+import com.example.series_collector.data.api.model.asEntity
 import com.example.series_collector.data.model.*
-import com.example.series_collector.data.mapper.asDomain
 import com.example.series_collector.data.room.SeriesDao
 import com.example.series_collector.data.room.entity.SeriesEntity
-import com.example.series_collector.data.source.FirestoreDataSource
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.onCompletion
-import java.lang.NullPointerException
+import com.example.series_collector.data.room.entity.asDomain
+import com.example.series_collector.data.source.firebase.FirestoreDataSource
 import javax.inject.Inject
 
 class CategoryRepository @Inject constructor(
@@ -19,24 +16,22 @@ class CategoryRepository @Inject constructor(
     private val seriesThumbnailFetcher: SeriesThumbnailFetcher
 ) {
 
-    fun getCategoryContentsStream(onComplete: () -> Unit) = flow {
-        val categoryContents = firestoreDataSource.getCategorys().map {
+    suspend fun getCategoryContents() : List<ListItem> {
+        return firestoreDataSource.getCategorys().map {
             when (it.viewType) {
                 ViewType.HORIZONTAL.name ->
                     Horizontal(
                         title = it.title,
                         items = getSeriesListByCategory(it.categoryId)
-                            .asDomain()
                     )
 
                 ViewType.VIEWPAGER.name -> ViewPager(items = getAds())
                 else -> Empty()
             }
         }
-        emit(categoryContents)
-    }.onCompletion { onComplete() }.flowOn(Dispatchers.IO)
+    }
 
-    private suspend fun getSeriesListByCategory(categoryId: String): List<SeriesEntity> {
+    private suspend fun getSeriesListByCategory(categoryId: String): List<Series> {
         val categoryType: CategoryType = CategoryType.find(categoryId) ?: return emptyList()
 
         return seriesDao.run {
@@ -48,7 +43,7 @@ class CategoryRepository @Inject constructor(
                     CategoryType.TRAVEL -> getTravelSeries(limit = 16)
                 }
             seriesThumbnailFetcher.invoke(list)
-        }
+        }.map { it.asDomain() }
     }
 
     private suspend fun getAds(): List<ListItem> {

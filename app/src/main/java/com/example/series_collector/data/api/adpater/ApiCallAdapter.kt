@@ -1,4 +1,4 @@
-package com.example.series_collector.data.api
+package com.example.series_collector.data.api.adpater
 
 import retrofit2.CallAdapter
 import retrofit2.Call

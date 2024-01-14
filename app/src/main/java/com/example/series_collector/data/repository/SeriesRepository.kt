@@ -1,47 +1,50 @@
 package com.example.series_collector.data.repository
 
 import com.example.series_collector.data.SeriesThumbnailFetcher
-import com.example.series_collector.data.api.ApiResultError
-import com.example.series_collector.data.api.ApiResultException
-import com.example.series_collector.data.api.ApiResultSuccess
+import com.example.series_collector.data.api.adpater.ApiResultError
+import com.example.series_collector.data.api.adpater.ApiResultException
+import com.example.series_collector.data.api.adpater.ApiResultSuccess
 import com.example.series_collector.data.model.Series
 import com.example.series_collector.data.model.SeriesWithPageInfo
-import com.example.series_collector.data.mapper.asDomain
 import com.example.series_collector.data.api.model.PageInfo
-import com.example.series_collector.data.api.model.PlayListsDto
+import com.example.series_collector.data.api.model.asDomain
+import com.example.series_collector.data.api.model.asEntity
+import com.example.series_collector.data.room.FollowedSeriesDao
 import com.example.series_collector.data.room.SeriesDao
-import com.example.series_collector.data.room.entity.SeriesFollowedEntity
-import com.example.series_collector.data.source.FirestoreDataSource
+import com.example.series_collector.data.room.entity.FollowedSeriesEntity
+import com.example.series_collector.data.room.entity.asDomain
+import com.example.series_collector.data.source.firebase.FirestoreDataSource
 import com.example.series_collector.data.source.youtube.YoutubeDataSource
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
-import java.io.IOException
 import java.util.*
 import javax.inject.Inject
 
 class SeriesRepository @Inject constructor(
     private val seriesDao: SeriesDao,
+    private val followedSeriesDao: FollowedSeriesDao,
     private val firestoreDataSource: FirestoreDataSource,
     private val youtubeDataSource: YoutubeDataSource,
     private val seriesThumbnailFetcher: SeriesThumbnailFetcher
 ) {
 
     fun isFollowed(seriesId: String): Flow<Boolean> {
-        return seriesDao.isFollowed(seriesId)
+        return followedSeriesDao.isFollowed(seriesId)
     }
 
-    fun getFollowedSeriesList(): Flow<List<Series>> {
-        return seriesDao.getFollowedSeriesList()
+    fun getFollowedSeriesList(): Flow<List<Series>> = flow {
+        val list = followedSeriesDao.getFollowedSeriesList()
             .map { it.asDomain() }
-    }
+        emit(list)
+    }.flowOn(Dispatchers.IO)
 
     suspend fun followSeries(seriesId: String) {
-        val seriesFollowedEntity = SeriesFollowedEntity(seriesId)
-        seriesDao.insertSeriesFollowed(seriesFollowedEntity)
+        val seriesFollowedEntity = FollowedSeriesEntity(seriesId)
+        followedSeriesDao.insertFollowedSeries(seriesFollowedEntity)
     }
 
     suspend fun unFollowSeries(seriesId: String) =
-        seriesDao.deleteSeriesFollowed(seriesId)
+        followedSeriesDao.deleteFollowedSeries(seriesId)
 
     suspend fun searchBySeriesName(query: String): List<Series> {
         return seriesDao.getSeriesByQuery(query).map { result ->
@@ -66,7 +69,6 @@ class SeriesRepository @Inject constructor(
             )
         }.flowOn(Dispatchers.IO)
 
-
     private suspend fun getSeriesPageInfo(
         seriesId: String,
         limit: Int = 1
@@ -85,10 +87,10 @@ class SeriesRepository @Inject constructor(
     suspend fun updateSeries(forceInit: Boolean) {
         seriesDao.run {
             val list =
-                if (forceInit) getRemoteAllSeries()
-                else getRemoteUpdatedSeries(lastUpdate = getLastUpdateDate())
+                if (forceInit) getRemoteAllSeries().map { it.asEntity() }
+                else getRemoteUpdatedSeries(lastUpdate = getLastUpdateDate()).map { it.asEntity() }
 
-            seriesThumbnailFetcher(list)
+            seriesThumbnailFetcher.invoke(list)
                 .forEach { series ->
                     insertSeries(series)
                 }

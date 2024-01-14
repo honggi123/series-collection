@@ -24,11 +24,8 @@ class HomeViewModel @Inject constructor(
 
     val categoryContents: LiveData<List<ListItem>> = isUpdateFinished
         .filter { it == false }
-        .flatMapLatest {
-            categoryRepository.getCategoryContentsStream(
-                onComplete = { _isLoading.postValue(false) }
-            )
-        }.asLiveData()
+        .map { categoryRepository.getCategoryContents() }
+        .asLiveData()
 
     init {
         updateSeries()
@@ -46,7 +43,5 @@ class HomeViewModel @Inject constructor(
                 }
         }
     }
-
-
 }
 

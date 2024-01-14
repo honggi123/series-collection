@@ -8,13 +8,13 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.series_collector.databinding.FragmentInventoryBinding
-import com.example.series_collector.ui.adapters.SeriesFollowedAdapter
+import com.example.series_collector.ui.adapters.FollowedSeriesAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class InventoryFragment() : Fragment(), InventoryItemCallback {
-    private val adapter = SeriesFollowedAdapter(this)
+    private val adapter = FollowedSeriesAdapter(this)
     private val inventoryViewModel: InventoryViewModel by viewModels()
 
     override fun onCreateView(

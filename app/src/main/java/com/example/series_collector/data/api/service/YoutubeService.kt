@@ -1,6 +1,7 @@
-package com.example.series_collector.data.api
+package com.example.series_collector.data.api.service
 
 import com.example.series_collector.BuildConfig
+import com.example.series_collector.data.api.adpater.ApiResponse
 import com.example.series_collector.data.api.model.PlayListsDto
 import retrofit2.http.GET
 import retrofit2.http.Query

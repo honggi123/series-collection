@@ -11,7 +11,7 @@ import java.util.*
     ],
     indices = [Index("series_id")]
 )
-data class SeriesFollowedEntity(
+data class FollowedSeriesEntity(
     @ColumnInfo(name = "series_id") val seriesId: String,
 
     @ColumnInfo(name = "put_date") val putDate: Calendar = Calendar.getInstance(),

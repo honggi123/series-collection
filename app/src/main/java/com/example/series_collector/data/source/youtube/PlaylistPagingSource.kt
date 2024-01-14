@@ -2,10 +2,10 @@ package com.example.series_collector.data.source.youtube
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.series_collector.data.api.ApiResultError
-import com.example.series_collector.data.api.ApiResultException
-import com.example.series_collector.data.api.ApiResultSuccess
-import com.example.series_collector.data.api.YoutubeService
+import com.example.series_collector.data.api.adpater.ApiResultError
+import com.example.series_collector.data.api.adpater.ApiResultException
+import com.example.series_collector.data.api.adpater.ApiResultSuccess
+import com.example.series_collector.data.api.service.YoutubeService
 import com.example.series_collector.data.api.model.SeriesVideo
 
 private const val STARTING_PAGE_TOKEN = ""

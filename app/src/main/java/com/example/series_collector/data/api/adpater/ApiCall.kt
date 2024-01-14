@@ -1,4 +1,4 @@
-package com.example.series_collector.data.api
+package com.example.series_collector.data.api.adpater
 
 import okhttp3.Request
 import okio.Timeout

@@ -1,36 +1,38 @@
-package com.example.series_collector.data.room.entity
+package com.example.series_collector.data.api.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.example.series_collector.data.model.Series
-import java.util.*
+import com.example.series_collector.data.room.entity.SeriesEntity
+import com.google.firebase.firestore.DocumentId
+import java.util.Calendar
 
-@Entity(tableName = "Series")
-data class SeriesEntity(
-    @PrimaryKey
-    @ColumnInfo(name = "id")
+data class SeriesDto(
+    @DocumentId
     val id: String = "",
-    @ColumnInfo(name = "name")
     val name: String = "",
-    @ColumnInfo(name = "description")
     val description: String = "",
-    @ColumnInfo(name = "channel")
     val channel: String = "",
-    @ColumnInfo(name = "have_count")
     val haveCount: Int = 0,
-    @ColumnInfo(name = "genre")
     val genreIndex: Int = 0,
-    @ColumnInfo(name = "thumbnail")
     val thumbnail: String? = ""
-) {
-    @ColumnInfo(name = "last_update_date")
-    var lastUpdateDate: Calendar = Calendar.getInstance()
-}
+)
 
-fun SeriesEntity.asDomain(): Series {
+fun SeriesDto.asDomain(): Series {
     return Series(
         seriesId = this.id,
+        name = this.name,
+        description = this.description,
+        channel = this.channel,
+        genreIndex = this.genreIndex,
+        thumbnail = this.thumbnail ?: ""
+    )
+}
+
+fun SeriesDto.asEntity(): SeriesEntity {
+    return SeriesEntity(
+        id = this.id,
         name = this.name,
         description = this.description,
         channel = this.channel,

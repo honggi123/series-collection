@@ -9,7 +9,7 @@ import com.example.series_collector.data.model.Series
 import com.example.series_collector.databinding.ListItemSeriesFollowedBinding
 import com.example.series_collector.ui.Inventory.InventoryItemCallback
 
-class SeriesFollowedAdapter(
+class FollowedSeriesAdapter(
     private val inventoryItemCallback: InventoryItemCallback
 ) : ListAdapter<Series, RecyclerView.ViewHolder>(SeriesFollowedDiffCallback()) {
 
