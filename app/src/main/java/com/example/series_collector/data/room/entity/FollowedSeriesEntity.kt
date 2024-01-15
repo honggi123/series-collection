@@ -14,8 +14,7 @@ import java.util.*
 data class FollowedSeriesEntity(
     @ColumnInfo(name = "series_id") val seriesId: String,
 
-    @ColumnInfo(name = "put_date") val putDate: Calendar = Calendar.getInstance(),
-
+    @ColumnInfo(name = "put_date") val putDate: Calendar = Calendar.getInstance()
     ) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")

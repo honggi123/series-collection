@@ -3,7 +3,6 @@ package com.example.series_collector.data
 import com.example.series_collector.data.api.adpater.ApiResultError
 import com.example.series_collector.data.api.adpater.ApiResultException
 import com.example.series_collector.data.api.adpater.ApiResultSuccess
-import com.example.series_collector.data.api.model.SeriesDto
 import com.example.series_collector.data.room.entity.SeriesEntity
 import com.example.series_collector.data.source.youtube.YoutubeDataSource
 import kotlinx.coroutines.*

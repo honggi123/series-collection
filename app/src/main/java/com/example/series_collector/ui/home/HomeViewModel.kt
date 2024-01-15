@@ -1,6 +1,7 @@
 package com.example.series_collector.ui.home
 
 import androidx.lifecycle.*
+import androidx.work.WorkInfo
 import com.example.series_collector.data.model.ListItem
 import com.example.series_collector.data.repository.CategoryRepository
 import com.example.series_collector.data.repository.SeriesRepository
@@ -20,12 +21,8 @@ class HomeViewModel @Inject constructor(
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val isUpdateFinished: MutableStateFlow<Boolean> = MutableStateFlow(false)
-
-    val categoryContents: LiveData<List<ListItem>> = isUpdateFinished
-        .filter { it == false }
-        .map { categoryRepository.getCategoryContents() }
-        .asLiveData()
+    private val _categoryContents = MutableLiveData<List<ListItem>>()
+    val categoryContents: LiveData<List<ListItem>> = _categoryContents
 
     init {
         updateSeries()
@@ -39,7 +36,16 @@ class HomeViewModel @Inject constructor(
             _isLoading.value = true
             seriesWorker.updateStream()
                 .collect { workInfo ->
-                    isUpdateFinished.value = workInfo.state.isFinished
+                    when (workInfo.state) {
+                        WorkInfo.State.SUCCEEDED -> {
+                            _categoryContents.value = categoryRepository.getCategoryContents()
+                            _isLoading.value = false
+                        }
+
+                        WorkInfo.State.FAILED, WorkInfo.State.BLOCKED -> {
+                            _isLoading.value = false
+                        }
+                    }
                 }
         }
     }

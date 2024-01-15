@@ -1,5 +1,6 @@
 package com.example.series_collector.data.repository
 
+import android.util.Log
 import com.example.series_collector.data.SeriesThumbnailFetcher
 import com.example.series_collector.data.api.adpater.ApiResultError
 import com.example.series_collector.data.api.adpater.ApiResultException
@@ -14,6 +15,7 @@ import com.example.series_collector.data.room.SeriesDao
 import com.example.series_collector.data.room.entity.FollowedSeriesEntity
 import com.example.series_collector.data.room.entity.asDomain
 import com.example.series_collector.data.source.firebase.FirestoreDataSource
+import com.example.series_collector.data.source.preference.PreferenceDataStore
 import com.example.series_collector.data.source.youtube.YoutubeDataSource
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -23,6 +25,7 @@ import javax.inject.Inject
 class SeriesRepository @Inject constructor(
     private val seriesDao: SeriesDao,
     private val followedSeriesDao: FollowedSeriesDao,
+    private val preferenceDataStore: PreferenceDataStore,
     private val firestoreDataSource: FirestoreDataSource,
     private val youtubeDataSource: YoutubeDataSource,
     private val seriesThumbnailFetcher: SeriesThumbnailFetcher
@@ -85,16 +88,18 @@ class SeriesRepository @Inject constructor(
         youtubeDataSource.getSearchResultStream(playlistId)
 
     suspend fun updateSeries(forceInit: Boolean) {
-        seriesDao.run {
-            val list =
-                if (forceInit) getRemoteAllSeries().map { it.asEntity() }
-                else getRemoteUpdatedSeries(lastUpdate = getLastUpdateDate()).map { it.asEntity() }
 
+        val list =
+            if (forceInit) getRemoteAllSeries().map { it!!.asEntity() }
+            else getRemoteUpdatedSeries(lastUpdate = preferenceDataStore.getLastUpdateDate()).map { it.asEntity() }
+
+        seriesDao.run {
             seriesThumbnailFetcher.invoke(list)
                 .forEach { series ->
                     insertSeries(series)
                 }
         }
+        preferenceDataStore.putLastUpdateDate(Calendar.getInstance())
     }
 
     suspend fun isEmpty() = seriesDao.isEmpty()
@@ -103,9 +108,14 @@ class SeriesRepository @Inject constructor(
         firestoreDataSource.getAllSeries()
     }
 
-    private suspend fun getRemoteUpdatedSeries(lastUpdate: Calendar) = withContext(Dispatchers.IO) {
-        firestoreDataSource.getUpdatedSeries(lastUpdate)
-    }
+    private suspend fun getRemoteUpdatedSeries(lastUpdate: Calendar?) =
+        withContext(Dispatchers.IO) {
+            if (lastUpdate != null) {
+                firestoreDataSource.getUpdatedSeries(lastUpdate)
+            } else {
+                firestoreDataSource.getUpdatedSeries(Calendar.getInstance())
+            }
+        }
 }
 
 

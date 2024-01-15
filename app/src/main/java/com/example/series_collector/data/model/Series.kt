@@ -6,7 +6,7 @@ data class Series(
     val description: String,
     val channel: String,
     val genreIndex: Int,
-    val thumbnail: String
+    val thumbnail: String = ""
 ) : ListItem {
     override val viewType: ViewType
         get() = ViewType.Series

@@ -22,11 +22,12 @@ data class SeriesEntity(
     @ColumnInfo(name = "genre")
     val genreIndex: Int = 0,
     @ColumnInfo(name = "thumbnail")
-    val thumbnail: String? = ""
-) {
-    @ColumnInfo(name = "last_update_date")
-    var lastUpdateDate: Calendar = Calendar.getInstance()
-}
+    val thumbnail: String? = "",
+    @ColumnInfo(name = "createdAt")
+    val createdAt: Calendar,
+    @ColumnInfo(name = "updatedAt")
+    val updatedAt: Calendar
+)
 
 fun SeriesEntity.asDomain(): Series {
     return Series(

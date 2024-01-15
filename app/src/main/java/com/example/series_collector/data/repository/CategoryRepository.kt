@@ -1,5 +1,6 @@
 package com.example.series_collector.data.repository
 
+import android.util.Log
 import com.example.series_collector.data.SeriesThumbnailFetcher
 import com.example.series_collector.data.api.model.asDomain
 import com.example.series_collector.data.api.model.asEntity
@@ -16,16 +17,21 @@ class CategoryRepository @Inject constructor(
     private val seriesThumbnailFetcher: SeriesThumbnailFetcher
 ) {
 
-    suspend fun getCategoryContents() : List<ListItem> {
+    suspend fun getCategoryContents(): List<ListItem> {
         return firestoreDataSource.getCategorys().map {
             when (it.viewType) {
-                ViewType.HORIZONTAL.name ->
+                ViewType.HORIZONTAL.name -> {
                     Horizontal(
                         title = it.title,
                         items = getSeriesListByCategory(it.categoryId)
                     )
+                }
 
-                ViewType.VIEWPAGER.name -> ViewPager(items = getAds())
+                ViewType.VIEWPAGER.name -> {
+                    val list = firestoreDataSource.getAds().map { it.asDomain() }
+                    ViewPager(items = list)
+                }
+
                 else -> Empty()
             }
         }
@@ -44,16 +50,6 @@ class CategoryRepository @Inject constructor(
                 }
             seriesThumbnailFetcher.invoke(list)
         }.map { it.asDomain() }
-    }
-
-    private suspend fun getAds(): List<ListItem> {
-        // TODO change ads
-        val list = mutableListOf<ListItem>()
-//        seriesDao.getRandomThumbnails(limit = 5)
-//            .forEach { url ->
-//                list.add(Ad(imgUrl = url))
-//            }
-        return emptyList()
     }
 
 }
