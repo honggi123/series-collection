@@ -31,7 +31,7 @@ class HomeViewModel @Inject constructor(
     private var updateJob: Job? = null
 
     fun updateSeries() {
-        updateJob?.cancel()
+        updateJob?.cancel() // TODO
         updateJob = viewModelScope.launch {
             _isLoading.value = true
             seriesWorker.updateStream()

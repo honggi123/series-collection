@@ -34,7 +34,7 @@ class NetWorkModule {
 
     @Singleton
     @Provides
-    fun provideUnsplashService(client: OkHttpClient): YoutubeService {
+    fun provideYoutubeService(client: OkHttpClient): YoutubeService {
         val BASE_URL = "https://www.googleapis.com/youtube/v3/"
 
         return Retrofit.Builder()

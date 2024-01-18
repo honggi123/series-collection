@@ -57,7 +57,7 @@ class SeriesRepository @Inject constructor(
         }
     }
 
-    fun getSeriesWithPageInfoStream(
+    fun getSeriesWithPageInfo(
         seriesId: String,
         limit: Int = 1
     ): Flow<SeriesWithPageInfo> =

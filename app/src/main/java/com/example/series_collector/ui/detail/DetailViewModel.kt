@@ -25,9 +25,6 @@ class DetailViewModel @Inject constructor(
 
     val isFollowed = seriesRepository.isFollowed(seriesId).asLiveData()
 
-    private val seriesInfoFlow =
-        seriesRepository.getSeriesWithPageInfoStream(seriesId = seriesId, limit = 1)
-
     private var _tags = MutableLiveData<List<Tag>>()
     val tags: LiveData<List<Tag>> = _tags
 
@@ -38,16 +35,17 @@ class DetailViewModel @Inject constructor(
     val errorMsg: LiveData<String?> = _errorMsg
 
     init {
-        observeSeriesInfoFlow()
+        initAll()
     }
 
-    private fun observeSeriesInfoFlow() {
+    private fun initAll() {
         viewModelScope.launch {
-            seriesInfoFlow.collect { result ->
-                val tags = getTagsBySeriesInfo(result)
-                _tags.postValue(tags)
-                _seriesInfo.postValue(result)
-            }
+            seriesRepository.getSeriesWithPageInfo(seriesId = seriesId)
+                .collect { result ->
+                    val tags = getTagsBySeriesInfo(result)
+                    _tags.postValue(tags)
+                    _seriesInfo.postValue(result)
+                }
         }
     }
 
@@ -59,7 +57,7 @@ class DetailViewModel @Inject constructor(
         )
     }
 
-    fun toggleSeriesFollowed(isFollowed: Boolean) {
+    fun toggleSeriesFollow(isFollowed: Boolean) {
         viewModelScope.launch {
             seriesRepository.run {
                 if (isFollowed) unFollowSeries(seriesId)
@@ -72,7 +70,6 @@ class DetailViewModel @Inject constructor(
         return seriesRepository.getPlaylistResultStream(playlistId = seriesId)
             .cachedIn(viewModelScope)
     }
-
 
     companion object {
         private const val SERIES_ID_SAVED_STATE_KEY = "seriesId"

@@ -1,16 +1,12 @@
 package com.example.series_collector.ui.search
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import androidx.lifecycle.viewModelScope
 import com.example.series_collector.data.model.GenreType
 import com.example.series_collector.data.model.Series
 import com.example.series_collector.data.repository.SeriesRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -18,20 +14,18 @@ class SearchViewModel @Inject constructor(
     seriesRepository: SeriesRepository
 ) : ViewModel() {
 
-    private val _filterType: MutableStateFlow<SearchFilterType> =
-        MutableStateFlow(SearchFilterType.ALL)
-
-    private val _searchQuery: MutableStateFlow<String> = MutableStateFlow("")
+    private val _selectedFilter = MutableStateFlow(SearchFilterType.ALL)
+    private val _searchQuery = MutableStateFlow("")
 
     private val _searchedResult = _searchQuery
         .debounce(300)
-        .mapLatest { searchQuery ->
-            seriesRepository.searchBySeriesName(searchQuery)
+        .mapLatest { query ->
+            seriesRepository.searchBySeriesName(query)
         }
 
     val filteredSeries =
-        combine(_searchedResult, _filterType) { result, filterType ->
-            filterSeries(result, filterType)
+        combine(_searchedResult, _selectedFilter) { result, filter ->
+            filterSeries(result, filter)
         }.asLiveData()
 
     fun search(query: String) {
@@ -39,7 +33,7 @@ class SearchViewModel @Inject constructor(
     }
 
     fun setFiltering(type: SearchFilterType) {
-        _filterType.value = type
+        _selectedFilter.value = type
     }
 
     private fun filterSeries(

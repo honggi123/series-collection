@@ -41,10 +41,9 @@ class DetailFragment : Fragment() {
             rvSeriesVideos.adapter = adapter
 
             callback = Callback { isFollowed ->
-                detailViewModel.toggleSeriesFollowed(isFollowed)
+                detailViewModel.toggleSeriesFollow(isFollowed)
                 val toggleMsg =
-                    if (isFollowed) R.string.removed_series_from_inventory
-                    else R.string.added_series_to_inventory
+                    if (isFollowed) R.string.removed_series_from_inventory else R.string.added_series_to_inventory
                 Snackbar.make(root, toggleMsg, Snackbar.LENGTH_LONG)
                     .show()
             }
