@@ -1,24 +1,19 @@
-package com.example.series_collector.utils.workers
+package com.example.series_collector.workers
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.asFlow
 import androidx.work.*
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-interface SeriesWorker {
-    fun updateStream(): Flow<WorkInfo>
-}
-
-class SeriesWorkerImpl @Inject constructor(
+class SeriesWorkerManagerImpl @Inject constructor(
     @ApplicationContext private val appContext: Context
-) : SeriesWorker {
+) : SeriesWorkerManager {
 
     private val workManager = WorkManager.getInstance(appContext)
 
-    override fun updateStream(): Flow<WorkInfo> = updateSeriesStream(workManager)
+    override fun update(): Flow<WorkInfo> = updateSeriesStream(workManager)
 
     private fun updateSeriesStream(workManager: WorkManager): Flow<WorkInfo> {
         val workerRequest = OneTimeWorkRequestBuilder<SeriesUpdateWorker>().build()
@@ -29,5 +24,4 @@ class SeriesWorkerImpl @Inject constructor(
 
         return workManager.getWorkInfoByIdLiveData(workerRequest.id).asFlow()
     }
-
 }

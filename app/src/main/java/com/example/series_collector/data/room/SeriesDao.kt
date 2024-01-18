@@ -13,7 +13,7 @@ import java.util.*
 interface SeriesDao {
 
     @Query("SELECT * FROM Series WHERE id = :seriesId")
-    fun getSeries(seriesId: String): SeriesEntity
+    suspend fun getSeries(seriesId: String): SeriesEntity
 
     @Query("SELECT * FROM Series WHERE name LIKE '%' || :query || '%'")
     suspend fun getSeriesByQuery(query: String): List<SeriesEntity>
@@ -31,7 +31,7 @@ interface SeriesDao {
     suspend fun getTravelSeries(limit: Int): List<SeriesEntity>
 
     @Query("SELECT (SELECT COUNT(*) FROM Series) == 0")
-    suspend fun isEmpty(): Boolean
+    fun isEmpty(): Boolean
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSeries(series: SeriesEntity)
