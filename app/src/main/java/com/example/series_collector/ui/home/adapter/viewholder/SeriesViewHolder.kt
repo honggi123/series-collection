@@ -1,5 +1,6 @@
-package com.example.series_collector.ui.adapters.viewholder
+package com.example.series_collector.ui.home.adapter.viewholder
 
+import android.util.Log
 import android.view.View
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView

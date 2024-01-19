@@ -1,13 +1,11 @@
-package com.example.series_collector.ui.adapters.viewholder
+package com.example.series_collector.ui.home.adapter.viewholder
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.view.ViewParent
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
 import com.example.series_collector.data.model.ViewType
 import com.example.series_collector.databinding.ListItemEmptyBinding
-import com.google.android.material.tabs.TabLayout
 
 object ViewHolderGenerator {
 
@@ -18,7 +16,7 @@ object ViewHolderGenerator {
         viewType: Int
     ): BindingViewHolder<*> {
         return when (viewType) {
-            ViewType.VIEWPAGER.ordinal -> AdViewPagerVIewHolder(parent.toBinding())
+            ViewType.VIEWPAGER.ordinal -> AdViewPagerViewHolder(parent.toBinding())
             ViewType.HORIZONTAL.ordinal -> HorizontalViewHolder(
                 parent.toBinding(),
                 sharedPool = horizontalViewPool

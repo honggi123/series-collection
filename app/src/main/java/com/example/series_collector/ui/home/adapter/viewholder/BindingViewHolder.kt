@@ -1,4 +1,4 @@
-package com.example.series_collector.ui.adapters.viewholder
+package com.example.series_collector.ui.home.adapter.viewholder
 
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView

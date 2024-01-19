@@ -25,13 +25,16 @@ class CategoryRepository @Inject constructor(
                 }
 
                 ViewType.VIEWPAGER.name -> {
-                    val list = firestoreDataSource.getAds().map { it.asDomain() }
-                    ViewPager(items = list)
+                    ViewPager(items = getAds())
                 }
 
                 else -> Empty()
             }
         }
+    }
+
+    private suspend fun getAds(): List<Ad> {
+       return firestoreDataSource.getAds().map { it.asDomain() }
     }
 
     private suspend fun getSeriesListByCategory(categoryId: String): List<Series> {

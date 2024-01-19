@@ -1,4 +1,4 @@
-package com.example.series_collector.ui.adapters
+package com.example.series_collector.ui.search
 
 import android.util.Log
 import androidx.fragment.app.Fragment

@@ -7,14 +7,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import com.example.series_collector.databinding.FragmentInventoryBinding
-import com.example.series_collector.ui.adapters.FollowedSeriesAdapter
+import com.example.series_collector.ui.home.HomeFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class InventoryFragment() : Fragment(), InventoryItemCallback {
-    private val adapter = FollowedSeriesAdapter(this)
+    private val adapter = SeriesFollowingAdapter(this)
     private val inventoryViewModel: InventoryViewModel by viewModels()
 
     override fun onCreateView(
@@ -41,6 +42,11 @@ class InventoryFragment() : Fragment(), InventoryItemCallback {
         }
     }
 
+    override fun openSeriesDetail(seriesId: String) {
+        val direction = InventoryFragmentDirections.actionInventoryFragmentToDetailFragment(seriesId)
+        view?.findNavController()?.navigate(direction)
+    }
+
     override fun deleteItem(seriesId: String) {
         inventoryViewModel.unFollowSeries(seriesId)
     }
@@ -48,6 +54,9 @@ class InventoryFragment() : Fragment(), InventoryItemCallback {
 }
 
 interface InventoryItemCallback {
+
+    fun openSeriesDetail(seriesId: String)
+
     fun deleteItem(seriesId: String)
 }
 

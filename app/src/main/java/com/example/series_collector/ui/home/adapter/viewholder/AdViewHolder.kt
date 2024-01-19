@@ -1,4 +1,4 @@
-package com.example.series_collector.ui.adapters.viewholder
+package com.example.series_collector.ui.home.adapter.viewholder
 
 import android.graphics.Color
 import android.graphics.PorterDuff
@@ -13,5 +13,6 @@ class AdViewHolder(
         binding.imageView.setColorFilter(
             Color.parseColor("#BDBDBD"), PorterDuff.Mode.MULTIPLY
         )
+        binding.order
     }
 }

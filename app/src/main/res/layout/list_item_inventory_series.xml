@@ -5,9 +5,6 @@
 
     <data>
         <variable
-            name="clickListener"
-            type="android.view.View.OnClickListener"/>
-        <variable
             name="series"
             type="com.example.series_collector.data.model.Series" />
     </data>
@@ -63,7 +60,7 @@
             android:id="@+id/btn_delete"
             android:layout_width="@dimen/inventory_item_remove_btn_size"
             android:layout_height="@dimen/inventory_item_remove_btn_size"
-            android:background="@drawable/ic_baseline_remove_circle_outline_24"
+            android:background="@drawable/ic_close_24"
             android:layout_gravity="right"/>
 
     </androidx.cardview.widget.CardView>

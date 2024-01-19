@@ -1,12 +1,12 @@
-package com.example.series_collector.ui.adapters
+package com.example.series_collector.ui.home.adapter
 
 import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import com.example.series_collector.data.model.ListItem
-import com.example.series_collector.ui.adapters.viewholder.BindingViewHolder
-import com.example.series_collector.ui.adapters.viewholder.ViewHolderGenerator
+import com.example.series_collector.ui.home.adapter.viewholder.BindingViewHolder
+import com.example.series_collector.ui.home.adapter.viewholder.ViewHolderGenerator
 
 class HomeListAdapter : ListAdapter<ListItem, BindingViewHolder<*>>(DiffCallback()) {
 

@@ -1,4 +1,4 @@
-package com.example.series_collector.ui.adapters
+package com.example.series_collector.ui.detail.adapter
 
 import android.view.View
 import android.widget.Toast

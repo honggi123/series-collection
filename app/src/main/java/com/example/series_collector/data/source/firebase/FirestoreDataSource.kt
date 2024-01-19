@@ -34,9 +34,10 @@ class FirestoreDataSource @Inject constructor() {
             .get()
             .await().toObjects(CategoryDTO::class.java)
 
-    // TODO
     suspend fun getAds(): List<AdDto> =
-        emptyList()
+        collection("Ad")
+            .get()
+            .await().toObjects(AdDto::class.java)
 
     private fun collection(path: String) = firestore.collection(path)
 

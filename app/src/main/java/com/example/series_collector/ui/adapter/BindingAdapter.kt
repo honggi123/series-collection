@@ -1,4 +1,4 @@
-package com.example.series_collector.ui.adapters
+package com.example.series_collector.ui.adapter
 
 import android.view.View
 import android.widget.ImageView
@@ -14,9 +14,6 @@ fun bindIsGone(view: View, isGone: Boolean) {
         View.VISIBLE
     }
 }
-
-
-
 
 @BindingAdapter("imageFromUrl")
 fun bindImageFromUrl(view: ImageView, imageUrl: String?) {

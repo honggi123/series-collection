@@ -1,10 +1,10 @@
-package com.example.series_collector.ui.adapters.viewholder
+package com.example.series_collector.ui.home.adapter.viewholder
 
 import androidx.recyclerview.widget.RecyclerView
 import com.example.series_collector.data.model.Horizontal
 import com.example.series_collector.data.model.ListItem
 import com.example.series_collector.databinding.ListItemHorizontalBinding
-import com.example.series_collector.ui.adapters.HomeListAdapter
+import com.example.series_collector.ui.home.adapter.HomeListAdapter
 
 class HorizontalViewHolder(
     private val binding: ListItemHorizontalBinding,

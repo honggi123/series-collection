@@ -10,7 +10,6 @@ import com.example.series_collector.data.api.adpater.ApiResultSuccess
 import com.example.series_collector.data.api.model.PageInfo
 import com.example.series_collector.data.api.model.SeriesEpisode
 import com.example.series_collector.data.model.Series
-import com.example.series_collector.data.model.SeriesWithPageInfo
 import com.example.series_collector.data.model.Tag
 import com.example.series_collector.data.model.TagType
 import com.example.series_collector.data.repository.EpisodeRepository

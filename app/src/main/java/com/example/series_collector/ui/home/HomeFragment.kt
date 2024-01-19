@@ -1,21 +1,20 @@
 package com.example.series_collector.ui.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.example.series_collector.databinding.FragmentHomeSeriesBinding
-import com.example.series_collector.ui.adapters.HomeListAdapter
+import com.example.series_collector.databinding.FragmentHomeBinding
+import com.example.series_collector.ui.home.adapter.HomeListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class HomeFragment() : Fragment() {
 
-    lateinit private var binding: FragmentHomeSeriesBinding
+    lateinit private var binding: FragmentHomeBinding
     private val homeViewModel: HomeViewModel by viewModels()
 
     override fun onCreateView(
@@ -23,7 +22,7 @@ class HomeFragment() : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentHomeSeriesBinding.inflate(inflater, container, false)
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.apply {
             val adapter = HomeListAdapter()
             viewModel = homeViewModel

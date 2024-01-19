@@ -13,7 +13,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.series_collector.R
 import com.example.series_collector.databinding.FragmentDetailSeriesBinding
-import com.example.series_collector.ui.adapters.SeriesEpisodeAdapter
+import com.example.series_collector.ui.detail.adapter.SeriesEpisodeAdapter
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
