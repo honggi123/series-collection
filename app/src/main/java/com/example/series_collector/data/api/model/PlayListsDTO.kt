@@ -2,14 +2,14 @@ package com.example.series_collector.data.api.model
 
 data class PlayListsDto(
     val etag: String,
-    val items: List<SeriesVideo>,
+    val items: List<SeriesEpisode>,
     val kind: String,
     val prevPageToken: String,
     val nextPageToken: String,
     val pageInfo: PageInfo?
 )
 
-data class SeriesVideo(
+data class SeriesEpisode(
     val etag: String,
     val id: String,
     val kind: String,

@@ -6,15 +6,15 @@ import com.example.series_collector.data.api.adpater.ApiResultError
 import com.example.series_collector.data.api.adpater.ApiResultException
 import com.example.series_collector.data.api.adpater.ApiResultSuccess
 import com.example.series_collector.data.api.service.YoutubeService
-import com.example.series_collector.data.api.model.SeriesVideo
+import com.example.series_collector.data.api.model.SeriesEpisode
 
 private const val STARTING_PAGE_TOKEN = ""
-class PlaylistPagingSource(
+class SeriesEpisodePagingSource(
     private val service: YoutubeService,
     private val playlistId: String
-) : PagingSource<String, SeriesVideo>() {
+) : PagingSource<String, SeriesEpisode>() {
 
-    override suspend fun load(params: LoadParams<String>): LoadResult<String, SeriesVideo> {
+    override suspend fun load(params: LoadParams<String>): LoadResult<String, SeriesEpisode> {
         val page = params.key ?: STARTING_PAGE_TOKEN
         val response = service.getYoutubePlayListItems(id = playlistId, pageToken = page, maxResults = 5)
         return when (response) {
@@ -32,7 +32,7 @@ class PlaylistPagingSource(
         }
     }
 
-    override fun getRefreshKey(state: PagingState<String, SeriesVideo>): String? {
+    override fun getRefreshKey(state: PagingState<String, SeriesEpisode>): String? {
         return state.anchorPosition?.let { anchorPosition ->
             state.closestPageToPosition(anchorPosition)?.prevKey
         }

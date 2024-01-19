@@ -1,25 +1,13 @@
 package com.example.series_collector.data.repository
 
-import android.util.Log
-import androidx.paging.PagingData
-import com.example.series_collector.data.SeriesThumbnailFetcher
 import com.example.series_collector.data.api.adpater.ApiResponse
-import com.example.series_collector.data.api.adpater.ApiResultError
-import com.example.series_collector.data.api.adpater.ApiResultException
-import com.example.series_collector.data.api.adpater.ApiResultSuccess
 import com.example.series_collector.data.model.Series
-import com.example.series_collector.data.model.SeriesWithPageInfo
-import com.example.series_collector.data.api.model.PageInfo
 import com.example.series_collector.data.api.model.PlayListsDto
-import com.example.series_collector.data.api.model.SeriesVideo
-import com.example.series_collector.data.api.model.asDomain
-import com.example.series_collector.data.api.model.asEntity
 import com.example.series_collector.data.room.FollowedSeriesDao
 import com.example.series_collector.data.room.SeriesDao
 import com.example.series_collector.data.room.entity.FollowedSeriesEntity
 import com.example.series_collector.data.room.entity.asDomain
 import com.example.series_collector.data.source.firebase.FirestoreDataSource
-import com.example.series_collector.data.source.preference.PreferenceDataStore
 import com.example.series_collector.data.source.youtube.YoutubeDataSource
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*

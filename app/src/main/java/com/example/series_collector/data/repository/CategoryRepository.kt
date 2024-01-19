@@ -1,12 +1,9 @@
 package com.example.series_collector.data.repository
 
-import android.util.Log
-import com.example.series_collector.data.SeriesThumbnailFetcher
+import com.example.series_collector.workers.SeriesThumbnailFetcher
 import com.example.series_collector.data.api.model.asDomain
-import com.example.series_collector.data.api.model.asEntity
 import com.example.series_collector.data.model.*
 import com.example.series_collector.data.room.SeriesDao
-import com.example.series_collector.data.room.entity.SeriesEntity
 import com.example.series_collector.data.room.entity.asDomain
 import com.example.series_collector.data.source.firebase.FirestoreDataSource
 import javax.inject.Inject

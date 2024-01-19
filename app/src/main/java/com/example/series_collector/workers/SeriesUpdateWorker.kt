@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.example.series_collector.data.SeriesThumbnailFetcher
 import com.example.series_collector.data.api.model.asEntity
 import com.example.series_collector.data.repository.SeriesRepository
 import com.example.series_collector.data.room.SeriesDao

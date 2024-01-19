@@ -6,8 +6,8 @@
     <data>
 
         <variable
-            name="seriesVideo"
-            type="com.example.series_collector.data.api.model.SeriesVideo" />
+            name="seriesEpisode"
+            type="com.example.series_collector.data.api.model.SeriesEpisode" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -27,14 +27,14 @@
                 android:layout_height="@dimen/series_item_image_height_normal"
                 android:background="@drawable/round_radius_shape"
                 android:scaleType="centerCrop"
-                app:imageFromUrl="@{seriesVideo.snippet.thumbnails.standard.url}" />
+                app:imageFromUrl="@{seriesEpisode.snippet.thumbnails.standard.url}" />
 
             <TextView
                 android:id="@+id/tv_series_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingStart="@dimen/margin_extra_small"
-                android:text="@{seriesVideo.snippet.title}"
+                android:text="@{seriesEpisode.snippet.title}"
                 android:textAppearance="?attr/textAppearanceListItem"
                 android:textColor="?attr/colorOnPrimary"
                 tools:text="Series title" />

@@ -1,4 +1,4 @@
-package com.example.series_collector.data
+package com.example.series_collector.workers
 
 import com.example.series_collector.data.api.adpater.ApiResultError
 import com.example.series_collector.data.api.adpater.ApiResultException

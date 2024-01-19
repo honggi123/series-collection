@@ -148,11 +148,11 @@
                     android:textColor="?attr/colorOnPrimary" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_series_videos"
+                    android:id="@+id/rv_series_episode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/list_item_series_video" />
+                    tools:listitem="@layout/list_item_series_episode" />
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>

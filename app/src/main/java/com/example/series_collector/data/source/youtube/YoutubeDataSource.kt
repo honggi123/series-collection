@@ -6,7 +6,7 @@ import androidx.paging.PagingData
 import com.example.series_collector.data.api.adpater.ApiResponse
 import com.example.series_collector.data.api.service.YoutubeService
 import com.example.series_collector.data.api.model.PlayListsDto
-import com.example.series_collector.data.api.model.SeriesVideo
+import com.example.series_collector.data.api.model.SeriesEpisode
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -17,10 +17,10 @@ class YoutubeDataSource @Inject constructor(
        return youTubeService.getYoutubePlayListItems(id = playListId, maxResults = limit)
     }
 
-    fun getPlayListStream(playlistId: String): Flow<PagingData<SeriesVideo>> {
+    fun getPlayListStream(playlistId: String): Flow<PagingData<SeriesEpisode>> {
         return Pager(
             config = PagingConfig(enablePlaceholders = false, pageSize = 5),
-            pagingSourceFactory = { PlaylistPagingSource(youTubeService, playlistId) }
+            pagingSourceFactory = { SeriesEpisodePagingSource(youTubeService, playlistId) }
         ).flow
     }
 

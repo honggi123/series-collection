@@ -5,7 +5,7 @@ import androidx.work.WorkInfo
 import com.example.series_collector.data.model.ListItem
 import com.example.series_collector.data.repository.CategoryRepository
 import com.example.series_collector.data.repository.SeriesRepository
-import com.example.series_collector.utils.workers.SeriesWorker
+import com.example.series_collector.workers.SeriesWorkerManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val categoryRepository: CategoryRepository,
-    private val seriesWorker: SeriesWorker,
+    private val seriesWorkerManager: SeriesWorkerManager,
 ) : ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()
@@ -34,7 +34,7 @@ class HomeViewModel @Inject constructor(
         updateJob?.cancel() // TODO
         updateJob = viewModelScope.launch {
             _isLoading.value = true
-            seriesWorker.updateStream()
+            seriesWorkerManager.update()
                 .collect { workInfo ->
                     when (workInfo.state) {
                         WorkInfo.State.SUCCEEDED -> {
