@@ -1,9 +1,9 @@
 package com.example.series_collector.di
 
 import android.content.Context
-import com.example.series_collector.data.source.local.room.AppDatabase
-import com.example.series_collector.data.source.local.room.FollowedSeriesDao
-import com.example.series_collector.data.source.local.room.SeriesDao
+import com.example.series_collector.local.room.AppDatabase
+import com.example.series_collector.local.room.FollowedSeriesDao
+import com.example.series_collector.local.room.SeriesDao
 
 import dagger.Module
 import dagger.Provides

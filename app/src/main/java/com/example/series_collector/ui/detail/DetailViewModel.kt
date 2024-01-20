@@ -4,11 +4,11 @@ package com.example.series_collector.ui.detail
 import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.series_collector.data.source.remote.api.adpater.ApiResultError
-import com.example.series_collector.data.source.remote.api.adpater.ApiResultException
-import com.example.series_collector.data.source.remote.api.adpater.ApiResultSuccess
-import com.example.series_collector.data.source.remote.api.model.PageInfo
-import com.example.series_collector.data.source.remote.api.model.SeriesEpisode
+import com.example.series_collector.remote.api.adpater.ApiResultError
+import com.example.series_collector.remote.api.adpater.ApiResultException
+import com.example.series_collector.remote.api.adpater.ApiResultSuccess
+import com.example.series_collector.remote.api.model.PageInfo
+import com.example.series_collector.remote.api.model.SeriesEpisode
 import com.example.series_collector.data.model.Series
 import com.example.series_collector.data.model.Tag
 import com.example.series_collector.data.model.TagType

@@ -1,10 +1,12 @@
 package com.example.series_collector.data.repository
 
-import com.example.series_collector.data.source.remote.api.model.asDomain
+import com.example.series_collector.data.local.SeriesLocalDataSource
+import com.example.series_collector.remote.api.model.asDomain
 import com.example.series_collector.data.model.*
-import com.example.series_collector.data.source.local.room.entity.asDomain
-import com.example.series_collector.data.source.remote.CategoryRemoteDataSource
-import com.example.series_collector.data.source.local.SeriesLocalDataSource
+import com.example.series_collector.data.remote.CategoryRemoteDataSource
+import com.example.series_collector.local.room.entity.asDomain
+import com.example.series_collector.remote.CategoryRemoteDataSourceImpl
+import com.example.series_collector.local.SeriesLocalDataSourceImpl
 import javax.inject.Inject
 
 class CategoryRepository @Inject constructor(

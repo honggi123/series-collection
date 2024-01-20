@@ -1,8 +1,8 @@
 package com.example.series_collector.di
 
 import com.example.series_collector.BuildConfig
-import com.example.series_collector.data.source.remote.api.adpater.ApiCallAdapterFactory
-import com.example.series_collector.data.source.remote.api.service.YoutubeService
+import com.example.series_collector.remote.api.adpater.ApiCallAdapterFactory
+import com.example.series_collector.remote.api.service.YoutubeService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

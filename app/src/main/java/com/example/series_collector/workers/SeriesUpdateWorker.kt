@@ -4,10 +4,10 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.example.series_collector.data.source.remote.api.model.asEntity
-import com.example.series_collector.data.repository.SeriesRepository
-import com.example.series_collector.data.source.local.room.SeriesDao
-import com.example.series_collector.data.source.local.preference.PreferenceDataStore
+import com.example.series_collector.data.local.SeriesLocalDataSource
+import com.example.series_collector.data.remote.SeriesRemoteDataSource
+import com.example.series_collector.remote.api.model.asEntity
+import com.example.series_collector.local.preference.PreferenceManager
 import com.example.series_collector.util.SeriesThumbnailFetcher
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -18,14 +18,14 @@ import java.util.Calendar
 class SeriesUpdateWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParams: WorkerParameters,
-    private val seriesDao: SeriesDao,
-    private val repository: SeriesRepository,
+    private val seriesLocalDataSource: SeriesLocalDataSource,
+    private val seriesRemoteDataSource: SeriesRemoteDataSource,
     private val seriesThumbnailFetcher: SeriesThumbnailFetcher,
-    private val preferenceDataStore: PreferenceDataStore
+    private val preferenceManager: PreferenceManager
 ) : CoroutineWorker(context, workerParams) {
     override suspend fun doWork(): Result = supervisorScope {
         try {
-            repository.run {
+            seriesLocalDataSource.run {
                 val forceInit = if (isEmpty()) true else false
                 updateSeries(forceInit)
             }
@@ -37,15 +37,15 @@ class SeriesUpdateWorker @AssistedInject constructor(
     }
 
     suspend private fun updateSeries(forceInit: Boolean) {
-        repository.run {
-            val lastUpdate = if (forceInit) null else preferenceDataStore.getLastUpdateDate()
-            val seriesList = if (forceInit) getRemoteAllSeries() else getRemoteUpdatedSeries(lastUpdate)
+        seriesRemoteDataSource.run {
+            val lastUpdate = if (forceInit) null else preferenceManager.getLastUpdateDate()
+            val seriesList = if (forceInit) getAllSeries() else getUpdatedSeries(lastUpdate!!)
             val entityList = seriesList.map { it?.asEntity() }
 
             seriesThumbnailFetcher.invoke(entityList)
-                .forEach { seriesDao.insertSeries(it) }
+                .forEach { seriesLocalDataSource.insertSeries(it) }
         }
 
-        preferenceDataStore.putLastUpdateDate(Calendar.getInstance())
+        preferenceManager.putLastUpdateDate(Calendar.getInstance())
     }
 }

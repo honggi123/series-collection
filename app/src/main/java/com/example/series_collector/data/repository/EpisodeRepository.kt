@@ -1,6 +1,7 @@
 package com.example.series_collector.data.repository
 
-import com.example.series_collector.data.source.remote.EpisodeRemoteDataSource
+import com.example.series_collector.data.remote.EpisodeRemoteDataSource
+import com.example.series_collector.remote.EpisodeRemoteDataSourceImpl
 import javax.inject.Inject
 
 
