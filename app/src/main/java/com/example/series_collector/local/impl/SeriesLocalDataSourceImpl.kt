@@ -1,13 +1,18 @@
-package com.example.series_collector.local
+package com.example.series_collector.local.impl
 
-import com.example.series_collector.data.local.SeriesLocalDataSource
-import com.example.series_collector.data.model.CategoryType
+import com.example.series_collector.data.source.local.SeriesLocalDataSource
+import com.example.series_collector.data.model.category.CategoryType
+import com.example.series_collector.data.model.series.Series
+import com.example.series_collector.data.model.series.toSeriesEntity
 import com.example.series_collector.local.room.FollowedSeriesDao
 import com.example.series_collector.local.room.SeriesDao
 import com.example.series_collector.local.room.entity.FollowedSeriesEntity
 import com.example.series_collector.local.room.entity.SeriesEntity
+import com.example.series_collector.local.room.entity.toSeries
+import com.example.series_collector.local.room.entity.toSeriesList
 import com.example.series_collector.util.SeriesThumbnailFetcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class SeriesLocalDataSourceImpl @Inject constructor(
@@ -20,8 +25,8 @@ class SeriesLocalDataSourceImpl @Inject constructor(
 
     override fun isEmpty() = seriesDao.isEmpty()
 
-    override fun getFollowingSeriesList(): Flow<List<SeriesEntity>> =
-        followedSeriesDao.getFollowedSeriesList()
+    override fun getFollowingSeriesList(): Flow<List<Series>> =
+        followedSeriesDao.getFollowedSeriesList().map { it.toSeriesList() }
 
     override suspend fun followSeries(seriesId: String) {
         val seriesFollowedEntity = FollowedSeriesEntity(seriesId)
@@ -32,7 +37,7 @@ class SeriesLocalDataSourceImpl @Inject constructor(
         followedSeriesDao.deleteFollowedSeries(seriesId)
 
 
-    override suspend fun getSeriesListByCategory(categoryId: String): List<SeriesEntity> {
+    override suspend fun getSeriesListByCategory(categoryId: String): List<Series> {
         val categoryType: CategoryType = CategoryType.find(categoryId) ?: return emptyList()
 
         return seriesDao.run {
@@ -43,16 +48,21 @@ class SeriesLocalDataSourceImpl @Inject constructor(
                     CategoryType.FICTION -> getFictionSeries(limit = 16)
                     CategoryType.TRAVEL -> getTravelSeries(limit = 16)
                 }
-            seriesThumbnailFetcher.invoke(list)
+            seriesThumbnailFetcher.invoke(list.toSeriesList())
         }
     }
 
-    override suspend fun searchBySeriesName(query: String) = seriesDao.getSeriesByQuery(query)
+    override suspend fun searchBySeriesName(query: String) =
+        seriesDao.getSeriesByQuery(query).toSeriesList()
 
 
-    override suspend fun getSeries(seriesId: String) = seriesDao.getSeries(seriesId)
+    override suspend fun getSeries(seriesId: String) =
+        seriesDao.getSeries(seriesId).toSeries()
 
 
-    override suspend fun insertSeries(seriesEntity: SeriesEntity) = seriesDao.insertSeries(seriesEntity)
+    override suspend fun insertSeries(series: Series)  {
+        val seriesEntity = series.toSeriesEntity()
+        seriesDao.insertSeries(seriesEntity)
+    }
 
 }

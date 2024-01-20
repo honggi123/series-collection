@@ -6,7 +6,7 @@
     <data>
         <variable
             name="series"
-            type="com.example.series_collector.data.model.Series" />
+            type="com.example.series_collector.data.model.series.Series" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -24,7 +24,7 @@
                 android:id="@+id/series_followed_thumbnail"
                 android:layout_width="@dimen/series_item_image_width_normal"
                 android:layout_height="@dimen/series_item_image_height_normal"
-                app:imageFromUrl="@{series.thumbnail}"
+                app:imageFromUrl="@{series.thumbnailUrl}"
                 android:background="?attr/colorSecondary"
                 android:scaleType="centerCrop" />
 

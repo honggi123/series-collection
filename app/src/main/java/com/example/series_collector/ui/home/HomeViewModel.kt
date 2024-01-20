@@ -2,13 +2,11 @@ package com.example.series_collector.ui.home
 
 import androidx.lifecycle.*
 import androidx.work.WorkInfo
-import com.example.series_collector.data.model.ListItem
+import com.example.series_collector.data.model.category.CategoryListItem
 import com.example.series_collector.data.repository.CategoryRepository
-import com.example.series_collector.data.repository.SeriesRepository
 import com.example.series_collector.workers.SeriesWorkerManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
-import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 
@@ -21,8 +19,8 @@ class HomeViewModel @Inject constructor(
     private val _isLoading = MutableLiveData<Boolean>()
     val isLoading: LiveData<Boolean> = _isLoading
 
-    private val _categoryContents = MutableLiveData<List<ListItem>>()
-    val categoryContents: LiveData<List<ListItem>> = _categoryContents
+    private val _categoryContents = MutableLiveData<List<CategoryListItem>>()
+    val categoryContents: LiveData<List<CategoryListItem>> = _categoryContents
 
     init {
         updateSeries()
@@ -31,7 +29,7 @@ class HomeViewModel @Inject constructor(
     private var updateJob: Job? = null
 
     fun updateSeries() {
-        updateJob?.cancel() // TODO
+        updateJob?.cancel()
         updateJob = viewModelScope.launch {
             _isLoading.value = true
             seriesWorkerManager.update()

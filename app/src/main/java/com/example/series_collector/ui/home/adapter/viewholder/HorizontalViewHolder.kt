@@ -1,8 +1,8 @@
 package com.example.series_collector.ui.home.adapter.viewholder
 
 import androidx.recyclerview.widget.RecyclerView
-import com.example.series_collector.data.model.Horizontal
-import com.example.series_collector.data.model.ListItem
+import com.example.series_collector.data.model.category.Horizontal
+import com.example.series_collector.data.model.category.CategoryListItem
 import com.example.series_collector.databinding.ListItemHorizontalBinding
 import com.example.series_collector.ui.home.adapter.HomeListAdapter
 
@@ -18,7 +18,7 @@ class HorizontalViewHolder(
         binding.rvSeries.setRecycledViewPool(sharedPool)
     }
 
-    override fun bind(item: ListItem) {
+    override fun bind(item: CategoryListItem) {
         super.bind(item)
         item as Horizontal
 

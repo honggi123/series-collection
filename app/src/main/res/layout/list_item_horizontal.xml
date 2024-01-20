@@ -6,7 +6,7 @@
     <data>
         <variable
             name="content"
-            type="com.example.series_collector.data.model.Horizontal"/>
+            type="com.example.series_collector.data.model.category.Horizontal"/>
     </data>
 
     <LinearLayout

@@ -1,12 +1,9 @@
 package com.example.series_collector.ui.home.adapter.viewholder
 
-import android.util.Log
 import android.view.View
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.RecyclerView
-import com.example.series_collector.data.model.Series
+import com.example.series_collector.data.model.series.Series
 import com.example.series_collector.databinding.ListItemHomeSeriesBinding
-import com.example.series_collector.databinding.ListItemHorizontalBinding
 import com.example.series_collector.ui.home.HomeFragmentDirections
 
 class SeriesViewHolder(
@@ -29,7 +26,7 @@ class SeriesViewHolder(
         view: View
     ) {
         val direction =
-            HomeFragmentDirections.actionHomeFragmentToDetailFragment(series.seriesId)
+            HomeFragmentDirections.actionHomeFragmentToDetailFragment(series.id)
         view.findNavController().navigate(direction)
     }
 

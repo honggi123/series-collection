@@ -2,7 +2,7 @@ package com.example.series_collector.remote.api.service
 
 import com.example.series_collector.BuildConfig
 import com.example.series_collector.remote.api.adpater.ApiResponse
-import com.example.series_collector.remote.api.model.EpisodeListsDto
+import com.example.series_collector.remote.model.EpisodeListsDto
 import retrofit2.http.GET
 import retrofit2.http.Query
 

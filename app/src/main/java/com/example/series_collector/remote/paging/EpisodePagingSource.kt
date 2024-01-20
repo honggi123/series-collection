@@ -5,7 +5,7 @@ import androidx.paging.PagingState
 import com.example.series_collector.remote.api.adpater.ApiResultError
 import com.example.series_collector.remote.api.adpater.ApiResultException
 import com.example.series_collector.remote.api.adpater.ApiResultSuccess
-import com.example.series_collector.remote.api.model.SeriesEpisode
+import com.example.series_collector.remote.model.SeriesEpisode
 import com.example.series_collector.remote.api.service.YoutubeService
 
 private const val STARTING_PAGE_TOKEN = ""

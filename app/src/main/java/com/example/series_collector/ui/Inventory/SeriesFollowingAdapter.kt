@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.series_collector.data.model.Series
+import com.example.series_collector.data.model.series.Series
 import com.example.series_collector.databinding.ListItemInventorySeriesBinding
 
 class SeriesFollowingAdapter(
@@ -45,11 +45,11 @@ class SeriesFollowingAdapter(
         }
 
         private fun openDetail(series: Series) {
-            inventoryItemCallback.openSeriesDetail(seriesId = series.seriesId)
+            inventoryItemCallback.openSeriesDetail(seriesId = series.id)
         }
 
         private fun deleteSeries(series: Series) {
-            inventoryItemCallback.deleteItem(series.seriesId)
+            inventoryItemCallback.deleteItem(series.id)
         }
 
         fun bind(item: Series) {
@@ -64,7 +64,7 @@ class SeriesFollowingAdapter(
 private class SeriesFollowedDiffCallback : DiffUtil.ItemCallback<Series>() {
 
     override fun areItemsTheSame(oldItem: Series, newItem: Series): Boolean {
-        return oldItem.seriesId == newItem.seriesId
+        return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(oldItem: Series, newItem: Series): Boolean {

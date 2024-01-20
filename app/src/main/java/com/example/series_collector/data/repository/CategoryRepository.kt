@@ -1,12 +1,12 @@
 package com.example.series_collector.data.repository
 
-import com.example.series_collector.data.local.SeriesLocalDataSource
-import com.example.series_collector.remote.api.model.asDomain
-import com.example.series_collector.data.model.*
-import com.example.series_collector.data.remote.CategoryRemoteDataSource
-import com.example.series_collector.local.room.entity.asDomain
-import com.example.series_collector.remote.CategoryRemoteDataSourceImpl
-import com.example.series_collector.local.SeriesLocalDataSourceImpl
+import com.example.series_collector.data.source.local.SeriesLocalDataSource
+import com.example.series_collector.data.model.category.Empty
+import com.example.series_collector.data.model.category.Horizontal
+import com.example.series_collector.data.model.category.CategoryListItem
+import com.example.series_collector.data.model.category.ViewPager
+import com.example.series_collector.data.model.category.ViewType
+import com.example.series_collector.data.source.remote.CategoryRemoteDataSource
 import javax.inject.Inject
 
 class CategoryRepository @Inject constructor(
@@ -14,19 +14,18 @@ class CategoryRepository @Inject constructor(
     private val seriesLocalDataSource: SeriesLocalDataSource
 ) {
 
-    suspend fun getCategoryContents(): List<ListItem> {
+    suspend fun getCategoryContents(): List<CategoryListItem> {
         return categoryRemoteDataSource.getCategorys().map {
             when (it.viewType) {
                 ViewType.HORIZONTAL.name -> {
                     Horizontal(
                         title = it.title,
                         items = seriesLocalDataSource.getSeriesListByCategory(it.categoryId)
-                            .map { it.asDomain() }
                     )
                 }
 
                 ViewType.VIEWPAGER.name -> {
-                    ViewPager(items = categoryRemoteDataSource.getAds().map { it.asDomain() })
+                    ViewPager(items = categoryRemoteDataSource.getAdList())
                 }
 
                 else -> Empty()

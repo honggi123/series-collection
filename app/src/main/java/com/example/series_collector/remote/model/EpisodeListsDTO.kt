@@ -1,4 +1,4 @@
-package com.example.series_collector.remote.api.model
+package com.example.series_collector.remote.model
 
 data class EpisodeListsDto(
     val etag: String,
@@ -10,9 +10,7 @@ data class EpisodeListsDto(
 )
 
 data class SeriesEpisode(
-    val etag: String,
     val id: String,
-    val kind: String,
     val snippet: Snippet
 )
 
@@ -36,7 +34,6 @@ data class Snippet(
 )
 
 data class Thumbnails(
-    val default: Default,
     val high: High,
     val maxres: Maxres,
     val medium: Medium?,
@@ -61,17 +58,11 @@ data class Medium(
     val width: Int
 )
 
-data class Default(
-    val height: Int,
-    val url: String,
-    val width: Int
-)
 
 data class ResourceId(
     val kind: String,
     val videoId: String
 )
-
 
 data class High(
     val height: Int,

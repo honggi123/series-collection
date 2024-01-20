@@ -1,7 +1,7 @@
 package com.example.series_collector.ui.home.adapter.viewholder
 
-import com.example.series_collector.data.model.ListItem
-import com.example.series_collector.data.model.ViewPager
+import com.example.series_collector.data.model.category.CategoryListItem
+import com.example.series_collector.data.model.category.ViewPager
 import com.example.series_collector.databinding.ListItemAdViewPagerBinding
 import com.example.series_collector.ui.home.adapter.HomeListAdapter
 
@@ -16,7 +16,7 @@ class AdViewPagerViewHolder(
     }
 
     // TODO binding page num, total page
-    override fun bind(item: ListItem) {
+    override fun bind(item: CategoryListItem) {
         super.bind(item)
         item as ViewPager
         adapter.submitList(item.items)

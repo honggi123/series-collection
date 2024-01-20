@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.series_collector.data.model.Series
+import com.example.series_collector.data.model.series.Series
 import com.example.series_collector.databinding.ListItemSearchSeriesBinding
 
 class SearchSeriesAdapter : ListAdapter<Series, RecyclerView.ViewHolder>(SearchSeriesDiffCallback()) {
@@ -47,7 +47,7 @@ class SearchSeriesAdapter : ListAdapter<Series, RecyclerView.ViewHolder>(SearchS
 private class SearchSeriesDiffCallback : DiffUtil.ItemCallback<Series>() {
 
     override fun areItemsTheSame(oldItem: Series, newItem: Series): Boolean {
-        return oldItem.seriesId == newItem.seriesId
+        return oldItem.id == newItem.id
     }
 
     override fun areContentsTheSame(oldItem: Series, newItem: Series): Boolean {

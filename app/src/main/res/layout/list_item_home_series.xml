@@ -11,7 +11,7 @@
 
         <variable
             name="item"
-            type="com.example.series_collector.data.model.Series" />
+            type="com.example.series_collector.data.model.series.Series" />
     </data>
 
     <androidx.cardview.widget.CardView
@@ -34,7 +34,7 @@
                 android:layout_height="@dimen/home_series_item_image_height"
                 android:scaleType="centerCrop"
                 android:background="@drawable/round_radius_shape"
-                app:imageFromUrl="@{item.thumbnail}"
+                app:imageFromUrl="@{item.thumbnailUrl}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />

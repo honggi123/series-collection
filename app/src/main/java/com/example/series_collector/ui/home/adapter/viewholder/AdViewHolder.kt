@@ -2,7 +2,6 @@ package com.example.series_collector.ui.home.adapter.viewholder
 
 import android.graphics.Color
 import android.graphics.PorterDuff
-import com.example.series_collector.data.model.ListItem
 import com.example.series_collector.databinding.ListItemAdBinding
 
 class AdViewHolder(

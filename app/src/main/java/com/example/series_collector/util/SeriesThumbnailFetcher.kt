@@ -1,9 +1,10 @@
 package com.example.series_collector.util
 
+import com.example.series_collector.data.model.series.Series
 import com.example.series_collector.remote.api.adpater.ApiResultError
 import com.example.series_collector.remote.api.adpater.ApiResultException
 import com.example.series_collector.remote.api.adpater.ApiResultSuccess
-import com.example.series_collector.remote.EpisodeRemoteDataSourceImpl
+import com.example.series_collector.remote.impl.EpisodeRemoteDataSourceImpl
 import com.example.series_collector.local.room.entity.SeriesEntity
 import kotlinx.coroutines.*
 import javax.inject.Inject
@@ -11,13 +12,13 @@ import javax.inject.Inject
 class SeriesThumbnailFetcher @Inject constructor(
     private val episodeRemoteDataSourceImpl: EpisodeRemoteDataSourceImpl
 ) {
-    suspend operator fun invoke(list: List<SeriesEntity>): List<SeriesEntity> =
+    suspend operator fun invoke(list: List<Series>): List<Series> =
         withContext(Dispatchers.IO) {
             list.map { series ->
                 async {
-                    if (series.thumbnail.isNullOrBlank()) {
+                    if (series.thumbnailUrl.isNullOrBlank()) {
                         val url = getThumbnailUrl(series.id)
-                        series.copy(thumbnail = url)
+                        series.copy(thumbnailUrl = url)
                     } else series
                 }
             }.awaitAll()

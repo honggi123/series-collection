@@ -4,9 +4,8 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.example.series_collector.data.local.SeriesLocalDataSource
-import com.example.series_collector.data.remote.SeriesRemoteDataSource
-import com.example.series_collector.remote.api.model.asEntity
+import com.example.series_collector.data.source.local.SeriesLocalDataSource
+import com.example.series_collector.data.source.remote.SeriesRemoteDataSource
 import com.example.series_collector.local.preference.PreferenceManager
 import com.example.series_collector.util.SeriesThumbnailFetcher
 import dagger.assisted.Assisted
@@ -40,9 +39,8 @@ class SeriesUpdateWorker @AssistedInject constructor(
         seriesRemoteDataSource.run {
             val lastUpdate = if (forceInit) null else preferenceManager.getLastUpdateDate()
             val seriesList = if (forceInit) getAllSeries() else getUpdatedSeries(lastUpdate!!)
-            val entityList = seriesList.map { it?.asEntity() }
 
-            seriesThumbnailFetcher.invoke(entityList)
+            seriesThumbnailFetcher.invoke(seriesList)
                 .forEach { seriesLocalDataSource.insertSeries(it) }
         }
 

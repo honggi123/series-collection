@@ -3,7 +3,7 @@ package com.example.series_collector.local.room.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.series_collector.data.model.Series
+import com.example.series_collector.data.model.series.Series
 import java.util.*
 
 @Entity(tableName = "Series")
@@ -29,26 +29,30 @@ data class SeriesEntity(
     val updatedAt: Calendar
 )
 
-fun List<SeriesEntity>.asDomain(): List<Series> {
+fun List<SeriesEntity>.toSeriesList(): List<Series> {
     return this.map {
         Series(
-            seriesId = it.id,
+            id = it.id,
             name = it.name,
             description = it.description,
             channel = it.channel,
             genreIndex = it.genreIndex,
-            thumbnail = it.thumbnail ?: ""
+            thumbnailUrl = it.thumbnail ?: "",
+            createdAt = it.createdAt,
+            updatedAt = it.updatedAt
         )
     }
 }
 
-fun SeriesEntity.asDomain(): Series {
+fun SeriesEntity.toSeries(): Series {
     return Series(
-        seriesId = this.id,
+        id = this.id,
         name = this.name,
         description = this.description,
         channel = this.channel,
         genreIndex = this.genreIndex,
-        thumbnail = this.thumbnail ?: ""
+        thumbnailUrl = this.thumbnail ?: "",
+        createdAt = this.createdAt,
+        updatedAt = this.updatedAt
     )
 }

@@ -1,6 +1,6 @@
-package com.example.series_collector.data.model
+package com.example.series_collector.data.model.category
 
-interface ListItem {
+interface CategoryListItem {
     val viewType: ViewType
 
     fun getKey() = viewType.hashCode()
