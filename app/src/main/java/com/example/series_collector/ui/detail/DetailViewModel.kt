@@ -4,11 +4,11 @@ package com.example.series_collector.ui.detail
 import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.series_collector.data.api.adpater.ApiResultError
-import com.example.series_collector.data.api.adpater.ApiResultException
-import com.example.series_collector.data.api.adpater.ApiResultSuccess
-import com.example.series_collector.data.api.model.PageInfo
-import com.example.series_collector.data.api.model.SeriesEpisode
+import com.example.series_collector.data.source.remote.api.adpater.ApiResultError
+import com.example.series_collector.data.source.remote.api.adpater.ApiResultException
+import com.example.series_collector.data.source.remote.api.adpater.ApiResultSuccess
+import com.example.series_collector.data.source.remote.api.model.PageInfo
+import com.example.series_collector.data.source.remote.api.model.SeriesEpisode
 import com.example.series_collector.data.model.Series
 import com.example.series_collector.data.model.Tag
 import com.example.series_collector.data.model.TagType
@@ -56,7 +56,7 @@ class DetailViewModel @Inject constructor(
     }
 
     private suspend fun getPageInfo(): PageInfo? {
-        val result = seriesRepository.getPlayList(seriesId)
+        val result = episodeRepository.getEpisodeList(seriesId)
 
         return when (result) {
             is ApiResultSuccess -> result.data.pageInfo
@@ -83,7 +83,7 @@ class DetailViewModel @Inject constructor(
     }
 
     fun searchEpisodeList(seriesId: String): Flow<PagingData<SeriesEpisode>> {
-        return episodeRepository.getEpisodeList(seriesId = seriesId)
+        return episodeRepository.getEpisodeListStream(seriesId = seriesId)
             .cachedIn(viewModelScope)
     }
 

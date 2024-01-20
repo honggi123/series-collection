@@ -1,16 +1,15 @@
 package com.example.series_collector.data.repository
 
-import androidx.paging.PagingData
-import com.example.series_collector.data.api.model.SeriesEpisode
-import com.example.series_collector.data.source.youtube.YoutubeDataSource
-import kotlinx.coroutines.flow.Flow
+import com.example.series_collector.data.source.remote.EpisodeRemoteDataSource
 import javax.inject.Inject
 
 
 class EpisodeRepository @Inject constructor(
-    private val youtubeDataSource: YoutubeDataSource
+    private val episodeRemoteDataSource: EpisodeRemoteDataSource
 ) {
-    fun getEpisodeList(seriesId: String): Flow<PagingData<SeriesEpisode>> {
-        return youtubeDataSource.getPlayListStream(seriesId)
-    }
+
+    suspend fun getEpisodeList(seriesId: String) = episodeRemoteDataSource.getEpisodeList(seriesId)
+
+    fun getEpisodeListStream(seriesId: String) = episodeRemoteDataSource.getEpisodeListStream(seriesId)
+
 }

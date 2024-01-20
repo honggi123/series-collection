@@ -30,6 +30,18 @@
                 app:layout_scrollFlags="scroll|enterAlways"
                 >
 
+                <TextView
+                    android:id="@+id/tv_category_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="유튜브 시리즈"
+                    android:textAppearance="?attr/textAppearanceHeadline6"
+                    android:textStyle="bold"
+                    android:layout_marginStart="8dp"
+                    android:paddingBottom="8dp"
+                    android:textColor="?attr/colorOnPrimary"
+                    tools:text="유튜브 시리즈"
+                    />
 
             </androidx.appcompat.widget.Toolbar>
 

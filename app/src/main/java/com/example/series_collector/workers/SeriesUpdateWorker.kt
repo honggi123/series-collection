@@ -4,10 +4,11 @@ import android.content.Context
 import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.example.series_collector.data.api.model.asEntity
+import com.example.series_collector.data.source.remote.api.model.asEntity
 import com.example.series_collector.data.repository.SeriesRepository
-import com.example.series_collector.data.room.SeriesDao
-import com.example.series_collector.data.source.preference.PreferenceDataStore
+import com.example.series_collector.data.source.local.room.SeriesDao
+import com.example.series_collector.data.source.local.preference.PreferenceDataStore
+import com.example.series_collector.util.SeriesThumbnailFetcher
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.*

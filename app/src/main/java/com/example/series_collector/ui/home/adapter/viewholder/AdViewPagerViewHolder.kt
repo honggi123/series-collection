@@ -15,6 +15,7 @@ class AdViewPagerViewHolder(
         binding.viewpager.adapter = adapter
     }
 
+    // TODO binding page num, total page
     override fun bind(item: ListItem) {
         super.bind(item)
         item as ViewPager
