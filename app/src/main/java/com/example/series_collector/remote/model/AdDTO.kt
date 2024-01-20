@@ -7,7 +7,7 @@ data class AdDto(
     val url: String = ""
 )
 
-fun AdDto.asDomain(): Ad {
+fun AdDto.toAd(): Ad {
     return Ad(imgUrl = url)
 }
 

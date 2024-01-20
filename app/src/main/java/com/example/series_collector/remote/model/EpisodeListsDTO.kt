@@ -1,72 +1,81 @@
 package com.example.series_collector.remote.model
 
+import com.example.series_collector.data.model.episode.Episode
+import com.example.series_collector.data.model.episode.PageInfo
+import com.example.series_collector.data.model.episode.Thumbnail
+
 data class EpisodeListsDto(
     val etag: String,
-    val items: List<SeriesEpisode>,
+    val items: List<EpisodeApiModel>,
     val kind: String,
     val prevPageToken: String,
     val nextPageToken: String,
-    val pageInfo: PageInfo?
+    val pageInfo: PageInfoApiModel?
 )
 
-data class SeriesEpisode(
+data class EpisodeApiModel(
     val id: String,
-    val snippet: Snippet
+    val snippet: SnippetApiModel
 )
 
-data class PageInfo(
+data class PageInfoApiModel(
     val resultsPerPage: Int,
     val totalResults: Int?,
 )
 
-data class Snippet(
+data class SnippetApiModel(
     val channelId: String,
     val channelTitle: String,
     val description: String,
     val playlistId: String,
     val position: Int,
     val publishedAt: String,
-    val resourceId: ResourceId,
-    val thumbnails: Thumbnails?,
+    val thumbnails: ThumbnailApiModel?,
     val title: String,
     val videoOwnerChannelId: String,
     val videoOwnerChannelTitle: String
 )
 
-data class Thumbnails(
-    val high: High,
-    val maxres: Maxres,
-    val medium: Medium?,
-    val standard: Standard
+data class ThumbnailApiModel(
+    val high: ThumbnailHighApiModel,
+    val medium: ThumbnailMediumApiModel?,
+    val standard: ThumbnailStandardApiModel
 )
 
-data class Standard(
+data class ThumbnailStandardApiModel(
     val height: Int,
     val url: String,
     val width: Int
 )
 
-data class Maxres(
-    val height: Int,
-    val url: String,
-    val width: Int
-)
-
-data class Medium(
+data class ThumbnailMediumApiModel(
     val height: Int,
     val url: String?,
     val width: Int
 )
 
-
-data class ResourceId(
-    val kind: String,
-    val videoId: String
-)
-
-data class High(
+data class ThumbnailHighApiModel(
     val height: Int,
     val url: String,
     val width: Int
 )
 
+fun PageInfoApiModel.toPageInfo(): PageInfo {
+    return PageInfo(
+        resultsPerPage = resultsPerPage,
+        totalResults = totalResults
+    )
+}
+
+fun EpisodeApiModel.toEpisode(): Episode {
+    return Episode(
+        id = this.id,
+        channelId = this.snippet.channelId,
+        seriesId = this.snippet.playlistId,
+        channelTitle = this.snippet.channelTitle,
+        description = this.snippet.description,
+        thumbnailUrl = this.snippet.thumbnails?.medium?.url ?: "",
+        publishedAt = this.snippet.publishedAt,
+        title = this.snippet.title,
+    )
+}

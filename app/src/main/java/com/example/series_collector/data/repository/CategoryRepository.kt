@@ -20,7 +20,7 @@ class CategoryRepository @Inject constructor(
                 ViewType.HORIZONTAL.name -> {
                     Horizontal(
                         title = it.title,
-                        items = seriesLocalDataSource.getSeriesListByCategory(it.categoryId)
+                        items = seriesLocalDataSource.getSeriesListByCategory(it.id)
                     )
                 }
 

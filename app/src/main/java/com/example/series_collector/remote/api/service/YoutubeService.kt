@@ -14,7 +14,7 @@ interface YoutubeService {
         @Query("part") part: String = "id, snippet",
         @Query("playlistId") id: String,
         @Query("pageToken") pageToken: String = "",
-        @Query("maxResults") maxResults: Int,
+        @Query("maxResults") limit: Int,
     ): ApiResponse<EpisodeListsDto>
 
 }

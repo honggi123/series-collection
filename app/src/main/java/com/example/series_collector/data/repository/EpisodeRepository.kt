@@ -9,5 +9,6 @@ class EpisodeRepository @Inject constructor(
 ) {
     fun getEpisodeListStream(seriesId: String) = episodeRemoteDataSource.getEpisodeListStream(seriesId)
 
-    suspend fun getEpisodeList(seriesId: String) = episodeRemoteDataSource.getEpisodeList(seriesId)
+    suspend fun getPageInfo(seriesId: String) = episodeRemoteDataSource.getPageInfo(seriesId)
+
 }

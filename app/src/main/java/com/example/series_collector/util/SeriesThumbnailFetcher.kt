@@ -1,6 +1,7 @@
 package com.example.series_collector.util
 
 import com.example.series_collector.data.model.series.Series
+import com.example.series_collector.data.source.remote.EpisodeRemoteDataSource
 import com.example.series_collector.remote.api.adpater.ApiResultError
 import com.example.series_collector.remote.api.adpater.ApiResultException
 import com.example.series_collector.remote.api.adpater.ApiResultSuccess
@@ -10,7 +11,7 @@ import kotlinx.coroutines.*
 import javax.inject.Inject
 
 class SeriesThumbnailFetcher @Inject constructor(
-    private val episodeRemoteDataSourceImpl: EpisodeRemoteDataSourceImpl
+    private val episodeRemoteDataSource: EpisodeRemoteDataSource
 ) {
     suspend operator fun invoke(list: List<Series>): List<Series> =
         withContext(Dispatchers.IO) {
@@ -25,11 +26,8 @@ class SeriesThumbnailFetcher @Inject constructor(
         }
 
     private suspend fun getThumbnailUrl(seriesId: String): String? {
-        val response = episodeRemoteDataSourceImpl.getEpisodeList(playListId = seriesId)
-        return when (response) {
-            is ApiResultSuccess -> response.data.items?.firstOrNull()?.snippet?.thumbnails?.medium?.url
-            is ApiResultException, is ApiResultError -> null
-        }
+        val list = episodeRemoteDataSource.getThumbnailList(seriesId = seriesId)
+        return list.firstOrNull()?.url
     }
 }
 

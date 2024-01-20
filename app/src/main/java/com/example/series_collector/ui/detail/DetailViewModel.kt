@@ -4,16 +4,13 @@ package com.example.series_collector.ui.detail
 import androidx.lifecycle.*
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.series_collector.remote.model.PageInfo
-import com.example.series_collector.remote.model.SeriesEpisode
 import com.example.series_collector.data.model.series.Series
 import com.example.series_collector.data.model.common.Tag
 import com.example.series_collector.data.model.common.TagType
+import com.example.series_collector.data.model.episode.Episode
+import com.example.series_collector.data.model.episode.PageInfo
 import com.example.series_collector.data.repository.EpisodeRepository
 import com.example.series_collector.data.repository.SeriesRepository
-import com.example.series_collector.remote.api.adpater.ApiResultError
-import com.example.series_collector.remote.api.adpater.ApiResultException
-import com.example.series_collector.remote.api.adpater.ApiResultSuccess
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -56,13 +53,7 @@ class DetailViewModel @Inject constructor(
     }
 
     private suspend fun getPageInfo(): PageInfo? {
-        val result = episodeRepository.getEpisodeList(seriesId)
-
-        return when (result) {
-            is ApiResultSuccess -> result.data.pageInfo
-            is ApiResultError -> TODO()
-            is ApiResultException -> TODO()
-        }
+        return episodeRepository.getPageInfo(seriesId)
     }
 
     private fun getTagsBySeriesInfo(series: Series, pageInfo: PageInfo?): List<Tag> {
@@ -82,7 +73,7 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    fun searchEpisodeList(seriesId: String): Flow<PagingData<SeriesEpisode>> {
+    fun searchEpisodeList(seriesId: String): Flow<PagingData<Episode>> {
         return episodeRepository.getEpisodeListStream(seriesId = seriesId)
             .cachedIn(viewModelScope)
     }
