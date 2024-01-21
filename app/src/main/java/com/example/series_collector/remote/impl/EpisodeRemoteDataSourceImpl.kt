@@ -3,9 +3,9 @@ package com.example.series_collector.remote.impl
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import com.example.series_collector.model.Thumbnail
 import com.example.series_collector.model.episode.Episode
 import com.example.series_collector.model.episode.PageInfo
-import com.example.series_collector.model.episode.Thumbnail
 import com.example.series_collector.data.source.remote.EpisodeRemoteDataSource
 import com.example.series_collector.remote.api.adpater.ApiResultSuccess
 import com.example.series_collector.remote.api.service.YoutubeService

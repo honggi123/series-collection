@@ -2,7 +2,6 @@ package com.example.series_collector.remote.model
 
 import com.example.series_collector.model.episode.Episode
 import com.example.series_collector.model.episode.PageInfo
-import com.example.series_collector.model.episode.Thumbnail
 
 data class EpisodeListsDto(
     val etag: String,
