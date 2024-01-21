@@ -1,6 +1,6 @@
 package com.example.series_collector.util
 
-import com.example.series_collector.data.model.series.Series
+import com.example.series_collector.model.series.Series
 import com.example.series_collector.data.source.remote.EpisodeRemoteDataSource
 import com.example.series_collector.remote.api.adpater.ApiResultError
 import com.example.series_collector.remote.api.adpater.ApiResultException
@@ -9,7 +9,9 @@ import com.example.series_collector.remote.impl.EpisodeRemoteDataSourceImpl
 import com.example.series_collector.local.room.entity.SeriesEntity
 import kotlinx.coroutines.*
 import javax.inject.Inject
+import javax.inject.Singleton
 
+@Singleton
 class SeriesThumbnailFetcher @Inject constructor(
     private val episodeRemoteDataSource: EpisodeRemoteDataSource
 ) {

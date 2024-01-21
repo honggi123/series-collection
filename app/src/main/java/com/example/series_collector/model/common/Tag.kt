@@ -1,4 +1,4 @@
-package com.example.series_collector.data.model.common
+package com.example.series_collector.model.common
 
 data class Tag(
     val type: TagType,

@@ -1,28 +1,20 @@
 package com.example.series_collector.data.repository
 
-import com.example.series_collector.data.source.local.SeriesLocalDataSource
-import com.example.series_collector.data.model.series.Series
-import kotlinx.coroutines.flow.*
-import javax.inject.Inject
+import com.example.series_collector.model.series.Series
+import kotlinx.coroutines.flow.Flow
 
-class SeriesRepository @Inject constructor(
-    private val seriesLocalDataSource: SeriesLocalDataSource
-) {
+interface SeriesRepository {
 
-    fun isFollowed(seriesId: String) = seriesLocalDataSource.isFollowed(seriesId)
+    fun isFollowed(seriesId: String): Flow<Boolean>
 
-    fun getFollowingSeriesList(): Flow<List<Series>> = seriesLocalDataSource.getFollowingSeriesList()
+    fun getFollowingSeriesList(): Flow<List<Series>>
 
-    suspend fun followSeries(seriesId: String) = seriesLocalDataSource.followSeries(seriesId)
+    suspend fun followSeries(seriesId: String)
 
-    suspend fun unFollowSeries(seriesId: String) = seriesLocalDataSource.unFollowSeries(seriesId)
+    suspend fun unFollowSeries(seriesId: String)
 
-    suspend fun searchBySeriesName(query: String) = seriesLocalDataSource.searchBySeriesName(query)
+    suspend fun searchBySeriesName(query: String): List<Series>
 
-    suspend fun getSeries(seriesId: String) = seriesLocalDataSource.getSeries(seriesId)
+    suspend fun getSeries(seriesId: String): Series
 
 }
-
-
-
-

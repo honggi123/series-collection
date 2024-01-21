@@ -2,9 +2,9 @@ package com.example.series_collector.ui.home
 
 import androidx.lifecycle.*
 import androidx.work.WorkInfo
-import com.example.series_collector.data.model.category.CategoryListItem
 import com.example.series_collector.data.repository.CategoryRepository
-import com.example.series_collector.workers.SeriesWorkerManager
+import com.example.series_collector.model.category.CategoryListItem
+import com.example.series_collector.worker.SeriesWorkerManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import javax.inject.Inject

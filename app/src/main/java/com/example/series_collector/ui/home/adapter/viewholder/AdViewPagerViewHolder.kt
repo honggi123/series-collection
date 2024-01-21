@@ -1,7 +1,7 @@
 package com.example.series_collector.ui.home.adapter.viewholder
 
-import com.example.series_collector.data.model.category.CategoryListItem
-import com.example.series_collector.data.model.category.ViewPager
+import com.example.series_collector.model.category.CategoryListItem
+import com.example.series_collector.model.category.ViewPager
 import com.example.series_collector.databinding.ListItemAdViewPagerBinding
 import com.example.series_collector.ui.home.adapter.HomeListAdapter
 

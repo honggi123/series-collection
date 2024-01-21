@@ -2,7 +2,7 @@ package com.example.series_collector.remote.paging
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.series_collector.data.model.episode.Episode
+import com.example.series_collector.model.episode.Episode
 import com.example.series_collector.remote.api.adpater.ApiResultError
 import com.example.series_collector.remote.api.adpater.ApiResultException
 import com.example.series_collector.remote.api.adpater.ApiResultSuccess

@@ -1,10 +1,11 @@
 package com.example.series_collector.data.source.local
 
-import com.example.series_collector.data.model.series.Series
+import com.example.series_collector.model.series.Series
 import com.example.series_collector.local.room.entity.SeriesEntity
 import kotlinx.coroutines.flow.Flow
 
 interface SeriesLocalDataSource {
+
     fun isEmpty(): Boolean
 
     fun isFollowed(seriesId: String): Flow<Boolean>

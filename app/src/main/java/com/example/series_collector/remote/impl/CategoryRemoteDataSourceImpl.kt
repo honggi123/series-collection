@@ -1,7 +1,7 @@
 package com.example.series_collector.remote.impl
 
-import com.example.series_collector.data.model.category.Ad
-import com.example.series_collector.data.model.category.Category
+import com.example.series_collector.model.category.Ad
+import com.example.series_collector.model.category.Category
 import com.example.series_collector.data.source.remote.CategoryRemoteDataSource
 import com.example.series_collector.remote.model.AdDto
 import com.example.series_collector.remote.model.CategoryDTO

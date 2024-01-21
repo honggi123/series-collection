@@ -1,4 +1,4 @@
-package com.example.series_collector.data.model.episode
+package com.example.series_collector.model.episode
 
 data class PageInfo(
     val resultsPerPage: Int,

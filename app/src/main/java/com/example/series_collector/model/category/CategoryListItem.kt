@@ -1,4 +1,4 @@
-package com.example.series_collector.data.model.category
+package com.example.series_collector.model.category
 
 interface CategoryListItem {
     val viewType: ViewType

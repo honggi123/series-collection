@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.series_collector.data.model.series.Series
+import com.example.series_collector.model.series.Series
 import com.example.series_collector.databinding.ListItemSearchSeriesBinding
 
 class SearchSeriesAdapter : ListAdapter<Series, RecyclerView.ViewHolder>(SearchSeriesDiffCallback()) {

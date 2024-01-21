@@ -1,14 +1,13 @@
 package com.example.series_collector.data.repository
 
-import com.example.series_collector.data.source.remote.EpisodeRemoteDataSource
-import javax.inject.Inject
+import androidx.paging.PagingData
+import com.example.series_collector.model.episode.Episode
+import com.example.series_collector.model.episode.PageInfo
+import kotlinx.coroutines.flow.Flow
 
+interface EpisodeRepository {
 
-class EpisodeRepository @Inject constructor(
-    private val episodeRemoteDataSource: EpisodeRemoteDataSource
-) {
-    fun getEpisodeListStream(seriesId: String) = episodeRemoteDataSource.getEpisodeListStream(seriesId)
+    fun getEpisodeListStream(seriesId: String)  : Flow<PagingData<Episode>>
 
-    suspend fun getPageInfo(seriesId: String) = episodeRemoteDataSource.getPageInfo(seriesId)
-
+    suspend fun getPageInfo(seriesId: String)  : PageInfo?
 }

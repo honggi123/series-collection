@@ -1,4 +1,4 @@
-package com.example.series_collector.workers
+package com.example.series_collector.worker
 
 import android.content.Context
 import androidx.hilt.work.HiltWorker

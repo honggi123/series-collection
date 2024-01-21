@@ -1,7 +1,7 @@
-package com.example.series_collector.data.model.series
+package com.example.series_collector.model.series
 
-import com.example.series_collector.data.model.category.CategoryListItem
-import com.example.series_collector.data.model.category.ViewType
+import com.example.series_collector.model.category.CategoryListItem
+import com.example.series_collector.model.category.ViewType
 import com.example.series_collector.local.room.entity.SeriesEntity
 import java.time.LocalDateTime
 import java.util.Calendar

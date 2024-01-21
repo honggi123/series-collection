@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.series_collector.data.model.episode.Episode
+import com.example.series_collector.model.episode.Episode
 import com.example.series_collector.databinding.ListItemSeriesEpisodeBinding
 
 class SeriesEpisodeAdapter : PagingDataAdapter<Episode, SeriesEpisodeAdapter.SeriesEpisodeHolder>(

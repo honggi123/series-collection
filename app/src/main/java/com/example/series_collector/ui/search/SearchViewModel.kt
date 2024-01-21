@@ -2,9 +2,10 @@ package com.example.series_collector.ui.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import com.example.series_collector.data.model.series.GenreType
-import com.example.series_collector.data.model.series.Series
 import com.example.series_collector.data.repository.SeriesRepository
+import com.example.series_collector.model.series.GenreType
+import com.example.series_collector.model.series.Series
+import com.example.series_collector.data.repository.impl.SeriesRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject

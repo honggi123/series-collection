@@ -1,6 +1,6 @@
 package com.example.series_collector.data.source.remote
 
-import com.example.series_collector.data.model.series.Series
+import com.example.series_collector.model.series.Series
 import java.util.Calendar
 
 interface SeriesRemoteDataSource {

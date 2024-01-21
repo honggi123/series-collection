@@ -1,9 +1,9 @@
 package com.example.series_collector.local.impl
 
 import com.example.series_collector.data.source.local.SeriesLocalDataSource
-import com.example.series_collector.data.model.category.CategoryType
-import com.example.series_collector.data.model.series.Series
-import com.example.series_collector.data.model.series.toSeriesEntity
+import com.example.series_collector.model.category.CategoryType
+import com.example.series_collector.model.series.Series
+import com.example.series_collector.model.series.toSeriesEntity
 import com.example.series_collector.local.room.FollowedSeriesDao
 import com.example.series_collector.local.room.SeriesDao
 import com.example.series_collector.local.room.entity.FollowedSeriesEntity

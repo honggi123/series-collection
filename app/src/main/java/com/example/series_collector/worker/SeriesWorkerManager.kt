@@ -1,4 +1,4 @@
-package com.example.series_collector.workers
+package com.example.series_collector.worker
 
 import androidx.work.WorkInfo
 import kotlinx.coroutines.flow.Flow

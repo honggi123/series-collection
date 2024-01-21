@@ -1,7 +1,7 @@
 package com.example.series_collector.di
 
-import com.example.series_collector.workers.SeriesWorkerManager
-import com.example.series_collector.workers.SeriesWorkerManagerImpl
+import com.example.series_collector.worker.SeriesWorkerManager
+import com.example.series_collector.worker.SeriesWorkerManagerImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

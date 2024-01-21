@@ -1,6 +1,6 @@
 package com.example.series_collector.remote.model
 
-import com.example.series_collector.data.model.series.Series
+import com.example.series_collector.model.series.Series
 import com.example.series_collector.local.room.entity.SeriesEntity
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentId

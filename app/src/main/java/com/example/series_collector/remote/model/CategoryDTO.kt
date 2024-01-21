@@ -1,6 +1,6 @@
 package com.example.series_collector.remote.model
 
-import com.example.series_collector.data.model.category.Category
+import com.example.series_collector.model.category.Category
 
 data class CategoryDTO(
     val categoryId: String = "",

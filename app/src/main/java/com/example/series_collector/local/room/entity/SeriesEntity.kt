@@ -3,7 +3,7 @@ package com.example.series_collector.local.room.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.series_collector.data.model.series.Series
+import com.example.series_collector.model.series.Series
 import java.util.*
 
 @Entity(tableName = "Series")

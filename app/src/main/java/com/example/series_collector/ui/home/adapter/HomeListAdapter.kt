@@ -4,7 +4,7 @@ import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.example.series_collector.data.model.category.CategoryListItem
+import com.example.series_collector.model.category.CategoryListItem
 import com.example.series_collector.ui.home.adapter.viewholder.BindingViewHolder
 import com.example.series_collector.ui.home.adapter.viewholder.ViewHolderGenerator
 

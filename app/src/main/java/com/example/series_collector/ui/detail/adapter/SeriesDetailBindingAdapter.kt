@@ -5,8 +5,8 @@ import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.databinding.BindingAdapter
 import com.example.series_collector.R
-import com.example.series_collector.data.model.common.Tag
-import com.example.series_collector.data.model.common.TagType
+import com.example.series_collector.model.common.Tag
+import com.example.series_collector.model.common.TagType
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 

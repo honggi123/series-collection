@@ -1,8 +1,8 @@
 package com.example.series_collector.ui.home.adapter.viewholder
 
 import androidx.recyclerview.widget.RecyclerView
-import com.example.series_collector.data.model.category.Horizontal
-import com.example.series_collector.data.model.category.CategoryListItem
+import com.example.series_collector.model.category.Horizontal
+import com.example.series_collector.model.category.CategoryListItem
 import com.example.series_collector.databinding.ListItemHorizontalBinding
 import com.example.series_collector.ui.home.adapter.HomeListAdapter
 
