@@ -6,14 +6,14 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.series_collector.ui.home.HomeViewModel" />
+            type="com.example.series_collector.feature.home.HomeViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
-        tools:context="com.example.series_collector.MainActivity">
+        tools:context="com.example.series_collector.ui.main.MainActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/app_bar"

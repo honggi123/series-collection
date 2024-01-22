@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/InventoryFragment"
-        android:name="com.example.series_collector.ui.Inventory.InventoryFragment"
+        android:name="com.example.series_collector.feature.Inventory.InventoryFragment"
         android:label="fragment_inventory"
         tools:layout="@layout/fragment_inventory">
 

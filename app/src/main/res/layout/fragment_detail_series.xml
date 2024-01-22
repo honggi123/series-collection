@@ -6,11 +6,11 @@
 
         <variable
             name="callback"
-            type="com.example.series_collector.ui.detail.DetailFragment.Callback" />
+            type="com.example.series_collector.feature.detail.DetailFragment.Callback" />
 
         <variable
             name="viewModel"
-            type="com.example.series_collector.ui.detail.DetailViewModel" />
+            type="com.example.series_collector.feature.detail.DetailViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
