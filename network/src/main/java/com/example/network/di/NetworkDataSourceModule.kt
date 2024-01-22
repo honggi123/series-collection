@@ -1,11 +1,11 @@
 package com.example.network.di
 
-import com.example.data.source.network.CategoryRemoteDataSource
-import com.example.data.source.network.EpisodeRemoteDataSource
-import com.example.data.source.network.SeriesRemoteDataSource
-import com.example.network.impl.CategoryRemoteDataSourceImpl
-import com.example.network.impl.EpisodeRemoteDataSourceImpl
-import com.example.network.impl.SeriesRemoteDataSourceImpl
+import com.example.data.source.network.CategoryNetworkDataSource
+import com.example.data.source.network.EpisodeNetworkDataSource
+import com.example.data.source.network.SeriesNetworkDataSource
+import com.example.network.impl.CategoryNetworkDataSourceImpl
+import com.example.network.impl.EpisodeNetworkDataSourceImpl
+import com.example.network.impl.SeriesNetworkDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -18,13 +18,13 @@ internal abstract class NetworkDataSourceModule {
 
     @Binds
     @Singleton
-    abstract fun bindCategoryRemoteDataSource(source: CategoryRemoteDataSourceImpl): CategoryRemoteDataSource
+    abstract fun bindCategoryRemoteDataSource(source: CategoryNetworkDataSourceImpl): CategoryNetworkDataSource
 
     @Binds
     @Singleton
-    abstract fun bindEpisodeRemoteDataSource(source: EpisodeRemoteDataSourceImpl): EpisodeRemoteDataSource
+    abstract fun bindEpisodeRemoteDataSource(source: EpisodeNetworkDataSourceImpl): EpisodeNetworkDataSource
 
     @Binds
     @Singleton
-    abstract fun bindSeriesRemoteDataSource(source: SeriesRemoteDataSourceImpl): SeriesRemoteDataSource
+    abstract fun bindSeriesRemoteDataSource(source: SeriesNetworkDataSourceImpl): SeriesNetworkDataSource
 }

@@ -1,6 +1,6 @@
 package com.example.worker.util
 
-import com.example.data.source.network.EpisodeRemoteDataSource
+import com.example.data.source.network.EpisodeNetworkDataSource
 import com.example.model.series.Series
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -10,9 +10,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 
-@Singleton
 class SeriesThumbnailFetcher @Inject constructor(
-    private val episodeRemoteDataSource: EpisodeRemoteDataSource
+    private val episodeNetworkDataSource: EpisodeNetworkDataSource
 ) {
     suspend operator fun invoke(list: List<Series>): List<Series> =
         withContext(Dispatchers.IO) {
@@ -27,7 +26,7 @@ class SeriesThumbnailFetcher @Inject constructor(
         }
 
     private suspend fun getThumbnailUrl(seriesId: String): String? {
-        val list = episodeRemoteDataSource.getThumbnailList(seriesId = seriesId)
+        val list = episodeNetworkDataSource.getThumbnailList(seriesId = seriesId)
         return list.firstOrNull()?.url
     }
 }

@@ -5,7 +5,7 @@ import androidx.hilt.work.HiltWorker
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
 import com.example.data.source.local.SeriesLocalDataSource
-import com.example.data.source.network.SeriesRemoteDataSource
+import com.example.data.source.network.SeriesNetworkDataSource
 import com.example.local.preference.PreferenceManager
 import com.example.worker.util.SeriesThumbnailFetcher
 import dagger.assisted.Assisted
@@ -18,7 +18,7 @@ class SeriesUpdateWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParams: WorkerParameters,
     private val seriesLocalDataSource: SeriesLocalDataSource,
-    private val seriesRemoteDataSource: SeriesRemoteDataSource,
+    private val seriesNetworkDataSource: SeriesNetworkDataSource,
     private val seriesThumbnailFetcher: SeriesThumbnailFetcher,
     private val preferenceManager: PreferenceManager
 ) : CoroutineWorker(context, workerParams) {
@@ -36,7 +36,7 @@ class SeriesUpdateWorker @AssistedInject constructor(
     }
 
     private suspend fun updateSeries(forceInit: Boolean) {
-        seriesRemoteDataSource.run {
+        seriesNetworkDataSource.run {
             val lastUpdate = if (forceInit) null else preferenceManager.getLastUpdateDate()
             val seriesList = if (forceInit) getAllSeries() else getUpdatedSeries(lastUpdate!!)
 

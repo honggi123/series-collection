@@ -6,7 +6,7 @@ import com.example.model.episode.Episode
 import com.example.model.episode.PageInfo
 import kotlinx.coroutines.flow.Flow
 
-interface EpisodeRemoteDataSource {
+interface EpisodeNetworkDataSource {
 
     fun getEpisodeListStream(seriesId: String): Flow<PagingData<Episode>>
 

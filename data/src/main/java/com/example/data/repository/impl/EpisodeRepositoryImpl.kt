@@ -1,16 +1,16 @@
 package com.example.data.repository.impl
 
 import com.example.data.repository.EpisodeRepository
-import com.example.data.source.network.EpisodeRemoteDataSource
+import com.example.data.source.network.EpisodeNetworkDataSource
 import javax.inject.Inject
 
 
 class EpisodeRepositoryImpl @Inject constructor(
-    private val episodeRemoteDataSource: EpisodeRemoteDataSource
+    private val episodeNetworkDataSource: EpisodeNetworkDataSource
 ) : EpisodeRepository {
     override fun getEpisodeListStream(seriesId: String) =
-        episodeRemoteDataSource.getEpisodeListStream(seriesId)
+        episodeNetworkDataSource.getEpisodeListStream(seriesId)
 
-    override suspend fun getPageInfo(seriesId: String) = episodeRemoteDataSource.getPageInfo(seriesId)
+    override suspend fun getPageInfo(seriesId: String) = episodeNetworkDataSource.getPageInfo(seriesId)
 
 }

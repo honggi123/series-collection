@@ -1,6 +1,6 @@
 package com.example.network.impl
 
-import com.example.data.source.network.SeriesRemoteDataSource
+import com.example.data.source.network.SeriesNetworkDataSource
 import com.example.model.series.Series
 import com.example.network.model.SeriesDTO
 import com.example.network.model.toSeries
@@ -10,8 +10,8 @@ import kotlinx.coroutines.tasks.await
 import java.util.Calendar
 import javax.inject.Inject
 
-class SeriesRemoteDataSourceImpl @Inject constructor() :
-    SeriesRemoteDataSource {
+class SeriesNetworkDataSourceImpl @Inject constructor() :
+    SeriesNetworkDataSource {
 
     private val firestore = Firebase.firestore
 

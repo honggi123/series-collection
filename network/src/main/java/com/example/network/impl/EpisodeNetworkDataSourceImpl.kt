@@ -3,7 +3,7 @@ package com.example.network.impl
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.example.data.source.network.EpisodeRemoteDataSource
+import com.example.data.source.network.EpisodeNetworkDataSource
 import com.example.model.common.Thumbnail
 import com.example.model.episode.Episode
 import com.example.model.episode.PageInfo
@@ -14,9 +14,9 @@ import com.example.network.paging.EpisodePagingSource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class EpisodeRemoteDataSourceImpl @Inject constructor(
+class EpisodeNetworkDataSourceImpl @Inject constructor(
     private val youTubeService: YoutubeService
-) : EpisodeRemoteDataSource {
+) : EpisodeNetworkDataSource {
 
     override suspend fun getPageInfo(seriesId: String): PageInfo? {
         val result = youTubeService.getYoutubePlayListItems(id = seriesId, limit = 1)

@@ -1,6 +1,6 @@
 package com.example.network.impl
 
-import com.example.data.source.network.CategoryRemoteDataSource
+import com.example.data.source.network.CategoryNetworkDataSource
 import com.example.model.category.Ad
 import com.example.model.category.Category
 import com.example.network.model.AdDto
@@ -13,8 +13,8 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class CategoryRemoteDataSourceImpl @Inject constructor() :
-    CategoryRemoteDataSource {
+class CategoryNetworkDataSourceImpl @Inject constructor() :
+    CategoryNetworkDataSource {
 
     private val firestore = Firebase.firestore
 
