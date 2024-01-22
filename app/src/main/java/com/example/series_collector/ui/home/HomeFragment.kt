@@ -30,7 +30,7 @@ class HomeFragment() : Fragment() {
             rvCategorys.adapter = adapter
 
             layoutRefresh.setOnRefreshListener(){
-                homeViewModel.updateSeries()
+//                homeViewModel.updateSeries()
                 layoutRefresh.isRefreshing = false
             }
 

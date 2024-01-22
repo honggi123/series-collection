@@ -5,8 +5,8 @@ import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
 import androidx.databinding.BindingAdapter
 import com.example.series_collector.R
-import com.example.series_collector.model.common.Tag
-import com.example.series_collector.model.common.TagType
+import com.example.model.common.Tag
+import com.example.model.common.TagType
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 
@@ -29,10 +29,10 @@ fun bindToast(view: View, msg: String?) {
 }
 
 @BindingAdapter("tags")
-fun bindTags(chipGroup: ChipGroup, tags: List<Tag>?) {
+fun bindTags(chipGroup: ChipGroup, tags: List<com.example.model.common.Tag>?) {
     tags?.forEach { tag ->
         val tagView: Chip = Chip(chipGroup.context).apply {
-            text = if (tag.type == TagType.TOTAL_PAGE) "${tag.name}화" else tag.name
+            text = if (tag.type == com.example.model.common.TagType.TOTAL_PAGE) "${tag.name}화" else tag.name
             isCheckable = false
             isCloseIconVisible = false
             setChipBackgroundColorResource(R.color.sc_gray)

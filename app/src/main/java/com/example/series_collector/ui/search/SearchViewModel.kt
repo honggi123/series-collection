@@ -2,17 +2,17 @@ package com.example.series_collector.ui.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import com.example.series_collector.data.repository.SeriesRepository
-import com.example.series_collector.model.series.GenreType
-import com.example.series_collector.model.series.Series
-import com.example.series_collector.data.repository.impl.SeriesRepositoryImpl
+import com.example.data.repository.SeriesRepository
+import com.example.model.series.GenreType
+import com.example.model.series.Series
+import com.example.data.repository.impl.SeriesRepositoryImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    seriesRepository: SeriesRepository
+    seriesRepository: com.example.data.repository.SeriesRepository
 ) : ViewModel() {
 
     private val _selectedFilter = MutableStateFlow(SearchFilterType.ALL)
@@ -38,17 +38,17 @@ class SearchViewModel @Inject constructor(
     }
 
     private fun filterSeries(
-        contents: List<Series>,
+        contents: List<com.example.model.series.Series>,
         filteringType: SearchFilterType
-    ): List<Series> {
+    ): List<com.example.model.series.Series> {
         return when (filteringType) {
             SearchFilterType.ALL -> contents.toList()
-            SearchFilterType.FICTION -> filterByGenre(contents, GenreType.FICTION)
-            SearchFilterType.TRAVEL -> filterByGenre(contents, GenreType.TRAVEL)
+            SearchFilterType.FICTION -> filterByGenre(contents, com.example.model.series.GenreType.FICTION)
+            SearchFilterType.TRAVEL -> filterByGenre(contents, com.example.model.series.GenreType.TRAVEL)
         }
     }
 
-    private fun filterByGenre(contents: List<Series>, genre: GenreType): List<Series> {
+    private fun filterByGenre(contents: List<com.example.model.series.Series>, genre: com.example.model.series.GenreType): List<com.example.model.series.Series> {
         return contents.filter { it.genreType == genre }
     }
 }

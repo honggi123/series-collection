@@ -4,11 +4,11 @@ import android.annotation.SuppressLint
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.example.series_collector.model.category.CategoryListItem
+import com.example.model.category.CategoryListItem
 import com.example.series_collector.ui.home.adapter.viewholder.BindingViewHolder
 import com.example.series_collector.ui.home.adapter.viewholder.ViewHolderGenerator
 
-class HomeListAdapter : ListAdapter<CategoryListItem, BindingViewHolder<*>>(DiffCallback()) {
+class HomeListAdapter : ListAdapter<com.example.model.category.CategoryListItem, BindingViewHolder<*>>(DiffCallback()) {
 
     override fun getItemViewType(position: Int): Int {
         val item = getItem(position)
@@ -28,7 +28,7 @@ class HomeListAdapter : ListAdapter<CategoryListItem, BindingViewHolder<*>>(Diff
 
 }
 
-class DiffCallback<T : CategoryListItem> : DiffUtil.ItemCallback<T>() {
+class DiffCallback<T : com.example.model.category.CategoryListItem> : DiffUtil.ItemCallback<T>() {
     override fun areItemsTheSame(oldItem: T, newItem: T) =
         oldItem.viewType == newItem.viewType && oldItem.getKey() == newItem.getKey()
 

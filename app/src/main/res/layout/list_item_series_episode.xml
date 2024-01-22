@@ -7,7 +7,7 @@
 
         <variable
             name="episode"
-            type="com.example.series_collector.model.episode.Episode" />
+            type="com.example.model.episode.Episode" />
     </data>
 
     <androidx.cardview.widget.CardView

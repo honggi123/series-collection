@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewbinding.ViewBinding
-import com.example.series_collector.model.category.ViewType
+import com.example.model.category.ViewType
 import com.example.series_collector.databinding.ListItemEmptyBinding
 
 object ViewHolderGenerator {
@@ -16,14 +16,14 @@ object ViewHolderGenerator {
         viewType: Int
     ): BindingViewHolder<*> {
         return when (viewType) {
-            ViewType.VIEWPAGER.ordinal -> AdViewPagerViewHolder(parent.toBinding())
-            ViewType.HORIZONTAL.ordinal -> HorizontalViewHolder(
+            com.example.model.category.ViewType.VIEWPAGER.ordinal -> AdViewPagerViewHolder(parent.toBinding())
+            com.example.model.category.ViewType.HORIZONTAL.ordinal -> HorizontalViewHolder(
                 parent.toBinding(),
                 sharedPool = horizontalViewPool
             )
 
-            ViewType.AD.ordinal -> AdViewHolder(parent.toBinding())
-            ViewType.Series.ordinal -> SeriesViewHolder(parent.toBinding())
+            com.example.model.category.ViewType.AD.ordinal -> AdViewHolder(parent.toBinding())
+            com.example.model.category.ViewType.Series.ordinal -> SeriesViewHolder(parent.toBinding())
             else -> ItemViewHolder(parent.toBinding())
         }
     }

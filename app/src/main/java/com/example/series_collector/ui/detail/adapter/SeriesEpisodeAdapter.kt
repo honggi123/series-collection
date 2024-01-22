@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.series_collector.model.episode.Episode
+import com.example.model.episode.Episode
 import com.example.series_collector.databinding.ListItemSeriesEpisodeBinding
 
-class SeriesEpisodeAdapter : PagingDataAdapter<Episode, SeriesEpisodeAdapter.SeriesEpisodeHolder>(
+class SeriesEpisodeAdapter : PagingDataAdapter<com.example.model.episode.Episode, SeriesEpisodeAdapter.SeriesEpisodeHolder>(
     SeriesEposideDiffCallback()
 ) {
 
@@ -37,7 +37,7 @@ class SeriesEpisodeAdapter : PagingDataAdapter<Episode, SeriesEpisodeAdapter.Ser
             binding.imgSeriesThumbnail.clipToOutline = true
         }
 
-        fun bind(item: Episode) {
+        fun bind(item: com.example.model.episode.Episode) {
             binding.apply {
                 episode = item
                 executePendingBindings()
@@ -46,12 +46,12 @@ class SeriesEpisodeAdapter : PagingDataAdapter<Episode, SeriesEpisodeAdapter.Ser
     }
 }
 
-private class SeriesEposideDiffCallback : DiffUtil.ItemCallback<Episode>() {
-    override fun areItemsTheSame(oldItem: Episode, newItem: Episode): Boolean {
+private class SeriesEposideDiffCallback : DiffUtil.ItemCallback<com.example.model.episode.Episode>() {
+    override fun areItemsTheSame(oldItem: com.example.model.episode.Episode, newItem: com.example.model.episode.Episode): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: Episode, newItem: Episode): Boolean {
+    override fun areContentsTheSame(oldItem: com.example.model.episode.Episode, newItem: com.example.model.episode.Episode): Boolean {
         return oldItem == newItem
     }
 }
