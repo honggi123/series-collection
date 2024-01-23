@@ -1,7 +1,11 @@
 package com.example.local.room.entity
 
-import androidx.room.*
-import java.util.*
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.Index
+import androidx.room.PrimaryKey
+import java.util.Calendar
 
 
 @Entity(
@@ -11,7 +15,7 @@ import java.util.*
     ],
     indices = [Index("series_id")]
 )
-data class FollowedSeriesEntity(
+data class FollowingSeriesEntity(
     @ColumnInfo(name = "series_id") val seriesId: String,
 
     @ColumnInfo(name = "put_date") val putDate: Calendar = Calendar.getInstance()

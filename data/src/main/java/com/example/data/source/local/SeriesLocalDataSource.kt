@@ -21,6 +21,6 @@ interface SeriesLocalDataSource {
 
     suspend fun getSeries(seriesId: String): Series
 
-    suspend fun insertSeries(series: Series)
+    suspend fun insertSeriesList(list: List<Series>)
 
 }

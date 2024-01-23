@@ -4,9 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import androidx.room.Transaction
 import com.example.local.room.entity.SeriesEntity
-import kotlinx.coroutines.flow.Flow
 import java.util.*
 
 @Dao
@@ -34,6 +32,6 @@ interface SeriesDao {
     fun isEmpty(): Boolean
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertSeries(series: SeriesEntity)
+    suspend fun insertSeriesList(list: List<SeriesEntity>)
 
 }

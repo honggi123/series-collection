@@ -8,6 +8,8 @@ class SeriesRepositoryImpl @Inject constructor(
     private val seriesLocalDataSource: SeriesLocalDataSource
 ) : SeriesRepository {
 
+    override fun isEmpty() = seriesLocalDataSource.isEmpty()
+
     override fun isFollowed(seriesId: String) = seriesLocalDataSource.isFollowed(seriesId)
 
     override fun getFollowingSeriesList() = seriesLocalDataSource.getFollowingSeriesList()

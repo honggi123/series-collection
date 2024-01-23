@@ -24,7 +24,7 @@ class DataBaseModule {
     }
 
     @Provides
-    fun provideFollowedSeriesDao(appDatabase: com.example.local.room.AppDatabase): com.example.local.room.FollowedSeriesDao {
+    fun provideFollowedSeriesDao(appDatabase: com.example.local.room.AppDatabase): com.example.local.room.FollowingSeriesDao {
         return appDatabase.followedSeriesDao()
     }
 }

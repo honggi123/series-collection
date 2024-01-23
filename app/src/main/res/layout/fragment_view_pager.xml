@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.series_collector.feature.search.SearchViewModel" />
+            type="com.example.series_collector.ui.search.SearchViewModel" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout

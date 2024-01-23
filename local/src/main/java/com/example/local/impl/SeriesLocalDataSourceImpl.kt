@@ -1,9 +1,9 @@
 package com.example.local.impl
 
 import com.example.data.source.local.SeriesLocalDataSource
-import com.example.local.room.FollowedSeriesDao
+import com.example.local.room.FollowingSeriesDao
 import com.example.local.room.SeriesDao
-import com.example.local.room.entity.FollowedSeriesEntity
+import com.example.local.room.entity.FollowingSeriesEntity
 import com.example.local.room.entity.SeriesEntity
 import com.example.local.room.entity.toSeries
 import com.example.local.room.entity.toSeriesList
@@ -16,23 +16,23 @@ import javax.inject.Inject
 
 class SeriesLocalDataSourceImpl @Inject constructor(
     private val seriesDao: SeriesDao,
-    private val followedSeriesDao: FollowedSeriesDao
+    private val followingSeriesDao: FollowingSeriesDao
 ) : SeriesLocalDataSource {
 
-    override fun isFollowed(seriesId: String) = followedSeriesDao.isFollowed(seriesId)
+    override fun isFollowed(seriesId: String) = followingSeriesDao.isFollowed(seriesId)
 
     override fun isEmpty() = seriesDao.isEmpty()
 
     override fun getFollowingSeriesList(): Flow<List<Series>> =
-        followedSeriesDao.getFollowedSeriesList().map { it.toSeriesList() }
+        followingSeriesDao.getFollowedSeriesList().map { it.toSeriesList() }
 
     override suspend fun followSeries(seriesId: String) {
-        val seriesFollowedEntity = FollowedSeriesEntity(seriesId)
-        followedSeriesDao.insertFollowedSeries(seriesFollowedEntity)
+        val seriesFollowedEntity = FollowingSeriesEntity(seriesId)
+        followingSeriesDao.insertFollowedSeries(seriesFollowedEntity)
     }
 
     override suspend fun unFollowSeries(seriesId: String) =
-        followedSeriesDao.deleteFollowedSeries(seriesId)
+        followingSeriesDao.deleteFollowedSeries(seriesId)
 
 
     override suspend fun getSeriesListByCategory(categoryId: String): List<Series> {
@@ -58,9 +58,9 @@ class SeriesLocalDataSourceImpl @Inject constructor(
         seriesDao.getSeries(seriesId).toSeries()
 
 
-    override suspend fun insertSeries(series: Series)  {
-        val seriesEntity = series.toSeriesEntity()
-        seriesDao.insertSeries(seriesEntity)
+    override suspend fun insertSeriesList(list: List<Series>)  {
+        val list = list.map { it.toSeriesEntity() }
+        seriesDao.insertSeriesList(list)
     }
 }
 
