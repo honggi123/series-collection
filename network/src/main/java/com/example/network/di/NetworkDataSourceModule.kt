@@ -1,11 +1,11 @@
 package com.example.network.di
 
-import com.example.data.source.network.CategoryNetworkDataSource
-import com.example.data.source.network.EpisodeNetworkDataSource
-import com.example.data.source.network.SeriesNetworkDataSource
-import com.example.network.impl.CategoryNetworkDataSourceImpl
-import com.example.network.impl.EpisodeNetworkDataSourceImpl
-import com.example.network.impl.SeriesNetworkDataSourceImpl
+import com.example.network.source.CategoryNetworkDataSource
+import com.example.network.source.EpisodeNetworkDataSource
+import com.example.network.source.SeriesNetworkDataSource
+import com.example.network.source.impl.CategoryNetworkDataSourceImpl
+import com.example.network.source.impl.EpisodeNetworkDataSourceImpl
+import com.example.network.source.impl.SeriesNetworkDataSourceImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

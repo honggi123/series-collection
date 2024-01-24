@@ -11,6 +11,11 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.data.repository.EpisodeRepository
 import com.example.data.repository.SeriesRepository
+import com.example.model.episode.Episode
+import com.example.model.episode.PageInfo
+import com.example.model.series.Series
+import com.example.model.series.Tag
+import com.example.model.series.TagType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -28,11 +33,11 @@ class DetailViewModel @Inject constructor(
 
     val isFollowed = seriesRepository.isFollowed(seriesId).asLiveData()
 
-    private var _tags = MutableLiveData<List<com.example.model.common.Tag>>()
-    val tags: LiveData<List<com.example.model.common.Tag>> = _tags
+    private var _tags = MutableLiveData<List<Tag>>()
+    val tags: LiveData<List<Tag>> = _tags
 
-    private var _series = MutableLiveData<com.example.model.series.Series?>()
-    val series: LiveData<com.example.model.series.Series?> = _series
+    private var _series = MutableLiveData<Series?>()
+    val series: LiveData<Series?> = _series
 
     private var _errorMsg = MutableLiveData<String?>()
     val errorMsg: LiveData<String?> = _errorMsg
@@ -52,19 +57,25 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    private suspend fun getPageInfo(): com.example.model.episode.PageInfo? {
+    private suspend fun getPageInfo(): PageInfo? {
         return episodeRepository.getPageInfo(seriesId)
     }
 
-    private fun getTagsBySeriesInfo(series: com.example.model.series.Series, pageInfo: com.example.model.episode.PageInfo?): List<com.example.model.common.Tag> {
+    private fun getTagsBySeriesInfo(
+        series: Series,
+        pageInfo: PageInfo?
+    ): List<Tag> {
         return listOf(
-            com.example.model.common.Tag(
-                com.example.model.common.TagType.GENRE,
+            Tag(
+                TagType.GENRE,
                 series?.genreType?.displayName
             ),
-            com.example.model.common.Tag(com.example.model.common.TagType.CHANNEL, series?.channel),
-            com.example.model.common.Tag(
-                com.example.model.common.TagType.TOTAL_PAGE,
+            Tag(
+                TagType.CHANNEL,
+                series?.channel
+            ),
+            Tag(
+                TagType.TOTAL_PAGE,
                 pageInfo?.totalResults.toString()
             )
         )
@@ -79,7 +90,7 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    fun searchEpisodeList(seriesId: String): Flow<PagingData<com.example.model.episode.Episode>> {
+    fun searchEpisodeList(seriesId: String): Flow<PagingData<Episode>> {
         return episodeRepository.getEpisodeListStream(seriesId = seriesId)
             .cachedIn(viewModelScope)
     }

@@ -4,8 +4,8 @@
 //import androidx.hilt.work.HiltWorker
 //import androidx.work.CoroutineWorker
 //import androidx.work.WorkerParameters
-//import com.example.data.source.local.SeriesLocalDataSource
-//import com.example.data.source.network.SeriesNetworkDataSource
+//import com.example.local.source.SeriesLocalDataSource
+//import com.example.network.source.SeriesNetworkDataSource
 //import com.example.worker.util.SeriesThumbnailFetcher
 //import dagger.assisted.Assisted
 //import dagger.assisted.AssistedInject

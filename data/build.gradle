@@ -30,6 +30,8 @@ android {
 }
 
 dependencies {
+    implementation project(":local")
+    implementation project(":network")
     implementation project(":model")
 
     kapt "com.google.dagger:hilt-android-compiler:$rootProject.hiltVersion"
@@ -37,6 +39,8 @@ dependencies {
 
     implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
     implementation "androidx.paging:paging-runtime-ktx:$rootProject.pagingVersion"
+    implementation platform("com.google.firebase:firebase-bom:$fireBaseVersion")
+    implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation platform('org.jetbrains.kotlin:kotlin-bom:1.8.0')
     implementation 'androidx.appcompat:appcompat:1.6.1'

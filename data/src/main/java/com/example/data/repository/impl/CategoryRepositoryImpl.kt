@@ -1,13 +1,15 @@
 package com.example.data.repository.impl
 
+import com.example.data.model.toAd
 import com.example.data.repository.CategoryRepository
-import com.example.data.source.local.SeriesLocalDataSource
-import com.example.data.source.network.CategoryNetworkDataSource
+import com.example.local.room.entity.toSeriesList
+import com.example.local.source.SeriesLocalDataSource
 import com.example.model.category.CategoryListItem
 import com.example.model.category.Empty
 import com.example.model.category.Horizontal
 import com.example.model.category.ViewPager
 import com.example.model.category.ViewType
+import com.example.network.source.CategoryNetworkDataSource
 import javax.inject.Inject
 
 class CategoryRepositoryImpl @Inject constructor(
@@ -21,12 +23,12 @@ class CategoryRepositoryImpl @Inject constructor(
                 ViewType.HORIZONTAL.name -> {
                     Horizontal(
                         title = it.title,
-                        items = seriesLocalDataSource.getSeriesListByCategory(it.id)
+                        items = seriesLocalDataSource.getSeriesListByCategory(it.categoryId).toSeriesList()
                     )
                 }
 
                 ViewType.VIEWPAGER.name -> {
-                    ViewPager(items = categoryNetworkDataSource.getAdList())
+                    ViewPager(items = categoryNetworkDataSource.getAdList().map { it.toAd() })
                 }
 
                 else -> Empty()

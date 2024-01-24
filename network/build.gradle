@@ -32,7 +32,6 @@ android {
 }
 
 dependencies {
-    implementation project(":data")
     implementation project(":model")
 
     kapt "com.google.dagger:hilt-android-compiler:$rootProject.hiltVersion"

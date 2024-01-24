@@ -2,12 +2,15 @@ package com.example.data.repository
 
 import com.example.model.series.Series
 import kotlinx.coroutines.flow.Flow
+import java.util.Calendar
 
 interface SeriesRepository {
 
     fun isEmpty(): Boolean
 
     fun isFollowed(seriesId: String): Flow<Boolean>
+
+    fun getLastUpdateDate(): Calendar?
 
     fun getFollowingSeriesList(): Flow<List<Series>>
 

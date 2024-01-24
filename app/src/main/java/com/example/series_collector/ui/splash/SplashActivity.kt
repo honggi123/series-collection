@@ -18,7 +18,10 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_splash)
-        startMainActivity()
+
+        splashViewModel.isLoading.observe(this) { isFinish ->
+            if (isFinish) startMainActivity()
+        }
     }
 
     private fun startMainActivity() {

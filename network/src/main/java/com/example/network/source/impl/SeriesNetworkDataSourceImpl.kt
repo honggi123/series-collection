@@ -1,9 +1,7 @@
-package com.example.network.impl
+package com.example.network.source.impl
 
-import com.example.data.source.network.SeriesNetworkDataSource
-import com.example.model.series.Series
-import com.example.network.model.SeriesDTO
-import com.example.network.model.toSeries
+import com.example.network.model.NetworkSeries
+import com.example.network.source.SeriesNetworkDataSource
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.tasks.await
@@ -15,18 +13,16 @@ class SeriesNetworkDataSourceImpl @Inject constructor() :
 
     private val firestore = Firebase.firestore
 
-    override suspend fun getAllSeries(): List<Series> =
+    override suspend fun getAllSeries(): List<NetworkSeries> =
         collection("Series")
             .get()
-            .await().toObjects(SeriesDTO::class.java)
-            .map { it.toSeries() }
+            .await().toObjects(NetworkSeries::class.java)
 
-    override suspend fun getUpdatedSeries(lastUpdate: Calendar): List<Series> =
+    override suspend fun getUpdatedSeries(lastUpdate: Calendar): List<NetworkSeries> =
         collection("Series")
             .whereGreaterThanOrEqualTo("updatedAt", lastUpdate.time)
             .get()
-            .await().toObjects(SeriesDTO::class.java)
-            .map { it.toSeries() }
+            .await().toObjects(NetworkSeries::class.java)
 
     private fun collection(path: String) = firestore.collection(path)
 }

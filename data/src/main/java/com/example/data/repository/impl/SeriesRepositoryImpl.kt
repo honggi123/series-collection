@@ -1,7 +1,10 @@
 package com.example.data.repository.impl
 
 import com.example.data.repository.SeriesRepository
-import com.example.data.source.local.SeriesLocalDataSource
+import com.example.local.room.entity.toSeries
+import com.example.local.room.entity.toSeriesList
+import com.example.local.source.SeriesLocalDataSource
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class SeriesRepositoryImpl @Inject constructor(
@@ -12,15 +15,22 @@ class SeriesRepositoryImpl @Inject constructor(
 
     override fun isFollowed(seriesId: String) = seriesLocalDataSource.isFollowed(seriesId)
 
-    override fun getFollowingSeriesList() = seriesLocalDataSource.getFollowingSeriesList()
+    override fun getLastUpdateDate() = seriesLocalDataSource.getLastUpdateDate()
 
-    override suspend fun followSeries(seriesId: String) = seriesLocalDataSource.followSeries(seriesId)
+    override fun getFollowingSeriesList() =
+        seriesLocalDataSource.getFollowingSeriesList().map { it.toSeriesList() }
 
-    override suspend fun unFollowSeries(seriesId: String) = seriesLocalDataSource.unFollowSeries(seriesId)
+    override suspend fun followSeries(seriesId: String) =
+        seriesLocalDataSource.followSeries(seriesId)
 
-    override suspend fun searchBySeriesName(query: String) = seriesLocalDataSource.searchBySeriesName(query)
+    override suspend fun unFollowSeries(seriesId: String) =
+        seriesLocalDataSource.unFollowSeries(seriesId)
 
-    override suspend fun getSeries(seriesId: String) = seriesLocalDataSource.getSeries(seriesId)
+    override suspend fun searchBySeriesName(query: String) =
+        seriesLocalDataSource.searchBySeriesName(query).map { it.toSeries() }
+
+    override suspend fun getSeries(seriesId: String) =
+        seriesLocalDataSource.getSeries(seriesId).toSeries()
 
 }
 
