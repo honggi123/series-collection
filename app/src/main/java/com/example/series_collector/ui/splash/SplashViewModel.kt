@@ -3,19 +3,20 @@ package com.example.series_collector.ui.splash
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import androidx.work.WorkInfo
+import androidx.work.WorkManager
 import com.example.data.repository.SeriesRepository
-import com.example.worker.SeriesWorkerManager
+import com.example.worker.SetupSeriesWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
     private val seriesRepository: SeriesRepository,
-    private val seriesWorkerManager: SeriesWorkerManager
+    private val workManager: WorkManager
 ) : ViewModel() {
 
     private val _isLoading = MutableLiveData<Boolean>()
@@ -30,47 +31,21 @@ class SplashViewModel @Inject constructor(
     }
 
     private fun setUpSeries() {
-        executeWorker(
-            workerOperation = { seriesWorkerManager.setUpSeries() },
-            onSuccess = {
-                _isLoading.value = false
-            },
-            onFailure = {
-                _isLoading.value = false
+        val workerRequest = SetupSeriesWorker.enqueue(workManager)
+        val workInfo = workManager.getWorkInfoByIdLiveData(workerRequest.id).asFlow()
+        viewModelScope.launch {
+            workInfo.collect {
+                if (it.state == WorkInfo.State.SUCCEEDED) {
+                    _isLoading.value = false
+                } else if (it.state == WorkInfo.State.FAILED) {
+                    _isLoading.value = false
+                }
             }
-        )
+        }
     }
 
     private fun updateSeries() {
-        val updateDate = seriesRepository.getLastUpdateDate()
-
-        executeWorker(
-            workerOperation = { seriesWorkerManager.updateSeries(updateDate) },
-            onSuccess = {
-                // TODO save update date
-                _isLoading.value = false
-            },
-            onFailure = {
-                _isLoading.value = false
-            }
-        )
+        TODO()
     }
 
-    private fun executeWorker(
-        workerOperation: () -> Flow<WorkInfo>,
-        onSuccess: () -> Unit = {},
-        onFailure: () -> Unit = {}
-    ) {
-        viewModelScope.launch {
-            _isLoading.value = true
-            workerOperation()
-                .collect {
-                    if (it.state == WorkInfo.State.SUCCEEDED) {
-                        onSuccess()
-                    } else if (it.state == WorkInfo.State.FAILED) {
-                        onFailure()
-                    }
-                }
-        }
-    }
 }

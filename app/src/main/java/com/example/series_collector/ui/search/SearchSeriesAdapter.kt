@@ -5,9 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.model.series.Series
 import com.example.series_collector.databinding.ListItemSearchSeriesBinding
 
-class SearchSeriesAdapter : ListAdapter<com.example.model.series.Series, RecyclerView.ViewHolder>(SearchSeriesDiffCallback()) {
+class SearchSeriesAdapter : ListAdapter<Series, RecyclerView.ViewHolder>(SearchSeriesDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return SearchSeriesViewHolder(

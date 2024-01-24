@@ -1,17 +1,22 @@
 package com.example.worker.di
 
-import com.example.worker.SeriesWorkerManager
-import com.example.worker.SeriesWorkerManagerImpl
-import dagger.Binds
+
+import android.content.Context
+import androidx.work.WorkManager
 import dagger.Module
+import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-abstract class WorkerModule {
+class WorkerModule {
 
-    @Binds
-    abstract fun bindSeriesWorkerManager(impl: SeriesWorkerManagerImpl): SeriesWorkerManager
-
+    @Provides
+    @Singleton
+    fun provideWorkManager(@ApplicationContext context: Context): WorkManager {
+        return WorkManager.getInstance(context)
+    }
 }
