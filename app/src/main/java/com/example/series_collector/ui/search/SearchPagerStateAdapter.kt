@@ -1,10 +1,7 @@
 package com.example.series_collector.ui.search
 
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.example.series_collector.ui.search.SearchFilterType
-import com.example.series_collector.ui.search.SearchFragment
 
 class SearchPagerStateAdapter(
     fragment: Fragment,

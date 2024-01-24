@@ -15,7 +15,7 @@
 
         <variable
             name="item"
-            type="com.example.series_collector.model.category.Ad" />
+            type="com.example.model.category.Ad" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -2,12 +2,14 @@ package com.example.series_collector.ui.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import com.example.series_collector.data.repository.SeriesRepository
-import com.example.series_collector.model.series.GenreType
-import com.example.series_collector.model.series.Series
-import com.example.series_collector.data.repository.impl.SeriesRepositoryImpl
+import com.example.data.repository.SeriesRepository
+import com.example.model.series.GenreType
+import com.example.model.series.Series
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.mapLatest
 import javax.inject.Inject
 
 @HiltViewModel

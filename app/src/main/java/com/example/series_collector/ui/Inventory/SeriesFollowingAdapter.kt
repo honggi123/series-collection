@@ -5,12 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.series_collector.model.series.Series
 import com.example.series_collector.databinding.ListItemInventorySeriesBinding
 
 class SeriesFollowingAdapter(
     private val inventoryItemCallback: InventoryItemCallback
-) : ListAdapter<Series, RecyclerView.ViewHolder>(SeriesFollowedDiffCallback()) {
+) : ListAdapter<com.example.model.series.Series, RecyclerView.ViewHolder>(SeriesFollowedDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return SeriesFollowingViewHolder(
@@ -44,15 +43,15 @@ class SeriesFollowingAdapter(
             }
         }
 
-        private fun openDetail(series: Series) {
+        private fun openDetail(series: com.example.model.series.Series) {
             inventoryItemCallback.openSeriesDetail(seriesId = series.id)
         }
 
-        private fun deleteSeries(series: Series) {
+        private fun deleteSeries(series: com.example.model.series.Series) {
             inventoryItemCallback.deleteItem(series.id)
         }
 
-        fun bind(item: Series) {
+        fun bind(item: com.example.model.series.Series) {
             binding.apply {
                 binding.series = item
                 executePendingBindings()
@@ -61,13 +60,13 @@ class SeriesFollowingAdapter(
     }
 }
 
-private class SeriesFollowedDiffCallback : DiffUtil.ItemCallback<Series>() {
+private class SeriesFollowedDiffCallback : DiffUtil.ItemCallback<com.example.model.series.Series>() {
 
-    override fun areItemsTheSame(oldItem: Series, newItem: Series): Boolean {
+    override fun areItemsTheSame(oldItem: com.example.model.series.Series, newItem: com.example.model.series.Series): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: Series, newItem: Series): Boolean {
+    override fun areContentsTheSame(oldItem: com.example.model.series.Series, newItem: com.example.model.series.Series): Boolean {
         return oldItem == newItem
     }
 }

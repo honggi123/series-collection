@@ -1,18 +1,23 @@
 package com.example.series_collector.ui.detail
 
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.example.series_collector.data.repository.EpisodeRepository
-import com.example.series_collector.data.repository.SeriesRepository
-import com.example.series_collector.model.series.Series
-import com.example.series_collector.model.common.Tag
-import com.example.series_collector.model.common.TagType
-import com.example.series_collector.model.episode.Episode
-import com.example.series_collector.model.episode.PageInfo
+import com.example.data.repository.EpisodeRepository
+import com.example.data.repository.SeriesRepository
+import com.example.model.episode.Episode
+import com.example.model.episode.PageInfo
+import com.example.model.series.Series
+import com.example.model.series.Tag
+import com.example.model.series.TagType
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -56,11 +61,23 @@ class DetailViewModel @Inject constructor(
         return episodeRepository.getPageInfo(seriesId)
     }
 
-    private fun getTagsBySeriesInfo(series: Series, pageInfo: PageInfo?): List<Tag> {
+    private fun getTagsBySeriesInfo(
+        series: Series,
+        pageInfo: PageInfo?
+    ): List<Tag> {
         return listOf(
-            Tag(TagType.GENRE, series?.genreType?.displayName),
-            Tag(TagType.CHANNEL, series?.channel),
-            Tag(TagType.TOTAL_PAGE, pageInfo?.totalResults.toString())
+            Tag(
+                TagType.GENRE,
+                series?.genreType?.displayName
+            ),
+            Tag(
+                TagType.CHANNEL,
+                series?.channel
+            ),
+            Tag(
+                TagType.TOTAL_PAGE,
+                pageInfo?.totalResults.toString()
+            )
         )
     }
 

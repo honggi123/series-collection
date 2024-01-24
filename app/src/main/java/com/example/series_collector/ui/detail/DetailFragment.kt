@@ -13,7 +13,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.series_collector.R
 import com.example.series_collector.databinding.FragmentDetailSeriesBinding
-import com.example.series_collector.ui.detail.adapter.SeriesEpisodeAdapter
+import com.example.series_collector.ui.detail.DetailFragment.Callback
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -41,9 +41,10 @@ class DetailFragment : Fragment() {
 
             callback = Callback { isFollowed ->
                 detailViewModel.toggleSeriesFollow(isFollowed)
-                val toggleMsg =
-                    if (isFollowed) R.string.removed_series_from_inventory else R.string.added_series_to_inventory
-                Snackbar.make(root, toggleMsg, Snackbar.LENGTH_LONG)
+                val message =
+                    if (isFollowed) R.string.removed_series_from_inventory
+                    else R.string.added_series_to_inventory
+                Snackbar.make(root, message, Snackbar.LENGTH_LONG)
                     .show()
             }
 

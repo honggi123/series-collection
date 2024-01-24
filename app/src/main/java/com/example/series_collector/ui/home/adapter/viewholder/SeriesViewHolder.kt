@@ -2,7 +2,7 @@ package com.example.series_collector.ui.home.adapter.viewholder
 
 import android.view.View
 import androidx.navigation.findNavController
-import com.example.series_collector.model.series.Series
+import com.example.model.series.Series
 import com.example.series_collector.databinding.ListItemHomeSeriesBinding
 import com.example.series_collector.ui.home.HomeFragmentDirections
 

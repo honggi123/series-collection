@@ -5,10 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.series_collector.model.series.Series
 import com.example.series_collector.databinding.ListItemSearchSeriesBinding
 
-class SearchSeriesAdapter : ListAdapter<Series, RecyclerView.ViewHolder>(SearchSeriesDiffCallback()) {
+class SearchSeriesAdapter : ListAdapter<com.example.model.series.Series, RecyclerView.ViewHolder>(SearchSeriesDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return SearchSeriesViewHolder(
@@ -35,7 +34,7 @@ class SearchSeriesAdapter : ListAdapter<Series, RecyclerView.ViewHolder>(SearchS
             }
         }
 
-        fun bind(item: Series) {
+        fun bind(item: com.example.model.series.Series) {
             binding.apply {
                 binding.series = item
                 executePendingBindings()
@@ -44,13 +43,13 @@ class SearchSeriesAdapter : ListAdapter<Series, RecyclerView.ViewHolder>(SearchS
     }
 }
 
-private class SearchSeriesDiffCallback : DiffUtil.ItemCallback<Series>() {
+private class SearchSeriesDiffCallback : DiffUtil.ItemCallback<com.example.model.series.Series>() {
 
-    override fun areItemsTheSame(oldItem: Series, newItem: Series): Boolean {
+    override fun areItemsTheSame(oldItem: com.example.model.series.Series, newItem: com.example.model.series.Series): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: Series, newItem: Series): Boolean {
+    override fun areContentsTheSame(oldItem: com.example.model.series.Series, newItem: com.example.model.series.Series): Boolean {
         return oldItem == newItem
     }
 }

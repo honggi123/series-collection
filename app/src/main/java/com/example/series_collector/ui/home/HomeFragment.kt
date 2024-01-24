@@ -29,11 +29,6 @@ class HomeFragment() : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             rvCategorys.adapter = adapter
 
-            layoutRefresh.setOnRefreshListener(){
-                homeViewModel.updateSeries()
-                layoutRefresh.isRefreshing = false
-            }
-
             subscribeUi(adapter)
         }
 
@@ -41,7 +36,7 @@ class HomeFragment() : Fragment() {
     }
 
     private fun subscribeUi(adapter: HomeListAdapter) {
-        homeViewModel.categoryContents.observe(viewLifecycleOwner) { contents ->
+        homeViewModel.contents.observe(viewLifecycleOwner) { contents ->
             adapter.submitList(contents)
         }
     }
