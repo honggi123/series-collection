@@ -11,6 +11,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.data.repository.EpisodeRepository
 import com.example.data.repository.SeriesRepository
+import com.example.data.repository.UserRepository
 import com.example.model.episode.Episode
 import com.example.model.episode.PageInfo
 import com.example.model.series.Series
@@ -26,12 +27,13 @@ import javax.inject.Inject
 class DetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val seriesRepository: SeriesRepository,
-    private val episodeRepository: EpisodeRepository
+    private val episodeRepository: EpisodeRepository,
+    private val userRepository: UserRepository
 ) : ViewModel() {
 
     val seriesId: String = savedStateHandle.get<String>(SERIES_ID_SAVED_STATE_KEY)!!
 
-    val isFollowed = seriesRepository.isFollowed(seriesId).asLiveData()
+    val isFollowed = userRepository.isFollowed(seriesId).asLiveData()
 
     private var _tags = MutableLiveData<List<Tag>>()
     val tags: LiveData<List<Tag>> = _tags
@@ -83,9 +85,9 @@ class DetailViewModel @Inject constructor(
 
     fun toggleSeriesFollow(isFollowed: Boolean) {
         viewModelScope.launch {
-            seriesRepository.run {
-                if (isFollowed) unFollowSeries(seriesId)
-                else followSeries(seriesId)
+            userRepository.run {
+                if (isFollowed) setSeriesUnFollowed(seriesId)
+                else setSeriesFollowed(seriesId)
             }
         }
     }

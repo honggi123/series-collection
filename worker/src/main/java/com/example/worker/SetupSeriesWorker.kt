@@ -10,7 +10,7 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import com.example.data.model.toSeries
 import com.example.data.model.toSeriesEntity
-import com.example.local.source.SeriesLocalDataSource
+import com.example.local.dao.SeriesDao
 import com.example.network.source.SeriesNetworkDataSource
 import com.example.worker.util.SeriesThumbnailFetcher
 import dagger.assisted.Assisted
@@ -21,7 +21,7 @@ import kotlinx.coroutines.supervisorScope
 class SetupSeriesWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParams: WorkerParameters,
-    private val seriesLocalDataSource: SeriesLocalDataSource,
+    private val seriesDao: SeriesDao,
     private val seriesNetworkDataSource: SeriesNetworkDataSource,
     private val seriesThumbnailFetcher: SeriesThumbnailFetcher,
 ) : CoroutineWorker(context, workerParams) {
@@ -32,7 +32,7 @@ class SetupSeriesWorker @AssistedInject constructor(
             val seriesEntitiesWithThumbnails = seriesThumbnailFetcher(allSeries)
                 .map { it.toSeriesEntity() }
 
-            seriesLocalDataSource.insertSeriesList(seriesEntitiesWithThumbnails)
+            seriesDao.insertSeriesList(seriesEntitiesWithThumbnails)
             Result.success()
         } catch (ex: Exception) {
             Result.failure()

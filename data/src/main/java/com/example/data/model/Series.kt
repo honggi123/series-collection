@@ -1,6 +1,6 @@
 package com.example.data.model
 
-import com.example.local.room.entity.SeriesEntity
+import com.example.local.entity.SeriesEntity
 import com.example.model.series.Series
 import com.example.network.model.NetworkSeries
 import java.util.Calendar

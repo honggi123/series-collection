@@ -2,9 +2,11 @@ package com.example.data.repository.impl
 
 import com.example.data.model.toAd
 import com.example.data.repository.CategoryRepository
-import com.example.local.room.entity.toSeriesList
-import com.example.local.source.SeriesLocalDataSource
+import com.example.local.dao.SeriesDao
+import com.example.local.entity.SeriesEntity
+import com.example.local.entity.toSeriesList
 import com.example.model.category.CategoryListItem
+import com.example.model.category.CategoryType
 import com.example.model.category.Empty
 import com.example.model.category.Horizontal
 import com.example.model.category.ViewPager
@@ -14,7 +16,7 @@ import javax.inject.Inject
 
 class CategoryRepositoryImpl @Inject constructor(
     private val categoryNetworkDataSource: CategoryNetworkDataSource,
-    private val seriesLocalDataSource: SeriesLocalDataSource
+    private val seriesDao: SeriesDao,
 ) : CategoryRepository {
 
     override suspend fun getCategoryContents(): List<CategoryListItem> {
@@ -23,7 +25,7 @@ class CategoryRepositoryImpl @Inject constructor(
                 ViewType.HORIZONTAL.name -> {
                     Horizontal(
                         title = it.title,
-                        items = seriesLocalDataSource.getSeriesListByCategory(it.categoryId).toSeriesList()
+                        items = getSeriesListByCategory(it.categoryId).toSeriesList()
                     )
                 }
 
@@ -32,6 +34,19 @@ class CategoryRepositoryImpl @Inject constructor(
                 }
 
                 else -> Empty()
+            }
+        }
+    }
+
+    suspend fun getSeriesListByCategory(categoryId: String): List<SeriesEntity> {
+        val categoryType: CategoryType = CategoryType.find(categoryId) ?: return emptyList()
+
+        return seriesDao.run {
+            when (categoryType) {
+                CategoryType.RECENT -> getRecentSeries(limit = 8)
+                CategoryType.POPULAR -> getPopularSeries(limit = 8)
+                CategoryType.FICTION -> getFictionSeries(limit = 16)
+                CategoryType.TRAVEL -> getTravelSeries(limit = 16)
             }
         }
     }

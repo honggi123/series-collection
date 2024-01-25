@@ -7,7 +7,7 @@ import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
-import com.example.data.repository.SeriesRepository
+import com.example.data.repository.UserRepository
 import com.example.worker.SetupSeriesWorker
 import com.example.worker.UpdateSeriesWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
-    private val seriesRepository: SeriesRepository,
+    private val userRepository: UserRepository,
     private val workManager: WorkManager
 ) : ViewModel() {
 
@@ -26,7 +26,7 @@ class SplashViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            if (seriesRepository.isEmpty()) {
+            if (userRepository.isEmpty()) {
                 setUpSeries()
             } else {
                 updateSeries()
@@ -40,7 +40,7 @@ class SplashViewModel @Inject constructor(
             val workInfo = workManager.getWorkInfoByIdLiveData(workerRequest.id).asFlow()
             workInfo.collect {
                 if (it.state == WorkInfo.State.SUCCEEDED) {
-                    seriesRepository.lastUpdateDate(Calendar.getInstance())
+                    userRepository.updateLastUpdateDate(Calendar.getInstance())
                     _isLoading.value = false
                 } else if (it.state == WorkInfo.State.FAILED) {
                     _isLoading.value = false
@@ -51,12 +51,12 @@ class SplashViewModel @Inject constructor(
 
     private fun updateSeries() {
         viewModelScope.launch {
-            val updateDate = seriesRepository.getLastUpdateDate()
+            val updateDate = userRepository.getLastUpdateDate()
             val workerRequest = UpdateSeriesWorker.enqueue(workManager, updateDate!!)
             val workInfo = workManager.getWorkInfoByIdLiveData(workerRequest.id).asFlow()
             workInfo.collect {
                 if (it.state == WorkInfo.State.SUCCEEDED) {
-                    seriesRepository.lastUpdateDate(Calendar.getInstance())
+                    userRepository.updateLastUpdateDate(Calendar.getInstance())
                     _isLoading.value = false
                 } else if (it.state == WorkInfo.State.FAILED) {
                     _isLoading.value = false
