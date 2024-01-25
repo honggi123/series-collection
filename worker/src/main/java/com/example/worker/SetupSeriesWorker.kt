@@ -17,7 +17,6 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.supervisorScope
 
-// TODO
 @HiltWorker
 class SetupSeriesWorker @AssistedInject constructor(
     @Assisted context: Context,

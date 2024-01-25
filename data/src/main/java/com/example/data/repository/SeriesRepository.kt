@@ -6,13 +6,16 @@ import java.util.Calendar
 
 interface SeriesRepository {
 
-    fun isEmpty(): Boolean
 
     fun isFollowed(seriesId: String): Flow<Boolean>
 
     fun getLastUpdateDate(): Calendar?
 
+    fun updatelastUpdateDate(date: Calendar)
+
     fun getFollowingSeriesList(): Flow<List<Series>>
+
+    suspend fun isEmpty(): Boolean
 
     suspend fun getSeries(seriesId: String): Series
 

@@ -9,8 +9,10 @@ import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.example.data.repository.SeriesRepository
 import com.example.worker.SetupSeriesWorker
+import com.example.worker.UpdateSeriesWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.util.Calendar
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,19 +25,22 @@ class SplashViewModel @Inject constructor(
     val isLoading: LiveData<Boolean> = _isLoading
 
     init {
-        if (seriesRepository.isEmpty()) {
-            setUpSeries()
-        } else {
-            updateSeries()
+        viewModelScope.launch {
+            if (seriesRepository.isEmpty()) {
+                setUpSeries()
+            } else {
+                updateSeries()
+            }
         }
     }
 
     private fun setUpSeries() {
-        val workerRequest = SetupSeriesWorker.enqueue(workManager)
-        val workInfo = workManager.getWorkInfoByIdLiveData(workerRequest.id).asFlow()
         viewModelScope.launch {
+            val workerRequest = SetupSeriesWorker.enqueue(workManager)
+            val workInfo = workManager.getWorkInfoByIdLiveData(workerRequest.id).asFlow()
             workInfo.collect {
                 if (it.state == WorkInfo.State.SUCCEEDED) {
+                    seriesRepository.lastUpdateDate(Calendar.getInstance())
                     _isLoading.value = false
                 } else if (it.state == WorkInfo.State.FAILED) {
                     _isLoading.value = false
@@ -45,7 +50,19 @@ class SplashViewModel @Inject constructor(
     }
 
     private fun updateSeries() {
-        TODO()
+        viewModelScope.launch {
+            val updateDate = seriesRepository.getLastUpdateDate()
+            val workerRequest = UpdateSeriesWorker.enqueue(workManager, updateDate!!)
+            val workInfo = workManager.getWorkInfoByIdLiveData(workerRequest.id).asFlow()
+            workInfo.collect {
+                if (it.state == WorkInfo.State.SUCCEEDED) {
+                    seriesRepository.lastUpdateDate(Calendar.getInstance())
+                    _isLoading.value = false
+                } else if (it.state == WorkInfo.State.FAILED) {
+                    _isLoading.value = false
+                }
+            }
+        }
     }
 
 }

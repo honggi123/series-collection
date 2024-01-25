@@ -61,6 +61,7 @@ dependencies {
 
     implementation 'androidx.hilt:hilt-work:1.0.0'
     implementation "androidx.startup:startup-runtime:1.0.0-alpha01"
+    implementation 'com.airbnb.android:lottie:5.0.2'
 
     //test
     testImplementation 'junit:junit:4.13.2'

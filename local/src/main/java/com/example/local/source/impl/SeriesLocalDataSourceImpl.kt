@@ -8,6 +8,7 @@ import com.example.local.room.entity.SeriesEntity
 import com.example.local.source.SeriesLocalDataSource
 import com.example.model.category.CategoryType
 import kotlinx.coroutines.flow.Flow
+import java.util.Calendar
 import javax.inject.Inject
 
 class SeriesLocalDataSourceImpl @Inject constructor(
@@ -20,10 +21,12 @@ class SeriesLocalDataSourceImpl @Inject constructor(
 
     override fun getLastUpdateDate() = preferenceManager.getLastUpdateDate()
 
-    override fun isEmpty() = seriesDao.isEmpty()
+    override fun setLastUpdateDate(date: Calendar) = preferenceManager.putLastUpdateDate(date)
 
     override fun getFollowingSeriesList(): Flow<List<SeriesEntity>> =
         followingSeriesDao.getFollowingSeriesList()
+
+    override suspend fun isEmpty() = seriesDao.isEmpty()
 
     override suspend fun followSeries(seriesId: String) {
         val seriesFollowedEntity = FollowingSeriesEntity(seriesId)

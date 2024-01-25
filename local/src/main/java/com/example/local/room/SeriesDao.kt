@@ -29,7 +29,7 @@ interface SeriesDao {
     suspend fun getTravelSeries(limit: Int): List<SeriesEntity>
 
     @Query("SELECT (SELECT COUNT(*) FROM Series) == 0")
-    fun isEmpty(): Boolean
+    suspend fun isEmpty(): Boolean
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertSeriesList(list: List<SeriesEntity>)

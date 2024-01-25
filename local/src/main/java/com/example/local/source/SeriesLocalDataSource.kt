@@ -6,13 +6,15 @@ import java.util.Calendar
 
 interface SeriesLocalDataSource {
 
-    fun isEmpty(): Boolean
-
     fun isFollowed(seriesId: String): Flow<Boolean>
 
     fun getLastUpdateDate(): Calendar?
 
+    fun setLastUpdateDate(date: Calendar)
+
     fun getFollowingSeriesList(): Flow<List<SeriesEntity>>
+
+    suspend fun isEmpty(): Boolean
 
     suspend fun followSeries(seriesId: String)
 
