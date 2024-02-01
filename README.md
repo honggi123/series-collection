@@ -30,10 +30,9 @@
 - 로딩 시간을 줄이기 위한 로컬 캐싱
 - 네트워크 연결이 안 되는 오프라인 상황에서 지원
 - 중첩 리사이클러의 뷰풀 공유를 통한 성능 개선 <br>
-- 다수의 이미지 URL을 가져오기 코루틴 병렬 실행과 오류 핸들 
-- NestedScrollView에 리사이클러뷰 구현시 뷰 재활용 문제 해결 <br>
-- 카테고리를 추가하는 상황에서의 유지보수성 향상 <br>
+- 다수의 이미지 URL을 가져오기 코루틴 병렬 실행과 SupervisorScope 오류 핸들 
 
+## Database
 - Local : Room db
 - Remote : Firebase FireStore
 
