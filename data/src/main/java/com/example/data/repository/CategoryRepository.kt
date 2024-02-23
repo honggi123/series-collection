@@ -1,9 +1,10 @@
 package com.example.data.repository
 
 import com.example.model.category.CategoryListItem
+import kotlinx.coroutines.flow.Flow
 
 interface CategoryRepository {
 
-    suspend fun getCategoryContents(): List<CategoryListItem>
+    fun getCategoryContents(): Flow<List<CategoryListItem>>
 
 }

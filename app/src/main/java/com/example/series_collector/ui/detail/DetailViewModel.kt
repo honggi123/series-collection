@@ -18,6 +18,7 @@ import com.example.model.series.Series
 import com.example.model.series.Tag
 import com.example.model.series.TagType
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -31,9 +32,7 @@ class DetailViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : ViewModel() {
 
-    val seriesId: String = savedStateHandle.get<String>(SERIES_ID_SAVED_STATE_KEY)!!
-
-    val isFollowed = userRepository.isFollowed(seriesId).asLiveData()
+    private val seriesId: String = savedStateHandle.get<String>(SERIES_ID_SAVED_STATE_KEY)!!
 
     private var _tags = MutableLiveData<List<Tag>>()
     val tags: LiveData<List<Tag>> = _tags
@@ -44,44 +43,29 @@ class DetailViewModel @Inject constructor(
     private var _errorMsg = MutableLiveData<String?>()
     val errorMsg: LiveData<String?> = _errorMsg
 
+    val searchedEpisodes = episodeRepository.getEpisodeListStream(seriesId = seriesId)
+        .cachedIn(viewModelScope)
+
+    val isFollowed = userRepository.isFollowed(seriesId)
+        .asLiveData()
+
     init {
-        initAll()
+        initSeriesInfo()
     }
 
-    private fun initAll() {
+    private fun initSeriesInfo() {
         viewModelScope.launch {
-            val series = seriesRepository.getSeries(seriesId)
-            val pageInfo = getPageInfo()
-            val tags = getTagsBySeriesInfo(series, pageInfo)
+            val seriesDeffered = async { seriesRepository.getSeries(seriesId) }
+            val pageInfoDeffered = async { episodeRepository.getPageInfo(seriesId) }
+
+            val series = seriesDeffered.await()
+            val pageInfo = pageInfoDeffered.await()
 
             _series.value = series
-            _tags.value = tags
+            _tags.value = series.toTags(pageInfo)
         }
     }
 
-    private suspend fun getPageInfo(): PageInfo? {
-        return episodeRepository.getPageInfo(seriesId)
-    }
-
-    private fun getTagsBySeriesInfo(
-        series: Series,
-        pageInfo: PageInfo?
-    ): List<Tag> {
-        return listOf(
-            Tag(
-                TagType.GENRE,
-                series?.genreType?.displayName
-            ),
-            Tag(
-                TagType.CHANNEL,
-                series?.channel
-            ),
-            Tag(
-                TagType.TOTAL_PAGE,
-                pageInfo?.totalResults.toString()
-            )
-        )
-    }
 
     fun toggleSeriesFollow(isFollowed: Boolean) {
         viewModelScope.launch {
@@ -92,16 +76,27 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    fun searchEpisodeList(seriesId: String): Flow<PagingData<Episode>> {
-        return episodeRepository.getEpisodeListStream(seriesId = seriesId)
-            .cachedIn(viewModelScope)
-    }
-
     companion object {
         private const val SERIES_ID_SAVED_STATE_KEY = "seriesId"
     }
 
 }
 
+private fun Series.toTags(pageInfo: PageInfo?): List<Tag> {
+    return listOf(
+        Tag(
+            TagType.GENRE,
+            this?.genreType?.displayName
+        ),
+        Tag(
+            TagType.CHANNEL,
+            this?.channel
+        ),
+        Tag(
+            TagType.TOTAL_PAGE,
+            pageInfo?.totalResults.toString()
+        )
+    )
+}
 
 

@@ -58,14 +58,14 @@ class DetailFragment : Fragment() {
 
         }
 
-        searchSeriesEpisodeList(args.seriesId)
+        searchSeriesEpisodeList()
 
         return binding.root
     }
 
-    private fun searchSeriesEpisodeList(seriesId: String) {
+    private fun searchSeriesEpisodeList() {
         lifecycleScope.launch {
-            detailViewModel.searchEpisodeList(seriesId).collectLatest {
+            detailViewModel.searchedEpisodes.collectLatest {
                 adapter.submitData(it)
             }
         }
