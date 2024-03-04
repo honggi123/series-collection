@@ -7,65 +7,46 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.data.repository.EpisodeRepository
 import com.example.data.repository.SeriesRepository
 import com.example.data.repository.UserRepository
-import com.example.model.episode.Episode
 import com.example.model.episode.PageInfo
 import com.example.model.series.Series
 import com.example.model.series.Tag
 import com.example.model.series.TagType
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.async
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-    savedStateHandle: SavedStateHandle,
     private val seriesRepository: SeriesRepository,
     private val episodeRepository: EpisodeRepository,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     private val seriesId: String = savedStateHandle.get<String>(SERIES_ID_SAVED_STATE_KEY)!!
 
-    private var _tags = MutableLiveData<List<Tag>>()
-    val tags: LiveData<List<Tag>> = _tags
-
-    private var _series = MutableLiveData<Series?>()
-    val series: LiveData<Series?> = _series
-
-    private var _errorMsg = MutableLiveData<String?>()
-    val errorMsg: LiveData<String?> = _errorMsg
-
-    val searchedEpisodes = episodeRepository.getEpisodeListStream(seriesId = seriesId)
-        .cachedIn(viewModelScope)
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val series: LiveData<Pair<Series?, List<Tag>>> = seriesRepository.getSeries(seriesId)
+        .flatMapLatest { series -> getTaggedSeries(series) }
+        .asLiveData()
 
     val isFollowed = userRepository.isFollowed(seriesId)
         .asLiveData()
 
-    init {
-        initSeriesInfo()
-    }
+    val episodes = episodeRepository.getEpisodeList(seriesId)
+        .cachedIn(viewModelScope)
 
-    private fun initSeriesInfo() {
-        viewModelScope.launch {
-            val seriesDeffered = async { seriesRepository.getSeries(seriesId) }
-            val pageInfoDeffered = async { episodeRepository.getPageInfo(seriesId) }
-
-            val series = seriesDeffered.await()
-            val pageInfo = pageInfoDeffered.await()
-
-            _series.value = series
-            _tags.value = series.toTags(pageInfo)
-        }
-    }
-
+    private var _errorMsg = MutableLiveData<String?>()
+    val errorMsg: LiveData<String?> = _errorMsg
 
     fun toggleSeriesFollow(isFollowed: Boolean) {
         viewModelScope.launch {
@@ -76,21 +57,25 @@ class DetailViewModel @Inject constructor(
         }
     }
 
+    private fun getTaggedSeries(series: Series): Flow<Pair<Series, List<Tag>>> {
+        return episodeRepository.getPageInfo(series.id)
+            .map { series to series.toTags(it) }
+    }
+
     companion object {
         private const val SERIES_ID_SAVED_STATE_KEY = "seriesId"
     }
-
 }
 
 private fun Series.toTags(pageInfo: PageInfo?): List<Tag> {
     return listOf(
         Tag(
             TagType.GENRE,
-            this?.genreType?.displayName
+            this.genreType?.displayName
         ),
         Tag(
             TagType.CHANNEL,
-            this?.channel
+            this.channel
         ),
         Tag(
             TagType.TOTAL_PAGE,

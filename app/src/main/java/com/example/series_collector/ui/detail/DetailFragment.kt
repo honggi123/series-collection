@@ -65,7 +65,7 @@ class DetailFragment : Fragment() {
 
     private fun searchSeriesEpisodeList() {
         lifecycleScope.launch {
-            detailViewModel.searchedEpisodes.collectLatest {
+            detailViewModel.episodes.collectLatest {
                 adapter.submitData(it)
             }
         }

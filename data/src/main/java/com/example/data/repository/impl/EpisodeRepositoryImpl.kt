@@ -6,6 +6,7 @@ import com.example.data.model.toPageInfo
 import com.example.data.repository.EpisodeRepository
 import com.example.network.model.NetworkEpisode
 import com.example.network.source.EpisodeNetworkDataSource
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
@@ -13,11 +14,14 @@ import javax.inject.Inject
 class EpisodeRepositoryImpl @Inject constructor(
     private val episodeNetworkDataSource: EpisodeNetworkDataSource
 ) : EpisodeRepository {
-    override fun getEpisodeListStream(seriesId: String) =
+
+    override fun getEpisodeList(seriesId: String) =
         episodeNetworkDataSource.getEpisodeListStream(seriesId)
             .map { it.map(NetworkEpisode::toEpisode) }
 
-    override suspend fun getPageInfo(seriesId: String) =
-        episodeNetworkDataSource.getPageInfo(seriesId)?.toPageInfo()
-
+    override fun getPageInfo(seriesId: String) = flow {
+        val pageInfo = episodeNetworkDataSource.getPageInfo(seriesId)
+            ?.toPageInfo()
+        emit(pageInfo)
+    }
 }

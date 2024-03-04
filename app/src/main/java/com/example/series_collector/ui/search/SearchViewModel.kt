@@ -9,7 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.mapLatest
+import kotlinx.coroutines.flow.flatMapLatest
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,7 +22,7 @@ class SearchViewModel @Inject constructor(
 
     val filteredSeries = searchQuery
         .debounce(300)
-        .mapLatest { query -> seriesRepository.searchBySeriesName(query) }
+        .flatMapLatest { query -> seriesRepository.searchBySeriesName(query) }
         .combine(selectedFilter) { result, filter -> filterSeries(result, filter) }
         .asLiveData()
 
@@ -30,15 +30,15 @@ class SearchViewModel @Inject constructor(
         searchQuery.value = query
     }
 
-    fun setFiltering(type: SearchFilterType) {
-        selectedFilter.value = type
+    fun setFiltering(filter: SearchFilterType) {
+        selectedFilter.value = filter
     }
 
     private fun filterSeries(
         contents: List<Series>,
-        filteringType: SearchFilterType
+        filter: SearchFilterType
     ): List<Series> {
-        return when (filteringType) {
+        return when (filter) {
             SearchFilterType.ALL -> contents.toList()
             SearchFilterType.FICTION -> contents.filterByGenre(GenreType.FICTION)
             SearchFilterType.TRAVEL -> contents.filterByGenre(GenreType.TRAVEL)

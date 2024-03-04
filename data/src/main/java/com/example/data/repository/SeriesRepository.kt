@@ -1,11 +1,11 @@
 package com.example.data.repository
 
 import com.example.model.series.Series
+import kotlinx.coroutines.flow.Flow
 
 interface SeriesRepository {
 
-    suspend fun getSeries(seriesId: String): Series
+    fun searchBySeriesName(query: String): Flow<List<Series>>
 
-    suspend fun searchBySeriesName(query: String): List<Series>
-
+    fun getSeries(seriesId: String): Flow<Series>
 }

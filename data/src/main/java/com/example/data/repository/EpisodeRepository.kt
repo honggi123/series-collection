@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 
 interface EpisodeRepository {
 
-    fun getEpisodeListStream(seriesId: String)  : Flow<PagingData<Episode>>
+    fun getEpisodeList(seriesId: String): Flow<PagingData<Episode>>
 
-    suspend fun getPageInfo(seriesId: String)  : PageInfo?
+    fun getPageInfo(seriesId: String): Flow<PageInfo?>
 }
