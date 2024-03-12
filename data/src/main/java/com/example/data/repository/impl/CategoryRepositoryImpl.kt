@@ -41,7 +41,7 @@ class CategoryRepositoryImpl @Inject constructor(
         emit(list)
     }
 
-    suspend fun getSeriesListByCategory(categoryId: String): List<SeriesEntity> {
+    private suspend fun getSeriesListByCategory(categoryId: String): List<SeriesEntity> {
         val categoryType: CategoryType = CategoryType.find(categoryId) ?: return emptyList()
 
         return seriesDao.run {

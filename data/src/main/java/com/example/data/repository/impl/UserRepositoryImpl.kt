@@ -18,13 +18,12 @@ class UserRepositoryImpl @Inject constructor(
 
     override fun isFollowed(seriesId: String) = seriesFollowedDao.isFollowed(seriesId)
 
-    override fun getFollowingSeriesList() =
-        seriesFollowedDao.getFollowingSeriesList().map { it.toSeriesList() }
+    override fun getFollowingSeriesList() = seriesFollowedDao.getFollowingSeriesList()
+        .map { it.toSeriesList() }
 
     override fun getLastUpdateDate() = preferenceManager.getLastUpdateDate()
 
-    override fun updateLastUpdateDate(date: Calendar) =
-        preferenceManager.setLastUpdateDate(date)
+    override fun updateLastUpdateDate(date: Calendar) = preferenceManager.setLastUpdateDate(date)
 
     override suspend fun isEmpty() = seriesDao.isEmpty()
 

@@ -24,6 +24,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
+@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val seriesRepository: SeriesRepository,
@@ -34,7 +35,6 @@ class DetailViewModel @Inject constructor(
 
     private val seriesId: String = savedStateHandle.get<String>(SERIES_ID_SAVED_STATE_KEY)!!
 
-    @OptIn(ExperimentalCoroutinesApi::class)
     val series: LiveData<Pair<Series?, List<Tag>>> = seriesRepository.getSeries(seriesId)
         .flatMapLatest { series -> getTaggedSeries(series) }
         .asLiveData()
