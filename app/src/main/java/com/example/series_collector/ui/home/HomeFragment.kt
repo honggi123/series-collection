@@ -21,7 +21,7 @@ class HomeFragment() : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         binding.apply {
             val adapter = HomeListAdapter()
@@ -36,7 +36,7 @@ class HomeFragment() : Fragment() {
     }
 
     private fun subscribeUi(adapter: HomeListAdapter) {
-        homeViewModel.contents.observe(viewLifecycleOwner) { contents ->
+        homeViewModel.homeContents.observe(viewLifecycleOwner) { contents ->
             adapter.submitList(contents)
         }
     }

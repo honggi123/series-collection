@@ -15,7 +15,7 @@ import com.example.network.source.SeriesNetworkDataSource
 import com.example.worker.util.SeriesThumbnailFetcher
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.supervisorScope
+import kotlinx.coroutines.coroutineScope
 import java.util.Calendar
 
 @HiltWorker
@@ -27,7 +27,7 @@ class UpdateSeriesWorker @AssistedInject constructor(
     private val seriesThumbnailFetcher: SeriesThumbnailFetcher,
 ) : CoroutineWorker(context, workerParams) {
 
-    override suspend fun doWork(): Result = supervisorScope {
+    override suspend fun doWork(): Result = coroutineScope {
         try {
             val lastUpdateDate = inputData.getLong(KEY_LAST_UPDATE_DATE, 0)
             val calendar = Calendar.getInstance()

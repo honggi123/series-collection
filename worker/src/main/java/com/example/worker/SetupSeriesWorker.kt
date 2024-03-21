@@ -15,7 +15,7 @@ import com.example.network.source.SeriesNetworkDataSource
 import com.example.worker.util.SeriesThumbnailFetcher
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
-import kotlinx.coroutines.supervisorScope
+import kotlinx.coroutines.coroutineScope
 
 @HiltWorker
 class SetupSeriesWorker @AssistedInject constructor(
@@ -25,7 +25,8 @@ class SetupSeriesWorker @AssistedInject constructor(
     private val seriesNetworkDataSource: SeriesNetworkDataSource,
     private val seriesThumbnailFetcher: SeriesThumbnailFetcher,
 ) : CoroutineWorker(context, workerParams) {
-    override suspend fun doWork(): Result = supervisorScope {
+
+    override suspend fun doWork(): Result = coroutineScope {
         try {
             val allSeries = seriesNetworkDataSource.getAllSeries()
                 .map { it.toSeries() }
