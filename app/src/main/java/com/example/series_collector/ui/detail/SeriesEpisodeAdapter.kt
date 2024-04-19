@@ -12,7 +12,10 @@ class SeriesEpisodeAdapter : PagingDataAdapter<Episode, SeriesEpisodeAdapter.Ser
     SeriesEposideDiffCallback()
 ) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SeriesEpisodeHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): SeriesEpisodeHolder {
         return SeriesEpisodeHolder(
             ListItemSeriesEpisodeBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -22,7 +25,10 @@ class SeriesEpisodeAdapter : PagingDataAdapter<Episode, SeriesEpisodeAdapter.Ser
         )
     }
 
-    override fun onBindViewHolder(holder: SeriesEpisodeHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: SeriesEpisodeHolder,
+        position: Int,
+    ) {
         val item = getItem(position)
         if (item != null) {
             holder.bind(item)

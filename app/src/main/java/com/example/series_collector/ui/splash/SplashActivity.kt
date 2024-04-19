@@ -14,7 +14,9 @@ class SplashActivity : AppCompatActivity() {
 
     private val splashViewModel: SplashViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(
+        savedInstanceState: Bundle?,
+    ) {
         super.onCreate(savedInstanceState)
 
         DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_splash)

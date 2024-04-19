@@ -16,7 +16,7 @@ fun Series.toSeriesEntity(): SeriesEntity {
         genreIndex = this.genreIndex,
         thumbnail = this.thumbnailUrl ?: "",
         createdAt = this.createdAt ?: Calendar.getInstance(),
-        updatedAt = this.updatedAt ?: Calendar.getInstance()
+        updatedAt = this.updatedAt ?: Calendar.getInstance(),
     )
 }
 
@@ -28,7 +28,7 @@ fun NetworkSeries.toSeries(): Series {
         channel = this.channel,
         genreIndex = this.genreIndex,
         createdAt = this.createdAt?.toDate()?.toCalendar(),
-        updatedAt = this.updatedAt?.toDate()?.toCalendar()
+        updatedAt = this.updatedAt?.toDate()?.toCalendar(),
     )
 }
 

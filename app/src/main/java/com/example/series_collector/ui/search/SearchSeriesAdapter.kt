@@ -8,9 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.model.series.Series
 import com.example.series_collector.databinding.ListItemSearchSeriesBinding
 
-class SearchSeriesAdapter : ListAdapter<Series, RecyclerView.ViewHolder>(SearchSeriesDiffCallback()) {
+class SearchSeriesAdapter :
+    ListAdapter<Series, RecyclerView.ViewHolder>(SearchSeriesDiffCallback()) {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+    override fun onCreateViewHolder(
+        parent: ViewGroup,
+        viewType: Int,
+    ): RecyclerView.ViewHolder {
         return SearchSeriesViewHolder(
             ListItemSearchSeriesBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -20,13 +24,16 @@ class SearchSeriesAdapter : ListAdapter<Series, RecyclerView.ViewHolder>(SearchS
         )
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+    override fun onBindViewHolder(
+        holder: RecyclerView.ViewHolder,
+        position: Int,
+    ) {
         val series = getItem(position)
         (holder as SearchSeriesViewHolder).bind(series)
     }
 
     class SearchSeriesViewHolder(
-        private val binding: ListItemSearchSeriesBinding
+        private val binding: ListItemSearchSeriesBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
@@ -35,7 +42,7 @@ class SearchSeriesAdapter : ListAdapter<Series, RecyclerView.ViewHolder>(SearchS
             }
         }
 
-        fun bind(item: com.example.model.series.Series) {
+        fun bind(item: Series) {
             binding.apply {
                 binding.series = item
                 executePendingBindings()
@@ -44,13 +51,19 @@ class SearchSeriesAdapter : ListAdapter<Series, RecyclerView.ViewHolder>(SearchS
     }
 }
 
-private class SearchSeriesDiffCallback : DiffUtil.ItemCallback<com.example.model.series.Series>() {
+private class SearchSeriesDiffCallback : DiffUtil.ItemCallback<Series>() {
 
-    override fun areItemsTheSame(oldItem: com.example.model.series.Series, newItem: com.example.model.series.Series): Boolean {
+    override fun areItemsTheSame(
+        oldItem: Series,
+        newItem: Series
+    ): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: com.example.model.series.Series, newItem: com.example.model.series.Series): Boolean {
+    override fun areContentsTheSame(
+        oldItem: Series,
+        newItem: Series
+    ): Boolean {
         return oldItem == newItem
     }
 }

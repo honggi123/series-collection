@@ -30,7 +30,7 @@ class DetailViewModel @Inject constructor(
     private val seriesRepository: SeriesRepository,
     private val episodeRepository: EpisodeRepository,
     private val userRepository: UserRepository,
-    savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     private val seriesId: String = savedStateHandle.get<String>(SERIES_ID_SAVED_STATE_KEY)!!
@@ -80,7 +80,7 @@ private fun Series.toTags(pageInfo: PageInfo?): List<Tag> {
         Tag(
             TagType.TOTAL_PAGE,
             pageInfo?.totalResults.toString()
-        )
+        ),
     )
 }
 

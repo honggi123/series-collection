@@ -30,8 +30,8 @@ class DetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        savedInstanceState: Bundle?,
+    ): View {
         binding = FragmentDetailSeriesBinding.inflate(inflater, container, false)
 
         binding.apply {
@@ -55,7 +55,6 @@ class DetailFragment : Fragment() {
             seriesDetailPlayBtn.setOnClickListener {
                 createYoutubeIntent(args.seriesId)
             }
-
         }
 
         searchSeriesEpisodeList()

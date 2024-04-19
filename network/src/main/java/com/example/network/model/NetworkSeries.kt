@@ -13,6 +13,6 @@ data class NetworkSeries(
     val haveCount: Int = 0,
     val genreIndex: Int = 0,
     val createdAt: Timestamp? = null,
-    val updatedAt: Timestamp? = null
+    val updatedAt: Timestamp? = null,
 )
 

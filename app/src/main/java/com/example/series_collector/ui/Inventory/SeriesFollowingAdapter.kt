@@ -16,7 +16,7 @@ class SeriesFollowingAdapter(
             ListItemInventorySeriesBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
-                false
+                false,
             ),
             inventoryItemCallback
         )
@@ -60,13 +60,20 @@ class SeriesFollowingAdapter(
     }
 }
 
-private class SeriesFollowedDiffCallback : DiffUtil.ItemCallback<com.example.model.series.Series>() {
+private class SeriesFollowedDiffCallback :
+    DiffUtil.ItemCallback<com.example.model.series.Series>() {
 
-    override fun areItemsTheSame(oldItem: com.example.model.series.Series, newItem: com.example.model.series.Series): Boolean {
+    override fun areItemsTheSame(
+        oldItem: com.example.model.series.Series,
+        newItem: com.example.model.series.Series
+    ): Boolean {
         return oldItem.id == newItem.id
     }
 
-    override fun areContentsTheSame(oldItem: com.example.model.series.Series, newItem: com.example.model.series.Series): Boolean {
+    override fun areContentsTheSame(
+        oldItem: com.example.model.series.Series,
+        newItem: com.example.model.series.Series
+    ): Boolean {
         return oldItem == newItem
     }
 }

@@ -38,7 +38,7 @@ class SearchViewModel @Inject constructor(
 
     private fun filterSeries(
         contents: List<Series>,
-        filter: SearchFilterType
+        filter: SearchFilterType,
     ): List<Series> {
         return when (filter) {
             SearchFilterType.ALL -> contents.toList()

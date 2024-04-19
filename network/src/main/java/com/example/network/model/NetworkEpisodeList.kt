@@ -7,12 +7,12 @@ data class NetworkEpisodeList(
     val kind: String,
     val prevPageToken: String,
     val nextPageToken: String,
-    val pageInfo: NetworkPageInfo?
+    val pageInfo: NetworkPageInfo?,
 )
 
 data class NetworkEpisode(
     val id: String,
-    val snippet: NetworkSnippet
+    val snippet: NetworkSnippet,
 )
 
 data class NetworkPageInfo(
@@ -30,30 +30,30 @@ data class NetworkSnippet(
     val thumbnails: NetworkThumbnails?,
     val title: String,
     val videoOwnerChannelId: String,
-    val videoOwnerChannelTitle: String
+    val videoOwnerChannelTitle: String,
 )
 
 data class NetworkThumbnails(
     val high: NetworkThumbnailHigh,
     val medium: NetworkThumbnailMedium?,
-    val standard: NetworkThumbnailStandard
+    val standard: NetworkThumbnailStandard,
 )
 
 data class NetworkThumbnailStandard(
     val height: Int,
     val url: String,
-    val width: Int
+    val width: Int,
 )
 
 data class NetworkThumbnailMedium(
     val height: Int,
     val url: String?,
-    val width: Int
+    val width: Int,
 )
 
 data class NetworkThumbnailHigh(
     val height: Int,
     val url: String,
-    val width: Int
+    val width: Int,
 )
 

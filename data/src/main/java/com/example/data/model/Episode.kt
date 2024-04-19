@@ -9,7 +9,7 @@ import com.example.network.model.NetworkPageInfo
 fun NetworkPageInfo.toPageInfo(): PageInfo {
     return PageInfo(
         resultsPerPage = resultsPerPage,
-        totalResults = totalResults
+        totalResults = totalResults,
     )
 }
 

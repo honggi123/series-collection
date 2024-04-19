@@ -16,7 +16,9 @@ class InventoryViewModel @Inject constructor(
     val mySeriesList = userRepository.getFollowingSeriesList()
         .asLiveData()
 
-    fun unFollowSeries(seriesId: String) {
+    fun unFollowSeries(
+        seriesId: String,
+    ) {
         viewModelScope.launch {
             userRepository.setSeriesUnFollowed(seriesId)
         }

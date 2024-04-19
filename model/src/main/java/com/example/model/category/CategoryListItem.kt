@@ -12,6 +12,6 @@ enum class ViewType {
 
     Series,
     AD,
-    EMPTY
+    EMPTY,
 }
 

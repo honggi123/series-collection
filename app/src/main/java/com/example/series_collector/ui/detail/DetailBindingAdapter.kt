@@ -11,7 +11,10 @@ import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 
 @BindingAdapter("isFollowed")
-fun bindisFollowed(button: AppCompatButton, isFollowed: Boolean) {
+fun bindisFollowed(
+    button: AppCompatButton,
+    isFollowed: Boolean,
+) {
     if (isFollowed) {
         button.isSelected = false
         button.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_baseline_check_24, 0, 0, 0)
@@ -22,14 +25,20 @@ fun bindisFollowed(button: AppCompatButton, isFollowed: Boolean) {
 }
 
 @BindingAdapter("toast")
-fun bindToast(view: View, msg: String?) {
+fun bindToast(
+    view: View,
+    msg: String?,
+) {
     if (!msg.isNullOrEmpty()) {
         Toast.makeText(view.context, msg, Toast.LENGTH_SHORT).show()
     }
 }
 
 @BindingAdapter("tags")
-fun bindTags(chipGroup: ChipGroup, tags: List<Tag>?) {
+fun bindTags(
+    chipGroup: ChipGroup,
+    tags: List<Tag>?,
+) {
     tags?.forEach { tag ->
         val tagView: Chip = Chip(chipGroup.context).apply {
             text = if (tag.type == TagType.TOTAL_PAGE) "${tag.name}화" else tag.name

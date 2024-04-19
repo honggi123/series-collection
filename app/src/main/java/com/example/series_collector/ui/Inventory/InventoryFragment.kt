@@ -20,7 +20,7 @@ class InventoryFragment : Fragment(), InventoryItemCallback {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View {
 
         val binding = FragmentInventoryBinding.inflate(inflater, container, false)
