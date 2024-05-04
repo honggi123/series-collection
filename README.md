@@ -55,6 +55,8 @@
 
 <details>
   <summary> 화면 동작 보기</summary>
+
+  <img src="https://github.com/honggi123/series-collection/assets/89631493/6416b5a1-eb93-4f83-8568-14294d6b903d" width="250px" height="500px"/>
 </details>
 
 #### ➁ 홈 화면
@@ -73,6 +75,8 @@
 
 <details>
   <summary> 화면 동작 보기</summary>
+  
+  <img src="https://github.com/honggi123/series-collection/assets/89631493/3e6c074c-28fd-4e28-905e-85bc0bf190ee" width="250px" height="500px"/>
 </details>
 
 <br><br>
