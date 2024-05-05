@@ -47,12 +47,10 @@
 
 <details>
   <summary> 화면 동작 보기</summary>
-
   <img src="https://github.com/honggi123/series-collection/assets/89631493/6416b5a1-eb93-4f83-8568-14294d6b903d" width="230px" height="500px"/>
 </details>
 
 #### ➁ 홈 화면
-
 <details>
   <summary> 화면 동작 보기</summary>
       <img src="https://github.com/honggi123/series-collection/assets/89631493/9ac3b535-b2fc-48b9-90d8-475383af3e2b" width="230px" height="500px"/>
@@ -85,11 +83,15 @@
 <br>
 
 ## 이슈 해결
-- 로컬 캐싱을 통한 로딩 시간 단축  
-- 로딩 작업 최소화를 위한 백그라운드 작업 적용
-- 다수의 이미지 Url을 가져오기 위한 코루틴 병렬 실행
-- 다수의 썸네일 이미지 URL을 가져올 때 오류 핸들
-- 스크롤 버벅거림을 일으킬 수 있는 중첩 리사이클러뷰의 뷰풀 개선 
+- [로컬 캐싱을 통한 로딩 시간 단축](https://velog.io/@kkk7526/%EB%A1%9C%EC%BB%AC-%EC%BA%90%EC%8B%B1%EC%9D%84-%ED%86%B5%ED%95%9C-%EB%A1%9C%EB%94%A9-%EC%8B%9C%EA%B0%84-%EB%8B%A8%EC%B6%95)
+
+- [로딩 작업 최소화를 위한 백그라운드 작업 적용](https://velog.io/@kkk7526/%EB%A1%9C%EB%94%A9-%EC%9E%91%EC%97%85-%EC%B5%9C%EC%86%8C%ED%99%94%EB%A5%BC-%EC%9C%84%ED%95%9C-%EB%B0%B1%EA%B7%B8%EB%9D%BC%EC%9A%B4%EB%93%9C-%EC%9E%91%EC%97%85-%EC%A0%81%EC%9A%A9)
+
+- [다수의 이미지 Url을 가져오기 위한 코루틴 병렬 실행](https://velog.io/@kkk7526/%EB%8B%A4%EC%88%98%EC%9D%98-%EC%9D%B4%EB%AF%B8%EC%A7%80-Url%EC%9D%84-%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0-%EC%9C%84%ED%95%9C-%EC%BD%94%EB%A3%A8%ED%8B%B4-%EB%B3%91%EB%A0%AC-%EC%8B%A4%ED%96%89-5sxukj7g)
+
+- [다수의 썸네일 이미지 URL을 가져올 때 오류 핸들](https://velog.io/@kkk7526/%EB%8B%A4%EC%88%98%EC%9D%98-%EC%9D%B4%EB%AF%B8%EC%A7%80-Url%EC%9D%84-%EA%B0%80%EC%A0%B8%EC%98%A4%EA%B8%B0-%EC%9C%84%ED%95%9C-%EC%BD%94%EB%A3%A8%ED%8B%B4-%EB%B3%91%EB%A0%AC-%EC%8B%A4%ED%96%89/)
+
+- [스크롤 버벅거림을 일으킬 수 있는 중첩 리사이클러뷰의 뷰풀 개선](https://velog.io/@kkk7526/%EC%8A%A4%ED%81%AC%EB%A1%A4-%EB%B2%84%EB%B2%85%EA%B1%B0%EB%A6%BC%EC%9D%84-%EC%9D%BC%EC%9C%BC%ED%82%AC-%EC%88%98-%EC%9E%88%EB%8A%94-%EC%A4%91%EC%B2%A9-%EB%A6%AC%EC%82%AC%EC%9D%B4%ED%81%B4%EB%9F%AC%EB%B7%B0%EC%9D%98-%EB%B7%B0%ED%92%80-%EA%B0%9C%EC%84%A0) 
 
 
 
