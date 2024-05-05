@@ -1,16 +1,10 @@
-
-## Series Collection
+# Series Collection
 
 |<img src="https://github.com/honggi123/series-collection/assets/89631493/78d55852-67e1-4042-866d-3ed326df6763" height="20%"/>|<img width=“20”% src="https://github.com/honggi123/series-collection/assets/89631493/43d20e3a-03f5-40aa-9c12-730c57170ca7" width="20%" height="20%"/>|<img width=“20”% src="https://github.com/honggi123/series-collection/assets/89631493/83ced6b3-4a0d-4be9-b784-fb9d343af29c" width="20%" height="20%"/>
 |----|----|----|
 
-<br><br>
-## 목차
-### 1. 개요
-### 2. 화면별 기능 소개
-### 3. 이슈 해결
+<br>
 
-<br><br>
 ## 개요
 
 #### ➀ 시리즈 컬렉션 이란?
@@ -43,11 +37,12 @@
     
 * Remote : Firebase FireStore
 
-<br><br>
+<br>
 
-<br><br>
 ## 화면별 기능 소개
+
 🚧
+
 #### ➀ 스플래시 화면
 
 <details>
@@ -60,12 +55,14 @@
 
 <details>
   <summary> 화면 동작 보기</summary>
+      <img src="https://github.com/honggi123/series-collection/assets/89631493/9ac3b535-b2fc-48b9-90d8-475383af3e2b" width="230px" height="500px"/>
 </details>
 
 #### ➂ 시리즈 상세 화면
 
 <details>
   <summary> 화면 동작 보기</summary>
+    <img src="https://github.com/honggi123/series-collection/assets/89631493/479130c2-17e4-476b-ab40-b0bd6e80e970" width="230px" height="500px"/>
 </details>
 
 #### ➂ 검색 화면
@@ -85,7 +82,8 @@
   <img src="https://github.com/honggi123/series-collection/assets/89631493/3e6c074c-28fd-4e28-905e-85bc0bf190ee" width="230px" height="500px"/>
 </details>
 
-<br><br>
+<br>
+
 ## 이슈 해결
 - 로컬 캐싱을 통한 로딩 시간 단축  
 - 로딩 작업 최소화를 위한 백그라운드 작업 적용
