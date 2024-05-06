@@ -58,7 +58,9 @@
 
 #### ➀ 스플래시 화면
 
-- sharedPreferecne, Room db를 통한 로딩 시간 최적화 <details>
+- sharedPreferecne, Room db를 통한 로딩 시간 최적화
+
+- Lottie 애니메이션 적용 <details>
   <summary>  화면 동작 보기</summary>
   <img src="https://github.com/honggi123/series-collection/assets/89631493/6416b5a1-eb93-4f83-8568-14294d6b903d" width="230px" height="500px"/>
 </details>
@@ -70,23 +72,29 @@
   </details>
 
 #### ➂ 시리즈 상세 화면
-  - 시리즈 회차 동영상 페이징 <details>
+  - 유튜브 연결 암시적 인텐트 적용
+    
+  - 시리즈 회차 영상 Youtube API를 통한 페이징 <details>
      <summary>  화면 동작 보기</summary>
       <img src="https://github.com/honggi123/series-collection/assets/89631493/479130c2-17e4-476b-ab40-b0bd6e80e970" width="230px" height="500px"/>
     </details>
 
 #### ➂ 검색 화면
- - 키워드 별 검색 
- - api 호출을 줄이기 위한 debouce를 통한 지연 
- - 카테고리 별 시리즈 보기 <details>
+ - 시리즈 데이터 키워드 별 검색
+ 
+ - api 호출을 줄이기 위한 flow debouce를 통한 지연
+
+ - 탭을 통한 카테고리 별 시리즈 분류 <details>
      <summary>  화면 동작 보기</summary>
      <img src="https://github.com/honggi123/series-collection/assets/89631493/56652ec7-49a2-4a28-afdf-07ce757499d4" width="230px" height="500px"/>
    </details>
 
 
 #### ➃ 북마크 화면
- - 룸 db를 통한 시리즈 저장 및 조회 <details>
-   <summary>  화면 동작 보기<br>
+ - 시리즈 상세화면에서 북마크 추가 / 삭제 
+
+ - 룸 db를 통해 시리즈 저장 및 조회 <details>
+   <summary>  화면 동작 보기
    </summary>
      <img src="https://github.com/honggi123/series-collection/assets/89631493/3e6c074c-28fd-4e28-905e-85bc0bf190ee" width="230px" height="500px"/>
  </details>
