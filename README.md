@@ -54,11 +54,9 @@
 
 ## 화면별 기능 소개
 
-🚧
-
 #### ➀ 스플래시 화면
 
-- sharedPreferecne, Room db를 통한 로딩 시간 최적화
+- Room db 캐싱을 통한 로딩 시간 최적화
 
 - Lottie 애니메이션 적용 <details>
   <summary>  화면 동작 보기</summary>
@@ -66,15 +64,15 @@
 </details>
 
 #### ➁ 홈 화면
-- 카테고리 별 시리즈를 보여주기 위한 중첩 리사이클러뷰 <details>
+- 중첩 리사이클러뷰 적용 <details>
    <summary>  화면 동작 보기</summary>
        <img src="https://github.com/honggi123/series-collection/assets/89631493/9ac3b535-b2fc-48b9-90d8-475383af3e2b" width="230px" height="500px"/>
   </details>
 
 #### ➂ 시리즈 상세 화면
-  - 유튜브 연결 암시적 인텐트 적용
+  - 유튜브 동영상 연결을 위한 암시적 인텐트 적용
     
-  - 시리즈 회차 영상 Youtube API를 통한 페이징 <details>
+  - Youtube API를 통해 회차 영상 페이징 <details>
      <summary>  화면 동작 보기</summary>
       <img src="https://github.com/honggi123/series-collection/assets/89631493/479130c2-17e4-476b-ab40-b0bd6e80e970" width="230px" height="500px"/>
     </details>
@@ -82,9 +80,7 @@
 #### ➂ 검색 화면
  - 시리즈 데이터 키워드 별 검색
  
- - api 호출을 줄이기 위한 flow debouce를 통한 지연
-
- - 탭을 통한 카테고리 별 시리즈 분류 <details>
+ - api 호출을 줄이기 위한 flow debouce를 통한 지연 <details>
      <summary>  화면 동작 보기</summary>
      <img src="https://github.com/honggi123/series-collection/assets/89631493/56652ec7-49a2-4a28-afdf-07ce757499d4" width="230px" height="500px"/>
    </details>
