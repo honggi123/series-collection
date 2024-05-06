@@ -2,7 +2,9 @@ package com.example.worker
 
 import android.content.Context
 import androidx.hilt.work.HiltWorker
+import androidx.work.Constraints
 import androidx.work.CoroutineWorker
+import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -49,6 +51,13 @@ class UpdateSeriesWorker @AssistedInject constructor(
 
         fun enqueue(workManager: WorkManager, updateDate: Calendar): OneTimeWorkRequest {
             val workRequest = OneTimeWorkRequestBuilder<UpdateSeriesWorker>()
+                .setConstraints(
+                    Constraints.Builder()
+                        .setRequiredNetworkType(
+                            NetworkType.CONNECTED
+                        )
+                        .build()
+                )
                 .setInputData(workDataOf(KEY_LAST_UPDATE_DATE to updateDate.timeInMillis))
                 .build()
             workManager.enqueue(workRequest)

@@ -2,8 +2,10 @@ package com.example.worker
 
 import android.content.Context
 import androidx.hilt.work.HiltWorker
+import androidx.work.Constraints
 import androidx.work.CoroutineWorker
 import androidx.work.ExistingWorkPolicy
+import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -46,6 +48,13 @@ class SetupSeriesWorker @AssistedInject constructor(
 
         fun enqueue(workManager: WorkManager): OneTimeWorkRequest {
             val workRequest = OneTimeWorkRequestBuilder<SetupSeriesWorker>()
+                .setConstraints(
+                    Constraints.Builder()
+                        .setRequiredNetworkType(
+                            NetworkType.CONNECTED
+                        )
+                        .build()
+                )
                 .build()
              workManager
                 .beginUniqueWork(KEY_UNIQUE_NAME, ExistingWorkPolicy.APPEND_OR_REPLACE, workRequest)
