@@ -58,40 +58,38 @@
 
 #### ➀ 스플래시 화면
 
-<details>
-  <summary> 화면 동작 보기</summary>
+- sharedPreferecne, Room db를 통한 로딩 시간 최적화 <details>
+  <summary>  화면 동작 보기</summary>
   <img src="https://github.com/honggi123/series-collection/assets/89631493/6416b5a1-eb93-4f83-8568-14294d6b903d" width="230px" height="500px"/>
 </details>
 
 #### ➁ 홈 화면
-<details>
-  <summary> 화면 동작 보기</summary>
-      <img src="https://github.com/honggi123/series-collection/assets/89631493/9ac3b535-b2fc-48b9-90d8-475383af3e2b" width="230px" height="500px"/>
-</details>
+- 카테고리 별 시리즈를 보여주기 위한 중첩 리사이클러뷰 <details>
+   <summary>  화면 동작 보기</summary>
+       <img src="https://github.com/honggi123/series-collection/assets/89631493/9ac3b535-b2fc-48b9-90d8-475383af3e2b" width="230px" height="500px"/>
+  </details>
 
 #### ➂ 시리즈 상세 화면
-
-<details>
-  <summary> 화면 동작 보기</summary>
-    <img src="https://github.com/honggi123/series-collection/assets/89631493/479130c2-17e4-476b-ab40-b0bd6e80e970" width="230px" height="500px"/>
-</details>
+  - 시리즈 회차 동영상 페이징 <details>
+     <summary>  화면 동작 보기</summary>
+      <img src="https://github.com/honggi123/series-collection/assets/89631493/479130c2-17e4-476b-ab40-b0bd6e80e970" width="230px" height="500px"/>
+    </details>
 
 #### ➂ 검색 화면
-
-<details>
-  <summary> 화면 동작 보기</summary>
-
-  <img src="https://github.com/honggi123/series-collection/assets/89631493/56652ec7-49a2-4a28-afdf-07ce757499d4" width="230px" height="500px"/>
-</details>
+ - 키워드 별 검색 
+ - api 호출을 줄이기 위한 debouce를 통한 지연 
+ - 카테고리 별 시리즈 보기 <details>
+     <summary>  화면 동작 보기</summary>
+     <img src="https://github.com/honggi123/series-collection/assets/89631493/56652ec7-49a2-4a28-afdf-07ce757499d4" width="230px" height="500px"/>
+   </details>
 
 
 #### ➃ 북마크 화면
-
-<details>
-  <summary> 화면 동작 보기</summary>
-  
-  <img src="https://github.com/honggi123/series-collection/assets/89631493/3e6c074c-28fd-4e28-905e-85bc0bf190ee" width="230px" height="500px"/>
-</details>
+ - 룸 db를 통한 시리즈 저장 및 조회 <details>
+   <summary>  화면 동작 보기<br>
+   </summary>
+     <img src="https://github.com/honggi123/series-collection/assets/89631493/3e6c074c-28fd-4e28-905e-85bc0bf190ee" width="230px" height="500px"/>
+ </details>
 
 
 
