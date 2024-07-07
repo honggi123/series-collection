@@ -2,9 +2,7 @@ package com.example.worker.util
 
 import com.example.model.series.Series
 import com.example.network.source.EpisodeNetworkDataSource
-import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.supervisorScope
 import kotlinx.coroutines.withContext
@@ -24,10 +22,14 @@ class SeriesThumbnailFetcher @Inject constructor(
                             series.copy(thumbnailUrl = url)
                         } else series
                     }
+                }.map {
+                    try {
+                        it.await()
+                    } catch (e: Throwable) {
+                        null
+                    }
                 }
-            }
-                .map { it.getCompletedOrNull() }
-                .filterNotNull()
+            }.filterNotNull()
         }
 
     private suspend fun getThumbnailUrl(seriesId: String): String? {
@@ -35,7 +37,3 @@ class SeriesThumbnailFetcher @Inject constructor(
         return list.firstOrNull()?.url
     }
 }
-
-@OptIn(ExperimentalCoroutinesApi::class)
-private fun <T> Deferred<T>.getCompletedOrNull() = if (isCancelled) null else getCompleted()
-
