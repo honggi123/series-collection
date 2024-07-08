@@ -46,9 +46,11 @@ class SearchViewModel @Inject constructor(
             SearchFilterType.TRAVEL -> contents.filterByGenre(GenreType.TRAVEL)
         }
     }
+
+    private fun List<Series>.filterByGenre(genre: GenreType): List<Series> {
+        return this.filter { it.genreType == genre }
+    }
 }
 
-private fun List<Series>.filterByGenre(genre: GenreType): List<Series> {
-    return this.filter { it.genreType == genre }
-}
+
 

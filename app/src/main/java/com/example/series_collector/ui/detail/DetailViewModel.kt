@@ -11,15 +11,11 @@ import androidx.paging.cachedIn
 import com.example.data.repository.EpisodeRepository
 import com.example.data.repository.SeriesRepository
 import com.example.data.repository.UserRepository
-import com.example.model.episode.PageInfo
 import com.example.model.series.Series
 import com.example.model.series.Tag
-import com.example.model.series.TagType
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flatMapLatest
-import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -35,8 +31,11 @@ class DetailViewModel @Inject constructor(
 
     private val seriesId: String = savedStateHandle.get<String>(SERIES_ID_SAVED_STATE_KEY)!!
 
-    val series: LiveData<Pair<Series?, List<Tag>>> = seriesRepository.getSeries(seriesId)
-        .flatMapLatest { series -> getTaggedSeries(series) }
+    private val _tags = MutableLiveData<List<Tag>>(listOf())
+    val tags: LiveData<List<Tag>> = _tags
+
+    val series: LiveData<Series?> = seriesRepository.getSeries(seriesId)
+        .onEach { _tags.value = getTaggedSeries(it) }
         .asLiveData()
 
     val isFollowed = userRepository.isFollowed(seriesId)
@@ -57,31 +56,12 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    private fun getTaggedSeries(series: Series): Flow<Pair<Series, List<Tag>>> {
-        return episodeRepository.getPageInfo(series.id)
-            .map { series to series.toTags(it) }
+    private fun getTaggedSeries(series: Series): List<Tag> {
+        TODO()
     }
 
     companion object {
         private const val SERIES_ID_SAVED_STATE_KEY = "seriesId"
     }
 }
-
-private fun Series.toTags(pageInfo: PageInfo?): List<Tag> {
-    return listOf(
-        Tag(
-            TagType.GENRE,
-            this.genreType?.displayName
-        ),
-        Tag(
-            TagType.CHANNEL,
-            this.channel
-        ),
-        Tag(
-            TagType.TOTAL_PAGE,
-            pageInfo?.totalResults.toString()
-        ),
-    )
-}
-
 
