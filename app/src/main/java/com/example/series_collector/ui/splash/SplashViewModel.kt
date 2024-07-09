@@ -8,7 +8,6 @@ import androidx.lifecycle.viewModelScope
 import androidx.work.WorkInfo
 import androidx.work.WorkManager
 import com.example.data.repository.UserRepository
-import com.example.worker.SetupSeriesWorker
 import com.example.worker.UpdateSeriesWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -26,43 +25,25 @@ class SplashViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            if (userRepository.isEmpty()) {
-                setUpSeries()
+            if (userRepository.isEmpty()) { // 로컬 데이터가 존재하지 않을 경우 (처음 초기화)
+                updateSeries(Calendar.getInstance())
             } else {
-                updateSeries()
+                val updatedDate = userRepository.getLastUpdateDate()
+                updateSeries(updatedDate)
             }
         }
     }
 
-    private fun setUpSeries() {
+    private fun updateSeries(updatedDate: Calendar?) {
         viewModelScope.launch {
-            val workerRequest = SetupSeriesWorker.enqueue(workManager)
+            val workerRequest = UpdateSeriesWorker.enqueue(workManager, updatedDate!!)
             val workInfo = workManager.getWorkInfoByIdLiveData(workerRequest.id).asFlow()
             workInfo.collect {
                 if (it.state == WorkInfo.State.SUCCEEDED) {
                     userRepository.updateLastUpdateDate(Calendar.getInstance())
-                    _isLoading.value = false
-                } else if (it.state == WorkInfo.State.FAILED) {
-                    _isLoading.value = false
                 }
+                _isLoading.value = false
             }
         }
     }
-
-    private fun updateSeries() {
-        viewModelScope.launch {
-            val updateDate = userRepository.getLastUpdateDate()
-            val workerRequest = UpdateSeriesWorker.enqueue(workManager, updateDate!!)
-            val workInfo = workManager.getWorkInfoByIdLiveData(workerRequest.id).asFlow()
-            workInfo.collect {
-                if (it.state == WorkInfo.State.SUCCEEDED) {
-                    userRepository.updateLastUpdateDate(Calendar.getInstance())
-                    _isLoading.value = false
-                } else if (it.state == WorkInfo.State.FAILED) {
-                    _isLoading.value = false
-                }
-            }
-        }
-    }
-
 }

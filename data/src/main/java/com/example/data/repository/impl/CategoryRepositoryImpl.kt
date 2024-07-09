@@ -13,6 +13,8 @@ import com.example.model.category.Horizontal
 import com.example.model.category.ViewPager
 import com.example.model.category.ViewType
 import com.example.network.source.CategoryNetworkDataSource
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class CategoryRepositoryImpl @Inject constructor(
@@ -20,9 +22,11 @@ class CategoryRepositoryImpl @Inject constructor(
     private val seriesDao: SeriesDao,
 ) : CategoryRepository {
 
-    override suspend fun getCategorys(): List<Category> {
-        return categoryNetworkDataSource.getCategorys()
+    override fun getCategorys(): Flow<List<Category>> = flow {
+        val categorys = categoryNetworkDataSource.getCategorys()
             .map { Category(it.categoryId, it.title, it.viewType) }
+
+        emit(categorys)
     }
 
     override suspend fun getCategoryContent(category: Category): CategoryListItem {

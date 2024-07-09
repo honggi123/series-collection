@@ -34,5 +34,4 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun setSeriesUnFollowed(seriesId: String) =
         seriesFollowedDao.deleteSeriesFollowed(seriesId)
-
 }

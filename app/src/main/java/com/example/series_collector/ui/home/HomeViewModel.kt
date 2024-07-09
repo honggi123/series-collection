@@ -15,7 +15,7 @@ class HomeViewModel @Inject constructor(
     private val categoryRepository: CategoryRepository,
 ) : ViewModel() {
 
-    val homeContents: LiveData<List<CategoryListItem>> = categoryRepository.getCategorys()
+    val contentsByCategory: LiveData<List<CategoryListItem>> = categoryRepository.getCategorys()
         .map { it.map { categoryRepository.getCategoryContent(it) } }
         .asLiveData()
 }

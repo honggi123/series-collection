@@ -81,7 +81,5 @@ class DetailFragment : Fragment() {
     fun interface Callback {
         fun toggle(isFollowed: Boolean)
     }
-
-
 }
 
