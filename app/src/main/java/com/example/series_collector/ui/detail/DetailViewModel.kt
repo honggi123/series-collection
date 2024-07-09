@@ -14,8 +14,10 @@ import com.example.data.repository.UserRepository
 import com.example.model.series.Series
 import com.example.model.series.Tag
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import java.io.IOException
 import javax.inject.Inject
 
 
@@ -33,7 +35,17 @@ class DetailViewModel @Inject constructor(
     val tags: LiveData<List<Tag>> = _tags
 
     val series: LiveData<Series?> = seriesRepository.getSeries(seriesId)
-        .onEach { _tags.value = getTaggedSeries(it) }
+        .onEach { _tags.value = getSeriesTags(it) }
+        .catch {
+            when (it) {
+                is IOException -> {
+                    _errorMsg.value = "네트워크를 확인해주세요."
+                }
+                else -> {
+                    _errorMsg.value = "시리즈 정보를 가져오지 못했습니다."
+                }
+            }
+        }
         .asLiveData()
 
     val isFollowed = userRepository.isFollowed(seriesId)
@@ -54,7 +66,7 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    private fun getTaggedSeries(series: Series): List<Tag> {
+    private fun getSeriesTags(series: Series): List<Tag> {
         TODO()
     }
 

@@ -38,7 +38,8 @@ class SearchFragment : Fragment() {
             searchViewModel.filteredSeries.observe(
                 it.viewLifecycleOwner, { contents ->
                     adapter.submitList(contents)
-                })
+                }
+            )
         }
     }
 }
