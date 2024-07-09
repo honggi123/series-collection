@@ -14,13 +14,11 @@ import com.example.data.repository.UserRepository
 import com.example.model.series.Series
 import com.example.model.series.Tag
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-@OptIn(ExperimentalCoroutinesApi::class)
 @HiltViewModel
 class DetailViewModel @Inject constructor(
     private val seriesRepository: SeriesRepository,
