@@ -2,12 +2,12 @@ package com.example.network.source
 
 import com.example.network.model.NetworkAd
 import com.example.network.model.NetworkCategory
+import kotlinx.coroutines.flow.Flow
 
 
 interface CategoryNetworkDataSource {
 
-    suspend fun getCategorys(): List<NetworkCategory>
+    fun getCategorys(): Flow<List<NetworkCategory>>
 
-    suspend fun getAdList(): List<NetworkAd>
-
+    fun getAdList(): Flow<List<NetworkAd>>
 }

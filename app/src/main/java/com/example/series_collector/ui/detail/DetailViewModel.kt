@@ -15,9 +15,7 @@ import com.example.model.series.Series
 import com.example.model.series.Tag
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import java.io.IOException
 import javax.inject.Inject
 
 
@@ -31,31 +29,29 @@ class DetailViewModel @Inject constructor(
 
     private val seriesId: String = savedStateHandle.get<String>(SERIES_ID_SAVED_STATE_KEY)!!
 
-    private val _tags = MutableLiveData<List<Tag>>(listOf())
-    val tags: LiveData<List<Tag>> = _tags
+    private var _errorMsg = MutableLiveData<String?>()
+    val errorMsg: LiveData<String?> = _errorMsg
 
     val series: LiveData<Series?> = seriesRepository.getSeries(seriesId)
-        .onEach { _tags.value = getSeriesTags(it) }
         .catch {
-            when (it) {
-                is IOException -> {
-                    _errorMsg.value = "네트워크를 확인해주세요."
-                }
-                else -> {
-                    _errorMsg.value = "시리즈 정보를 가져오지 못했습니다."
-                }
-            }
+            _errorMsg.value = "시리즈 정보를 가져오지 못했습니다."
+        }
+        .asLiveData()
+
+    val tags: LiveData<List<Tag>> = seriesRepository.getTagList(seriesId)
+        .catch {
+            _errorMsg.value = "태그 정보를 가져오지 못했습니다."
         }
         .asLiveData()
 
     val isFollowed = userRepository.isFollowed(seriesId)
+        .catch {
+            // TODO add log
+        }
         .asLiveData()
 
     val episodes = episodeRepository.getEpisodeList(seriesId)
         .cachedIn(viewModelScope)
-
-    private var _errorMsg = MutableLiveData<String?>()
-    val errorMsg: LiveData<String?> = _errorMsg
 
     fun toggleSeriesFollow(isFollowed: Boolean) {
         viewModelScope.launch {
@@ -64,10 +60,6 @@ class DetailViewModel @Inject constructor(
                 else setSeriesFollowed(seriesId)
             }
         }
-    }
-
-    private fun getSeriesTags(series: Series): List<Tag> {
-        TODO()
     }
 
     companion object {

@@ -10,6 +10,7 @@ import androidx.work.WorkManager
 import com.example.data.repository.UserRepository
 import com.example.worker.UpdateSeriesWorker
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import java.util.Calendar
 import javax.inject.Inject
@@ -31,14 +32,12 @@ class SplashViewModel @Inject constructor(
         }
     }
 
-    private fun updateSeries(updatedDate: Calendar?) {
-        viewModelScope.launch {
-            val workerRequest = UpdateSeriesWorker.enqueue(workManager, updatedDate!!)
-            val workInfo = workManager.getWorkInfoByIdLiveData(workerRequest.id).asFlow()
-            workInfo.collect {
-                if (it.state == WorkInfo.State.SUCCEEDED) {
-                    userRepository.updateLastUpdateDate(Calendar.getInstance())
-                }
+    private suspend fun updateSeries(updatedDate: Calendar) {
+        val workerRequest = UpdateSeriesWorker.enqueue(workManager, updatedDate)
+        val workInfo = workManager.getWorkInfoByIdLiveData(workerRequest.id).asFlow()
+        workInfo.collectLatest {
+            if (it.state == WorkInfo.State.SUCCEEDED) {
+                userRepository.updateLastUpdateDate(Calendar.getInstance())
                 _isLoading.value = false
             }
         }
