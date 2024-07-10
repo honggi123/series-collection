@@ -18,6 +18,8 @@ import com.example.worker.util.SeriesThumbnailFetcher
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.map
 import java.util.Calendar
 
 @HiltWorker
@@ -34,12 +36,15 @@ class UpdateSeriesWorker @AssistedInject constructor(
             val lastUpdateDate = inputData.getLong(KEY_LAST_UPDATE_DATE, 0)
             val calendar = Calendar.getInstance()
             calendar.timeInMillis = lastUpdateDate
-            val updatedSeriesFromNetwork = seriesNetworkDataSource.getUpdatedSeries(calendar)
-                .map { it.toSeries() }
-            val seriesEntitiesWithThumbnails = seriesThumbnailFetcher.invoke(updatedSeriesFromNetwork)
-                .map { it.toSeriesEntity() }
+            val updatedSeries = seriesNetworkDataSource.getUpdatedSeries(calendar)
+                .map { it.map { it.toSeries() } }
+            updatedSeries.map {
+                seriesThumbnailFetcher.invoke(it)
+                    .map { it.toSeriesEntity() }
+            }.collectLatest {
+                seriesDao.insertSeriesList(it)
+            }
 
-            seriesDao.insertSeriesList(seriesEntitiesWithThumbnails)
             Result.success()
         } catch (ex: Exception) {
             Result.failure()

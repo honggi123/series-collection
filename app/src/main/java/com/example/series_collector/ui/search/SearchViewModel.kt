@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.flatMapLatest
+import java.io.IOException
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class)
@@ -32,7 +33,16 @@ class SearchViewModel @Inject constructor(
         .debounce(300)
         .flatMapLatest { query -> seriesRepository.searchBySeriesName(query) }
         .combine(selectedFilter) { result, filter -> filterSeries(result, filter) }
-        .catch { _errorMsg.value = "검색어를 가져오는데 실패했습니다." }
+        .catch {
+            when (it) {
+                is IOException -> {
+                    _errorMsg.value = "네트워크 연결을 확인해주세요."
+                }
+                else -> {
+                    _errorMsg.value = "검색어를 가져오는데 실패했습니다."
+                }
+            }
+        }
         .asLiveData()
 
     fun search(query: String) {

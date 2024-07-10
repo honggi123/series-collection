@@ -25,12 +25,9 @@ class SplashViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            if (userRepository.isEmpty()) { // 로컬 데이터가 존재하지 않을 경우 (처음 초기화)
-                updateSeries(Calendar.getInstance())
-            } else {
-                val updatedDate = userRepository.getLastUpdateDate()
-                updateSeries(updatedDate)
-            }
+            val lastUpdateDate = userRepository.getLastUpdateDate()
+            val updatedDate = lastUpdateDate ?: INITIAL_DATE
+            updateSeries(updatedDate)
         }
     }
 
@@ -44,6 +41,12 @@ class SplashViewModel @Inject constructor(
                 }
                 _isLoading.value = false
             }
+        }
+    }
+
+    companion object {
+        val INITIAL_DATE: Calendar = Calendar.getInstance().apply {
+            set(2020, Calendar.JANUARY, 1)
         }
     }
 }
